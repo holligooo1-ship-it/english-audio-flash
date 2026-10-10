@@ -1,0 +1,47 @@
+{
+  "deck": "Vocabulario básico",
+  "cards": [
+    {
+      "id": 1,
+      "en": "i'm on my way",
+      "es": "voy en camino",
+      "audio": "I'm-on-my-way.mp3",
+      "tags": ["frases"]
+    },
+    {
+      "id": 2,
+      "en": "it dosen't work",
+      "es": "no funciona",
+      "audio": "it-dosn't-work.mp3",
+      "tags": ["frases"]
+    },
+    {
+      "id": 3,
+      "en": "sure",
+      "es": "seguro, claro",
+      "audio": "sure.mp3",
+      "tags": ["respuestas"]
+    },
+    {
+      "id": 4,
+      "en": "next time",
+      "es": "la próxima vez",
+      "audio": "next-time.mp3",
+      "tags": ["frases"]
+    },
+    {
+      "id": 5,
+      "en": "take care",
+      "es": "cuídate",
+      "audio": "take-care.mp3",
+      "tags": ["despedidas"]
+    },
+    {
+      "id": 6,
+      "en": "hey there",
+      "es": "buenos días",
+      "audio": "hey-there.mp3",
+      "tags": ["saludos"]
+    }
+  ]
+}
