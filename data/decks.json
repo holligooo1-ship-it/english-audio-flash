@@ -5,42 +5,42 @@
       "id": 1,
       "en": "i'm on my way",
       "es": "voy en camino",
-      "audio": "https://drive.google.com/uc?export=download&id=1NCQavcYfexF-4YQtJi3QdMMJOgIK1yYL",
+      "audio": "audios/im-on-my-way.mp3",
       "tags": ["frases"]
     },
     {
       "id": 2,
       "en": "it doesn't work",
       "es": "no funciona",
-      "audio": "https://drive.google.com/uc?export=download&id=19fj8KTulBTEDqv4JlaCPPOwRd0VOKUG6",
+      "audio": "audios/it-doesnt-work.mp3",
       "tags": ["frases"]
     },
     {
       "id": 3,
       "en": "sure",
       "es": "seguro, claro",
-      "audio": "https://drive.google.com/uc?export=download&id=1TiHdW1an3NEyAWQX8g1fkypXxlOjDdP3",
+      "audio": "audios/sure.mp3",
       "tags": ["respuestas"]
     },
     {
       "id": 4,
       "en": "next time",
       "es": "la próxima vez",
-      "audio": "https://drive.google.com/uc?export=download&id=1kWiujNGVT9kde7dxHGX6sZm8D8P8aMsl",
+      "audio": "audios/next-time.mp3",
       "tags": ["frases"]
     },
     {
       "id": 5,
       "en": "take care",
       "es": "cuídate",
-      "audio": "https://drive.google.com/uc?export=download&id=1ECp77SmE5VJdDtztET3zvGyB9ff7Do-G",
+      "audio": "audios/take-care.mp3",
       "tags": ["despedidas"]
     },
     {
       "id": 6,
       "en": "hey there",
       "es": "buenos días",
-      "audio": "https://drive.google.com/uc?export=download&id=1RzRhK17sND3W4m1qaupke0223r2KQl8N",
+      "audio": "audios/hey-there.mp3",
       "tags": ["saludos"]
     }
   ]
