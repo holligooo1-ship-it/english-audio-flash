@@ -55,6 +55,26 @@ html, body {
   font-size: 18px;
 }
 
+.direction-btn {
+  margin-left: auto;
+  background: #1f2937;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.direction-btn:hover {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
 /* ---------- CARD ---------- */
 .card-area {
   flex: 1;
@@ -73,7 +93,7 @@ html, body {
   padding: 36px 28px;
   text-align: center;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card.playing {
@@ -100,6 +120,7 @@ html, body {
   line-height: 1.2;
   margin-bottom: 16px;
   word-break: break-word;
+  transition: opacity 0.3s;
 }
 
 .word-es {
@@ -107,8 +128,16 @@ html, body {
   color: var(--muted);
   margin-bottom: 32px;
   min-height: 26px;
+  transition: opacity 0.3s;
 }
 
+.word-en.hidden,
+.word-es.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ---------- PROGRESS ---------- */
 .progress-wrap {
   width: 100%;
   height: 6px;
@@ -134,12 +163,23 @@ html, body {
 /* ---------- CONTROLS ---------- */
 .controls {
   padding: 18px 20px 26px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas:
+    "prev play next"
+    "speed speed speed"
+    "pause pause pause";
   align-items: center;
-  gap: 16px;
+  gap: 12px 20px;
+  justify-items: center;
   border-top: 1px solid var(--border);
 }
+
+#btnPrev { grid-area: prev; }
+#btnPlay { grid-area: play; }
+#btnNext { grid-area: next; }
+.speed-wrap { grid-area: speed; }
+.pause-wrap { grid-area: pause; }
 
 .controls > button {
   background: #1f2937;
@@ -170,25 +210,6 @@ html, body {
 .controls > button.primary:hover {
   box-shadow: 0 12px 36px rgba(99, 102, 241, 0.55);
 }
-
-/* Fila de botones principales */
-.controls {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  grid-template-areas:
-    "prev play next"
-    "speed speed speed"
-    "pause pause pause";
-  align-items: center;
-  gap: 12px 20px;
-  justify-items: center;
-}
-
-#btnPrev  { grid-area: prev; }
-#btnPlay  { grid-area: play; }
-#btnNext  { grid-area: next; }
-.speed-wrap { grid-area: speed; }
-.pause-wrap { grid-area: pause; }
 
 .speed-wrap,
 .pause-wrap {
@@ -228,4 +249,5 @@ html, body {
   .card { padding: 28px 20px; }
   .controls > button { width: 48px; height: 48px; font-size: 18px; }
   .controls > button.primary { width: 64px; height: 64px; font-size: 22px; }
+  .direction-btn { font-size: 11px; padding: 6px 10px; }
 }
