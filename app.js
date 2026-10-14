@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v5
-// Modo dual + orden secuencial/aleatorio SIN repeticiones
+// ENGLISH AUDIO FLASH - v6
+// Se detiene al terminar el ciclo. Tú decides si repetir.
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -12,9 +12,10 @@ let pauseSeconds = 2;
 let direction = "en-es";
 let order = "secuencial";
 
-// ---------- ESTADO DEL CICLO ALEATORIO ----------
-let cyclePlayed = [];   // índices que YA sonaron en este ciclo
-let history = [];       // historial para el botón ⏮
+// ---------- ESTADO DEL CICLO ----------
+let cyclePlayed = [];        // índices ya sonados en el ciclo actual (modo aleatorio)
+let history = [];            // historial para ⏮
+let cycleCompleted = false;  // true cuando ya terminó la vuelta
 
 // ---------- PERSISTENCIA ----------
 function loadSettings() {
@@ -63,8 +64,7 @@ async function loadCards() {
       statusEl.textContent = "Sin tarjetas";
       return;
     }
-    cyclePlayed = [currentIndex];
-    renderCard();
+    resetCycle();
   } catch (err) {
     console.error(err);
     statusEl.textContent = "Error al cargar datos";
@@ -82,29 +82,32 @@ function updateButtons() {
     : "🎲 Aleatorio";
 }
 
+// ---------- RESET DEL CICLO ----------
+function resetCycle() {
+  currentIndex = 0;
+  cyclePlayed = [0];
+  history = [];
+  cycleCompleted = false;
+  renderCard();
+}
+
 // ---------- SELECCIÓN ALEATORIA SIN REPETICIÓN ----------
 function pickNextRandom() {
-  // Si ya sonaron todas, empezar ciclo nuevo
   if (cyclePlayed.length >= cards.length) {
     cyclePlayed = [];
   }
-
-  // Candidatos: no han sonado en este ciclo Y no son el actual
   const candidates = [];
   for (let i = 0; i < cards.length; i++) {
     if (i === currentIndex) continue;
     if (cyclePlayed.includes(i)) continue;
     candidates.push(i);
   }
-
-  // Fallback (por seguridad)
   if (candidates.length === 0) {
     for (let i = 0; i < cards.length; i++) {
       if (i !== currentIndex) candidates.push(i);
     }
     if (candidates.length === 0) return currentIndex;
   }
-
   const next = candidates[Math.floor(Math.random() * candidates.length)];
   cyclePlayed.push(next);
   return next;
@@ -113,7 +116,7 @@ function pickNextRandom() {
 // ---------- SIGUIENTE / ANTERIOR ----------
 function goNext() {
   history.push(currentIndex);
-
+  cycleCompleted = false;   // si el usuario navega a mano, ya no está "completado"
   if (order === "secuencial") {
     currentIndex = (currentIndex + 1) % cards.length;
   } else {
@@ -122,6 +125,7 @@ function goNext() {
 }
 
 function goPrev() {
+  cycleCompleted = false;
   if (history.length > 0) {
     const prev = history.pop();
     if (order === "aleatorio") {
@@ -134,6 +138,27 @@ function goPrev() {
   }
 }
 
+// ---------- DETECTAR FIN DE CICLO ----------
+function isEndOfCycle() {
+  if (order === "secuencial") {
+    return currentIndex === cards.length - 1;
+  } else {
+    return cyclePlayed.length >= cards.length;
+  }
+}
+
+// ---------- FIN DE CICLO ----------
+function finishCycle() {
+  isPlaying = false;
+  cycleCompleted = true;
+  player.pause();
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+  cardEl.classList.remove("playing");
+  btnPlay.textContent = "▶";
+  statusEl.classList.remove("active");
+  statusEl.textContent = "✅ Completado";
+}
+
 // ---------- RENDER ----------
 function renderCard() {
   const c = cards[currentIndex];
@@ -144,8 +169,11 @@ function renderCard() {
 
   counter.textContent = `${currentIndex + 1} / ${cards.length}`;
   progressBar.style.width = ((currentIndex + 1) / cards.length) * 100 + "%";
-  statusEl.textContent = "Listo";
-  statusEl.classList.remove("active");
+
+  if (!cycleCompleted) {
+    statusEl.textContent = "Listo";
+    statusEl.classList.remove("active");
+  }
 }
 
 // ---------- REPRODUCIR ----------
@@ -205,6 +233,13 @@ async function loop() {
   while (isPlaying) {
     await playCard();
     if (!isPlaying) break;
+
+    // ¿Terminó la vuelta? → Parar
+    if (isEndOfCycle()) {
+      finishCycle();
+      break;
+    }
+
     goNext();
     renderCard();
   }
@@ -216,6 +251,8 @@ btnPlay.addEventListener("click", () => {
   if (isPlaying) {
     stopAll();
   } else {
+    // Si ya había terminado la vuelta, reiniciar
+    if (cycleCompleted) resetCycle();
     isPlaying = true;
     btnPlay.textContent = "⏸";
     loop();
@@ -252,6 +289,7 @@ btnDirection.addEventListener("click", () => {
   const wasPlaying = isPlaying;
   stopAll();
   direction = direction === "en-es" ? "es-en" : "en-es";
+  cycleCompleted = false;
   updateButtons();
   saveSettings();
   renderCard();
@@ -266,11 +304,9 @@ btnOrder.addEventListener("click", () => {
   const wasPlaying = isPlaying;
   stopAll();
   order = order === "secuencial" ? "aleatorio" : "secuencial";
-  cyclePlayed = [currentIndex];
-  history = [];
+  resetCycle();
   updateButtons();
   saveSettings();
-  renderCard();
   if (wasPlaying) {
     isPlaying = true;
     btnPlay.textContent = "⏸";
@@ -298,7 +334,7 @@ function stopAll() {
   cardEl.classList.remove("playing");
   btnPlay.textContent = "▶";
   statusEl.classList.remove("active");
-  statusEl.textContent = "Pausado";
+  if (!cycleCompleted) statusEl.textContent = "Pausado";
 }
 
 // ---------- INIT ----------
