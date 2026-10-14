@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v7
-// Sesión limitada: elige cuántas tarjetas por ronda
+// ENGLISH AUDIO FLASH - v8
+// Reset al cambiar modo + selector 1-100
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -58,6 +58,22 @@ const pauseInput = document.getElementById("pause");
 const pauseValue = document.getElementById("pauseValue");
 const limitSelect = document.getElementById("limit");
 
+// ---------- POBLAR SELECTOR 1-100 ----------
+function populateLimitOptions() {
+  limitSelect.innerHTML = "";
+  for (let i = 1; i <= 100; i++) {
+    const opt = document.createElement("option");
+    opt.value = String(i);
+    opt.textContent = String(i);
+    limitSelect.appendChild(opt);
+  }
+  const allOpt = document.createElement("option");
+  allOpt.value = "all";
+  allOpt.textContent = "Todas";
+  limitSelect.appendChild(allOpt);
+  limitSelect.value = sessionLimit === "all" ? "all" : String(sessionLimit);
+}
+
 // ---------- CARGAR DATOS ----------
 async function loadCards() {
   try {
@@ -90,7 +106,9 @@ function updateButtons() {
 function effectiveLimit() {
   if (cards.length === 0) return 1;
   if (sessionLimit === "all") return cards.length;
-  return Math.min(sessionLimit, cards.length);
+  const n = parseInt(sessionLimit, 10);
+  if (isNaN(n)) return cards.length;
+  return Math.min(n, cards.length);
 }
 
 // ---------- RESET ----------
@@ -289,14 +307,15 @@ btnPrev.addEventListener("click", () => {
   }
 });
 
+// ---------- CAMBIO DE DIRECCIÓN ----------
+// Ahora reinicia el ciclo completo (vuelve a la tarjeta 1)
 btnDirection.addEventListener("click", () => {
   const wasPlaying = isPlaying;
   stopAll();
   direction = direction === "en-es" ? "es-en" : "en-es";
-  cycleCompleted = false;
+  resetCycle();               // ← REINICIO
   updateButtons();
   saveSettings();
-  renderCard();
   if (wasPlaying) {
     isPlaying = true;
     btnPlay.textContent = "⏸";
@@ -308,7 +327,7 @@ btnOrder.addEventListener("click", () => {
   const wasPlaying = isPlaying;
   stopAll();
   order = order === "secuencial" ? "aleatorio" : "secuencial";
-  resetCycle();
+  resetCycle();               // ← también reinicia al cambiar orden
   updateButtons();
   saveSettings();
   if (wasPlaying) {
@@ -333,7 +352,9 @@ pauseInput.addEventListener("input", () => {
 
 limitSelect.addEventListener("change", () => {
   const wasPlaying = isPlaying;
-  sessionLimit = limitSelect.value === "all" ? "all" : parseInt(limitSelect.value, 10);
+  sessionLimit = limitSelect.value === "all"
+    ? "all"
+    : parseInt(limitSelect.value, 10);
   saveSettings();
   if (wasPlaying) stopAll();
   resetCycle();
@@ -351,10 +372,10 @@ function stopAll() {
 
 // ---------- INIT ----------
 loadSettings();
+populateLimitOptions();
 updateButtons();
 speedInput.value = speed;
 speedValue.textContent = speed.toFixed(1) + "x";
 pauseInput.value = pauseSeconds;
 pauseValue.textContent = pauseSeconds + "s";
-limitSelect.value = sessionLimit;
 loadCards();
