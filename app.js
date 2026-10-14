@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v2
-// Modo dual (EN→ES / ES→EN) + persistencia de ajustes
+// ENGLISH AUDIO FLASH - v3
+// Un audio por tarjeta según el modo
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -28,17 +28,17 @@ function saveSettings() {
 }
 
 // ---------- DOM ----------
-const player    = document.getElementById("player");
-const statusEl  = document.getElementById("status");
-const wordEn    = document.getElementById("wordEn");
-const wordEs    = document.getElementById("wordEs");
-const counter   = document.getElementById("counter");
-const progressBar = document.getElementById("progressBar");
-const cardEl    = document.getElementById("card");
+const player       = document.getElementById("player");
+const statusEl     = document.getElementById("status");
+const wordEn       = document.getElementById("wordEn");   // texto principal en pantalla
+const wordEs       = document.getElementById("wordEs");   // (queda vacío ahora)
+const counter      = document.getElementById("counter");
+const progressBar  = document.getElementById("progressBar");
+const cardEl       = document.getElementById("card");
 
-const btnPlay = document.getElementById("btnPlay");
-const btnPrev = document.getElementById("btnPrev");
-const btnNext = document.getElementById("btnNext");
+const btnPlay      = document.getElementById("btnPlay");
+const btnPrev      = document.getElementById("btnPrev");
+const btnNext      = document.getElementById("btnNext");
 const btnDirection = document.getElementById("btnDirection");
 
 const speedInput = document.getElementById("speed");
@@ -63,44 +63,31 @@ async function loadCards() {
   }
 }
 
-// ---------- RENDER ----------
+// ---------- BOTÓN DE DIRECCIÓN ----------
 function updateDirectionButton() {
   btnDirection.textContent = direction === "en-es"
     ? "EN → ES 🔄"
     : "ES → EN 🔄";
 }
 
+// ---------- RENDER ----------
+// EN→ES: suena inglés, se ve español
+// ES→EN: suena español, se ve inglés
 function renderCard() {
   const c = cards[currentIndex];
   if (!c) return;
 
-  // Siempre ponemos los dos textos
-  wordEn.textContent = c.en;
-  wordEs.textContent = c.es;
-
-  // Según la dirección, ocultamos la "respuesta"
   if (direction === "en-es") {
-    // pregunta = inglés (visible), respuesta = español (oculta)
-    wordEn.classList.remove("hidden");
-    wordEs.classList.add("hidden");
+    wordEn.textContent = c.es;   // texto visible: español
   } else {
-    // pregunta = español (visible), respuesta = inglés (oculta)
-    wordEs.classList.remove("hidden");
-    wordEn.classList.add("hidden");
+    wordEn.textContent = c.en;   // texto visible: inglés
   }
+  wordEs.textContent = "";       // no mostramos subtítulo
 
   counter.textContent = `${currentIndex + 1} / ${cards.length}`;
   progressBar.style.width = ((currentIndex + 1) / cards.length) * 100 + "%";
   statusEl.textContent = "Listo";
   statusEl.classList.remove("active");
-}
-
-function revealAnswer() {
-  if (direction === "en-es") {
-    wordEs.classList.remove("hidden");
-  } else {
-    wordEn.classList.remove("hidden");
-  }
 }
 
 // ---------- REPRODUCIR UNA TARJETA ----------
@@ -112,73 +99,37 @@ function playCard() {
     cardEl.classList.add("playing");
 
     if (direction === "en-es") {
-      playEnToEs(c, resolve);
+      // Solo suena el audio en inglés (MP3)
+      statusEl.textContent = "🔊 Inglés";
+      statusEl.classList.add("active");
+
+      player.src = c.audio;
+      player.playbackRate = speed;
+      player.currentTime = 0;
+
+      player.onended = () => afterCard(resolve);
+      player.onerror = () => {
+        console.warn("Error al reproducir:", c.audio);
+        afterCard(resolve);
+      };
+      player.play().catch(() => afterCard(resolve));
     } else {
-      playEsToEn(c, resolve);
+      // Solo suena el TTS en español
+      statusEl.textContent = "🇪🇸 Español";
+      statusEl.classList.add("active");
+
+      speakSpanish(c.es, () => afterCard(resolve));
     }
   });
 }
 
-// --- EN → ES: audio inglés, luego TTS español + revelar traducción
-function playEnToEs(c, resolve) {
-  statusEl.textContent = "🔊 Inglés";
-  statusEl.classList.add("active");
-
-  player.src = c.audio;
-  player.playbackRate = speed;
-  player.currentTime = 0;
-
-  player.onended = () => {
-    revealAnswer();
-    statusEl.textContent = "🇪🇸 Español";
-    speakSpanish(c.es, () => afterCard(resolve));
-  };
-
-  player.onerror = () => {
-    console.warn("Error al reproducir:", c.audio);
-    revealAnswer();
-    speakSpanish(c.es, () => afterCard(resolve));
-  };
-
-  player.play().catch(() => player.onerror());
-}
-
-// --- ES → EN: TTS español, luego audio inglés + revelar inglés
-function playEsToEn(c, resolve) {
-  statusEl.textContent = "🇪🇸 Español";
-  statusEl.classList.add("active");
-
-  speakSpanish(c.es, () => {
-    statusEl.textContent = "🔊 Inglés";
-
-    player.src = c.audio;
-    player.playbackRate = speed;
-    player.currentTime = 0;
-
-    player.onended = () => {
-      revealAnswer();
-      afterCard(resolve);
-    };
-
-    player.onerror = () => {
-      console.warn("Error al reproducir:", c.audio);
-      revealAnswer();
-      afterCard(resolve);
-    };
-
-    player.play().catch(() => player.onerror());
-  });
-}
-
-// --- Pausa final antes de la siguiente tarjeta
+// ---------- PAUSA FINAL ----------
 function afterCard(resolve) {
   statusEl.textContent = "⏸ Pausa";
   statusEl.classList.remove("active");
   cardEl.classList.remove("playing");
 
-  setTimeout(() => {
-    resolve();
-  }, pauseSeconds * 1000);
+  setTimeout(() => resolve(), pauseSeconds * 1000);
 }
 
 // ---------- TTS ESPAÑOL ----------
@@ -209,7 +160,6 @@ async function loop() {
 // ---------- CONTROLES ----------
 btnPlay.addEventListener("click", () => {
   if (cards.length === 0) return;
-
   if (isPlaying) {
     stopAll();
   } else {
