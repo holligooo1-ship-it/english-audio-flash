@@ -55,8 +55,14 @@ html, body {
   font-size: 18px;
 }
 
-.direction-btn {
+/* ---------- TOPBAR ACTIONS ---------- */
+.topbar-actions {
   margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.toolbar-btn {
   background: #1f2937;
   border: 1px solid var(--border);
   color: var(--text);
@@ -67,9 +73,10 @@ html, body {
   transition: 0.2s;
   font-weight: 600;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
-.direction-btn:hover {
+.toolbar-btn:hover {
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
@@ -249,5 +256,5 @@ html, body {
   .card { padding: 28px 20px; }
   .controls > button { width: 48px; height: 48px; font-size: 18px; }
   .controls > button.primary { width: 64px; height: 64px; font-size: 22px; }
-  .direction-btn { font-size: 11px; padding: 6px 10px; }
+  .toolbar-btn { font-size: 11px; padding: 6px 10px; }
 }
