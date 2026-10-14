@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v3
-// Un audio por tarjeta según el modo
+// ENGLISH AUDIO FLASH - v4
+// Modo dual + orden secuencial/aleatorio
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -10,12 +10,18 @@ let isPlaying = false;
 let speed = 1;
 let pauseSeconds = 2;
 let direction = "en-es";     // "en-es" | "es-en"
+let order = "secuencial";    // "secuencial" | "aleatorio"
+
+// ---------- COLA E HISTORIAL (para aleatorio) ----------
+let queue = [];              // índices pendientes de reproducir
+let history = [];            // índices ya visitados
 
 // ---------- PERSISTENCIA ----------
 function loadSettings() {
   try {
     const s = JSON.parse(localStorage.getItem("af_settings") || "{}");
     if (s.direction) direction = s.direction;
+    if (s.order) order = s.order;
     if (typeof s.speed === "number") speed = s.speed;
     if (typeof s.pause === "number") pauseSeconds = s.pause;
   } catch (e) {}
@@ -23,15 +29,15 @@ function loadSettings() {
 
 function saveSettings() {
   localStorage.setItem("af_settings", JSON.stringify({
-    direction, speed, pause: pauseSeconds
+    direction, order, speed, pause: pauseSeconds
   }));
 }
 
 // ---------- DOM ----------
 const player       = document.getElementById("player");
 const statusEl     = document.getElementById("status");
-const wordEn       = document.getElementById("wordEn");   // texto principal en pantalla
-const wordEs       = document.getElementById("wordEs");   // (queda vacío ahora)
+const wordEn       = document.getElementById("wordEn");
+const wordEs       = document.getElementById("wordEs");
 const counter      = document.getElementById("counter");
 const progressBar  = document.getElementById("progressBar");
 const cardEl       = document.getElementById("card");
@@ -40,6 +46,7 @@ const btnPlay      = document.getElementById("btnPlay");
 const btnPrev      = document.getElementById("btnPrev");
 const btnNext      = document.getElementById("btnNext");
 const btnDirection = document.getElementById("btnDirection");
+const btnOrder     = document.getElementById("btnOrder");
 
 const speedInput = document.getElementById("speed");
 const speedValue = document.getElementById("speedValue");
@@ -56,6 +63,7 @@ async function loadCards() {
       statusEl.textContent = "Sin tarjetas";
       return;
     }
+    buildQueue();
     renderCard();
   } catch (err) {
     console.error(err);
@@ -63,11 +71,51 @@ async function loadCards() {
   }
 }
 
-// ---------- BOTÓN DE DIRECCIÓN ----------
-function updateDirectionButton() {
+// ---------- BOTONES ----------
+function updateButtons() {
   btnDirection.textContent = direction === "en-es"
     ? "EN → ES 🔄"
     : "ES → EN 🔄";
+
+  btnOrder.textContent = order === "secuencial"
+    ? "🔁 Secuencial"
+    : "🎲 Aleatorio";
+}
+
+// ---------- COLA ALEATORIA ----------
+function buildQueue() {
+  const indices = cards.map((_, i) => i);
+  // Fisher-Yates
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  // evitar que la primera sea la misma que la actual
+  if (indices.length > 1 && indices[0] === currentIndex) {
+    [indices[0], indices[1]] = [indices[1], indices[0]];
+  }
+  queue = indices;
+}
+
+// ---------- SIGUIENTE / ANTERIOR ----------
+function goNext() {
+  history.push(currentIndex);
+
+  if (order === "secuencial") {
+    currentIndex = (currentIndex + 1) % cards.length;
+  } else {
+    if (queue.length === 0) buildQueue();
+    currentIndex = queue.shift();
+  }
+}
+
+function goPrev() {
+  if (history.length > 0) {
+    currentIndex = history.pop();
+  } else if (order === "secuencial") {
+    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+  }
+  // en aleatorio sin historial: se queda en la misma
 }
 
 // ---------- RENDER ----------
@@ -77,12 +125,8 @@ function renderCard() {
   const c = cards[currentIndex];
   if (!c) return;
 
-  if (direction === "en-es") {
-    wordEn.textContent = c.es;   // texto visible: español
-  } else {
-    wordEn.textContent = c.en;   // texto visible: inglés
-  }
-  wordEs.textContent = "";       // no mostramos subtítulo
+  wordEn.textContent = direction === "en-es" ? c.es : c.en;
+  wordEs.textContent = "";
 
   counter.textContent = `${currentIndex + 1} / ${cards.length}`;
   progressBar.style.width = ((currentIndex + 1) / cards.length) * 100 + "%";
@@ -90,7 +134,7 @@ function renderCard() {
   statusEl.classList.remove("active");
 }
 
-// ---------- REPRODUCIR UNA TARJETA ----------
+// ---------- REPRODUCIR ----------
 function playCard() {
   return new Promise((resolve) => {
     const c = cards[currentIndex];
@@ -99,7 +143,6 @@ function playCard() {
     cardEl.classList.add("playing");
 
     if (direction === "en-es") {
-      // Solo suena el audio en inglés (MP3)
       statusEl.textContent = "🔊 Inglés";
       statusEl.classList.add("active");
 
@@ -114,21 +157,17 @@ function playCard() {
       };
       player.play().catch(() => afterCard(resolve));
     } else {
-      // Solo suena el TTS en español
       statusEl.textContent = "🇪🇸 Español";
       statusEl.classList.add("active");
-
       speakSpanish(c.es, () => afterCard(resolve));
     }
   });
 }
 
-// ---------- PAUSA FINAL ----------
 function afterCard(resolve) {
   statusEl.textContent = "⏸ Pausa";
   statusEl.classList.remove("active");
   cardEl.classList.remove("playing");
-
   setTimeout(() => resolve(), pauseSeconds * 1000);
 }
 
@@ -147,12 +186,12 @@ function speakSpanish(text, onDone) {
   speechSynthesis.speak(u);
 }
 
-// ---------- LOOP PRINCIPAL ----------
+// ---------- LOOP ----------
 async function loop() {
   while (isPlaying) {
     await playCard();
     if (!isPlaying) break;
-    currentIndex = (currentIndex + 1) % cards.length;
+    goNext();
     renderCard();
   }
 }
@@ -173,7 +212,7 @@ btnNext.addEventListener("click", () => {
   if (cards.length === 0) return;
   const wasPlaying = isPlaying;
   stopAll();
-  currentIndex = (currentIndex + 1) % cards.length;
+  goNext();
   renderCard();
   if (wasPlaying) {
     isPlaying = true;
@@ -186,7 +225,7 @@ btnPrev.addEventListener("click", () => {
   if (cards.length === 0) return;
   const wasPlaying = isPlaying;
   stopAll();
-  currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+  goPrev();
   renderCard();
   if (wasPlaying) {
     isPlaying = true;
@@ -199,7 +238,24 @@ btnDirection.addEventListener("click", () => {
   const wasPlaying = isPlaying;
   stopAll();
   direction = direction === "en-es" ? "es-en" : "en-es";
-  updateDirectionButton();
+  updateButtons();
+  saveSettings();
+  renderCard();
+  if (wasPlaying) {
+    isPlaying = true;
+    btnPlay.textContent = "⏸";
+    loop();
+  }
+});
+
+btnOrder.addEventListener("click", () => {
+  const wasPlaying = isPlaying;
+  stopAll();
+  order = order === "secuencial" ? "aleatorio" : "secuencial";
+  queue = [];
+  history = [];
+  if (order === "aleatorio") buildQueue();
+  updateButtons();
   saveSettings();
   renderCard();
   if (wasPlaying) {
@@ -234,7 +290,7 @@ function stopAll() {
 
 // ---------- INIT ----------
 loadSettings();
-updateDirectionButton();
+updateButtons();
 speedInput.value = speed;
 speedValue.textContent = speed.toFixed(1) + "x";
 pauseInput.value = pauseSeconds;
