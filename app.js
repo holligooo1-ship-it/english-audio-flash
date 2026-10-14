@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v4
-// Modo dual + orden secuencial/aleatorio
+// ENGLISH AUDIO FLASH - v5
+// Modo dual + orden secuencial/aleatorio SIN repeticiones
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -9,12 +9,12 @@ let currentIndex = 0;
 let isPlaying = false;
 let speed = 1;
 let pauseSeconds = 2;
-let direction = "en-es";     // "en-es" | "es-en"
-let order = "secuencial";    // "secuencial" | "aleatorio"
+let direction = "en-es";
+let order = "secuencial";
 
-// ---------- COLA E HISTORIAL (para aleatorio) ----------
-let queue = [];              // índices pendientes de reproducir
-let history = [];            // índices ya visitados
+// ---------- ESTADO DEL CICLO ALEATORIO ----------
+let cyclePlayed = [];   // índices que YA sonaron en este ciclo
+let history = [];       // historial para el botón ⏮
 
 // ---------- PERSISTENCIA ----------
 function loadSettings() {
@@ -63,7 +63,7 @@ async function loadCards() {
       statusEl.textContent = "Sin tarjetas";
       return;
     }
-    buildQueue();
+    cyclePlayed = [currentIndex];
     renderCard();
   } catch (err) {
     console.error(err);
@@ -82,19 +82,32 @@ function updateButtons() {
     : "🎲 Aleatorio";
 }
 
-// ---------- COLA ALEATORIA ----------
-function buildQueue() {
-  const indices = cards.map((_, i) => i);
-  // Fisher-Yates
-  for (let i = indices.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [indices[i], indices[j]] = [indices[j], indices[i]];
+// ---------- SELECCIÓN ALEATORIA SIN REPETICIÓN ----------
+function pickNextRandom() {
+  // Si ya sonaron todas, empezar ciclo nuevo
+  if (cyclePlayed.length >= cards.length) {
+    cyclePlayed = [];
   }
-  // evitar que la primera sea la misma que la actual
-  if (indices.length > 1 && indices[0] === currentIndex) {
-    [indices[0], indices[1]] = [indices[1], indices[0]];
+
+  // Candidatos: no han sonado en este ciclo Y no son el actual
+  const candidates = [];
+  for (let i = 0; i < cards.length; i++) {
+    if (i === currentIndex) continue;
+    if (cyclePlayed.includes(i)) continue;
+    candidates.push(i);
   }
-  queue = indices;
+
+  // Fallback (por seguridad)
+  if (candidates.length === 0) {
+    for (let i = 0; i < cards.length; i++) {
+      if (i !== currentIndex) candidates.push(i);
+    }
+    if (candidates.length === 0) return currentIndex;
+  }
+
+  const next = candidates[Math.floor(Math.random() * candidates.length)];
+  cyclePlayed.push(next);
+  return next;
 }
 
 // ---------- SIGUIENTE / ANTERIOR ----------
@@ -104,23 +117,24 @@ function goNext() {
   if (order === "secuencial") {
     currentIndex = (currentIndex + 1) % cards.length;
   } else {
-    if (queue.length === 0) buildQueue();
-    currentIndex = queue.shift();
+    currentIndex = pickNextRandom();
   }
 }
 
 function goPrev() {
   if (history.length > 0) {
-    currentIndex = history.pop();
+    const prev = history.pop();
+    if (order === "aleatorio") {
+      const idx = cyclePlayed.indexOf(currentIndex);
+      if (idx !== -1) cyclePlayed.splice(idx, 1);
+    }
+    currentIndex = prev;
   } else if (order === "secuencial") {
     currentIndex = (currentIndex - 1 + cards.length) % cards.length;
   }
-  // en aleatorio sin historial: se queda en la misma
 }
 
 // ---------- RENDER ----------
-// EN→ES: suena inglés, se ve español
-// ES→EN: suena español, se ve inglés
 function renderCard() {
   const c = cards[currentIndex];
   if (!c) return;
@@ -252,9 +266,8 @@ btnOrder.addEventListener("click", () => {
   const wasPlaying = isPlaying;
   stopAll();
   order = order === "secuencial" ? "aleatorio" : "secuencial";
-  queue = [];
+  cyclePlayed = [currentIndex];
   history = [];
-  if (order === "aleatorio") buildQueue();
   updateButtons();
   saveSettings();
   renderCard();
