@@ -175,7 +175,8 @@ html, body {
   grid-template-areas:
     "prev play next"
     "speed speed speed"
-    "pause pause pause";
+    "pause pause pause"
+    "limit limit limit";
   align-items: center;
   gap: 12px 20px;
   justify-items: center;
@@ -187,6 +188,7 @@ html, body {
 #btnNext { grid-area: next; }
 .speed-wrap { grid-area: speed; }
 .pause-wrap { grid-area: pause; }
+.limit-wrap { grid-area: limit; }
 
 .controls > button {
   background: #1f2937;
@@ -219,7 +221,8 @@ html, body {
 }
 
 .speed-wrap,
-.pause-wrap {
+.pause-wrap,
+.limit-wrap {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -230,7 +233,8 @@ html, body {
 }
 
 .speed-wrap label,
-.pause-wrap label {
+.pause-wrap label,
+.limit-wrap label {
   min-width: 70px;
   text-align: left;
 }
@@ -249,6 +253,39 @@ html, body {
   font-variant-numeric: tabular-nums;
 }
 
+/* ---------- SELECT (Tarjetas) ---------- */
+.limit-wrap select {
+  flex: 1;
+  padding: 8px 30px 8px 12px;
+  background: #1f2937;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+  transition: 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 18px;
+}
+
+.limit-wrap select:hover,
+.limit-wrap select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.limit-wrap select option {
+  background: #1f2937;
+  color: var(--text);
+}
+
 /* ---------- MOBILE ---------- */
 @media (max-width: 480px) {
   .word-en { font-size: 26px; }
@@ -257,4 +294,8 @@ html, body {
   .controls > button { width: 48px; height: 48px; font-size: 18px; }
   .controls > button.primary { width: 64px; height: 64px; font-size: 22px; }
   .toolbar-btn { font-size: 11px; padding: 6px 10px; }
+  .speed-wrap label,
+  .pause-wrap label,
+  .limit-wrap label { min-width: 60px; font-size: 12px; }
+  .limit-wrap select { font-size: 12px; padding: 6px 26px 6px 10px; }
 }
