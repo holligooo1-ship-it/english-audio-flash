@@ -1,19 +1,19 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v8
-// Reset al cambiar modo + selector 1-100
+// ENGLISH AUDIO FLASH - v9
+// La sesión usa las PRIMERAS N tarjetas del mazo
 // ==========================================================
 
 // ---------- ESTADO ----------
-let cards = [];
-let currentIndex = 0;
+let cards = [];              // todas las tarjetas del mazo
+let sessionCards = [];       // subconjunto de la sesión actual
+let currentIndex = 0;        // índice DENTRO de sessionCards
 let isPlaying = false;
 let speed = 1;
 let pauseSeconds = 2;
 let direction = "en-es";
 let order = "secuencial";
-let sessionLimit = "all";    // "all" o número
+let sessionLimit = "all";
 
-// ---------- ESTADO DEL CICLO ----------
 let cyclePlayed = [];
 let history = [];
 let cycleCompleted = false;
@@ -111,33 +111,58 @@ function effectiveLimit() {
   return Math.min(n, cards.length);
 }
 
+// ---------- CONSTRUIR SESIÓN ----------
+// Toma las PRIMERAS N tarjetas del mazo.
+function buildSession() {
+  const limit = effectiveLimit();
+  sessionCards = cards.slice(0, limit);
+}
+
 // ---------- RESET ----------
 function resetCycle() {
-  currentIndex = 0;
-  cyclePlayed = [0];
+  buildSession();
+
+  cyclePlayed = [];
   history = [];
   cycleCompleted = false;
   sessionPlayed = 0;
+
+  if (sessionCards.length === 0) return;
+
+  // En aleatorio, empieza por una cualquiera.
+  // En secuencial, empieza por la primera.
+  if (order === "aleatorio") {
+    currentIndex = Math.floor(Math.random() * sessionCards.length);
+  } else {
+    currentIndex = 0;
+  }
+  cyclePlayed = [currentIndex];
+
   renderCard();
 }
 
-// ---------- ALEATORIO SIN REPETICIÓN ----------
+// ---------- ALEATORIO SIN REPETICIÓN (dentro de la sesión) ----------
 function pickNextRandom() {
-  if (cyclePlayed.length >= cards.length) {
+  const total = sessionCards.length;
+
+  if (cyclePlayed.length >= total) {
     cyclePlayed = [];
   }
+
   const candidates = [];
-  for (let i = 0; i < cards.length; i++) {
+  for (let i = 0; i < total; i++) {
     if (i === currentIndex) continue;
     if (cyclePlayed.includes(i)) continue;
     candidates.push(i);
   }
+
   if (candidates.length === 0) {
-    for (let i = 0; i < cards.length; i++) {
+    for (let i = 0; i < total; i++) {
       if (i !== currentIndex) candidates.push(i);
     }
     if (candidates.length === 0) return currentIndex;
   }
+
   const next = candidates[Math.floor(Math.random() * candidates.length)];
   cyclePlayed.push(next);
   return next;
@@ -148,7 +173,7 @@ function goNext() {
   history.push(currentIndex);
   cycleCompleted = false;
   if (order === "secuencial") {
-    currentIndex = (currentIndex + 1) % cards.length;
+    currentIndex = (currentIndex + 1) % sessionCards.length;
   } else {
     currentIndex = pickNextRandom();
   }
@@ -164,7 +189,7 @@ function goPrev() {
     }
     currentIndex = prev;
   } else if (order === "secuencial") {
-    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+    currentIndex = (currentIndex - 1 + sessionCards.length) % sessionCards.length;
   }
 }
 
@@ -182,13 +207,13 @@ function finishCycle() {
 
 // ---------- RENDER ----------
 function renderCard() {
-  const c = cards[currentIndex];
+  const c = sessionCards[currentIndex];
   if (!c) return;
 
   wordEn.textContent = direction === "en-es" ? c.es : c.en;
   wordEs.textContent = "";
 
-  const limit = effectiveLimit();
+  const limit = sessionCards.length;
   const shown = Math.min(sessionPlayed + 1, limit);
   counter.textContent = `${shown} / ${limit}`;
   progressBar.style.width = (shown / limit) * 100 + "%";
@@ -202,7 +227,7 @@ function renderCard() {
 // ---------- REPRODUCIR ----------
 function playCard() {
   return new Promise((resolve) => {
-    const c = cards[currentIndex];
+    const c = sessionCards[currentIndex];
     if (!c) return resolve();
 
     cardEl.classList.add("playing");
@@ -253,7 +278,7 @@ function speakSpanish(text, onDone) {
 
 // ---------- LOOP ----------
 async function loop() {
-  const limit = effectiveLimit();
+  const limit = sessionCards.length;
   while (isPlaying) {
     await playCard();
     if (!isPlaying) break;
@@ -270,7 +295,7 @@ async function loop() {
 
 // ---------- CONTROLES ----------
 btnPlay.addEventListener("click", () => {
-  if (cards.length === 0) return;
+  if (sessionCards.length === 0) return;
   if (isPlaying) {
     stopAll();
   } else {
@@ -282,7 +307,7 @@ btnPlay.addEventListener("click", () => {
 });
 
 btnNext.addEventListener("click", () => {
-  if (cards.length === 0) return;
+  if (sessionCards.length === 0) return;
   const wasPlaying = isPlaying;
   stopAll();
   goNext();
@@ -295,7 +320,7 @@ btnNext.addEventListener("click", () => {
 });
 
 btnPrev.addEventListener("click", () => {
-  if (cards.length === 0) return;
+  if (sessionCards.length === 0) return;
   const wasPlaying = isPlaying;
   stopAll();
   goPrev();
@@ -307,13 +332,11 @@ btnPrev.addEventListener("click", () => {
   }
 });
 
-// ---------- CAMBIO DE DIRECCIÓN ----------
-// Ahora reinicia el ciclo completo (vuelve a la tarjeta 1)
 btnDirection.addEventListener("click", () => {
   const wasPlaying = isPlaying;
   stopAll();
   direction = direction === "en-es" ? "es-en" : "en-es";
-  resetCycle();               // ← REINICIO
+  resetCycle();
   updateButtons();
   saveSettings();
   if (wasPlaying) {
@@ -327,7 +350,7 @@ btnOrder.addEventListener("click", () => {
   const wasPlaying = isPlaying;
   stopAll();
   order = order === "secuencial" ? "aleatorio" : "secuencial";
-  resetCycle();               // ← también reinicia al cambiar orden
+  resetCycle();
   updateButtons();
   saveSettings();
   if (wasPlaying) {
