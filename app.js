@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v6
-// Se detiene al terminar el ciclo. Tú decides si repetir.
+// ENGLISH AUDIO FLASH - v7
+// Sesión limitada: elige cuántas tarjetas por ronda
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -11,11 +11,13 @@ let speed = 1;
 let pauseSeconds = 2;
 let direction = "en-es";
 let order = "secuencial";
+let sessionLimit = "all";    // "all" o número
 
 // ---------- ESTADO DEL CICLO ----------
-let cyclePlayed = [];        // índices ya sonados en el ciclo actual (modo aleatorio)
-let history = [];            // historial para ⏮
-let cycleCompleted = false;  // true cuando ya terminó la vuelta
+let cyclePlayed = [];
+let history = [];
+let cycleCompleted = false;
+let sessionPlayed = 0;
 
 // ---------- PERSISTENCIA ----------
 function loadSettings() {
@@ -25,12 +27,13 @@ function loadSettings() {
     if (s.order) order = s.order;
     if (typeof s.speed === "number") speed = s.speed;
     if (typeof s.pause === "number") pauseSeconds = s.pause;
+    if (s.sessionLimit !== undefined) sessionLimit = s.sessionLimit;
   } catch (e) {}
 }
 
 function saveSettings() {
   localStorage.setItem("af_settings", JSON.stringify({
-    direction, order, speed, pause: pauseSeconds
+    direction, order, speed, pause: pauseSeconds, sessionLimit
   }));
 }
 
@@ -53,6 +56,7 @@ const speedInput = document.getElementById("speed");
 const speedValue = document.getElementById("speedValue");
 const pauseInput = document.getElementById("pause");
 const pauseValue = document.getElementById("pauseValue");
+const limitSelect = document.getElementById("limit");
 
 // ---------- CARGAR DATOS ----------
 async function loadCards() {
@@ -82,16 +86,24 @@ function updateButtons() {
     : "🎲 Aleatorio";
 }
 
-// ---------- RESET DEL CICLO ----------
+// ---------- LÍMITE EFECTIVO ----------
+function effectiveLimit() {
+  if (cards.length === 0) return 1;
+  if (sessionLimit === "all") return cards.length;
+  return Math.min(sessionLimit, cards.length);
+}
+
+// ---------- RESET ----------
 function resetCycle() {
   currentIndex = 0;
   cyclePlayed = [0];
   history = [];
   cycleCompleted = false;
+  sessionPlayed = 0;
   renderCard();
 }
 
-// ---------- SELECCIÓN ALEATORIA SIN REPETICIÓN ----------
+// ---------- ALEATORIO SIN REPETICIÓN ----------
 function pickNextRandom() {
   if (cyclePlayed.length >= cards.length) {
     cyclePlayed = [];
@@ -116,7 +128,7 @@ function pickNextRandom() {
 // ---------- SIGUIENTE / ANTERIOR ----------
 function goNext() {
   history.push(currentIndex);
-  cycleCompleted = false;   // si el usuario navega a mano, ya no está "completado"
+  cycleCompleted = false;
   if (order === "secuencial") {
     currentIndex = (currentIndex + 1) % cards.length;
   } else {
@@ -138,16 +150,7 @@ function goPrev() {
   }
 }
 
-// ---------- DETECTAR FIN DE CICLO ----------
-function isEndOfCycle() {
-  if (order === "secuencial") {
-    return currentIndex === cards.length - 1;
-  } else {
-    return cyclePlayed.length >= cards.length;
-  }
-}
-
-// ---------- FIN DE CICLO ----------
+// ---------- FIN DE SESIÓN ----------
 function finishCycle() {
   isPlaying = false;
   cycleCompleted = true;
@@ -167,8 +170,10 @@ function renderCard() {
   wordEn.textContent = direction === "en-es" ? c.es : c.en;
   wordEs.textContent = "";
 
-  counter.textContent = `${currentIndex + 1} / ${cards.length}`;
-  progressBar.style.width = ((currentIndex + 1) / cards.length) * 100 + "%";
+  const limit = effectiveLimit();
+  const shown = Math.min(sessionPlayed + 1, limit);
+  counter.textContent = `${shown} / ${limit}`;
+  progressBar.style.width = (shown / limit) * 100 + "%";
 
   if (!cycleCompleted) {
     statusEl.textContent = "Listo";
@@ -213,7 +218,7 @@ function afterCard(resolve) {
   setTimeout(() => resolve(), pauseSeconds * 1000);
 }
 
-// ---------- TTS ESPAÑOL ----------
+// ---------- TTS ----------
 function speakSpanish(text, onDone) {
   if (!("speechSynthesis" in window)) {
     onDone && onDone();
@@ -230,16 +235,16 @@ function speakSpanish(text, onDone) {
 
 // ---------- LOOP ----------
 async function loop() {
+  const limit = effectiveLimit();
   while (isPlaying) {
     await playCard();
     if (!isPlaying) break;
+    sessionPlayed++;
 
-    // ¿Terminó la vuelta? → Parar
-    if (isEndOfCycle()) {
+    if (sessionPlayed >= limit) {
       finishCycle();
       break;
     }
-
     goNext();
     renderCard();
   }
@@ -251,7 +256,6 @@ btnPlay.addEventListener("click", () => {
   if (isPlaying) {
     stopAll();
   } else {
-    // Si ya había terminado la vuelta, reiniciar
     if (cycleCompleted) resetCycle();
     isPlaying = true;
     btnPlay.textContent = "⏸";
@@ -327,6 +331,14 @@ pauseInput.addEventListener("input", () => {
   saveSettings();
 });
 
+limitSelect.addEventListener("change", () => {
+  const wasPlaying = isPlaying;
+  sessionLimit = limitSelect.value === "all" ? "all" : parseInt(limitSelect.value, 10);
+  saveSettings();
+  if (wasPlaying) stopAll();
+  resetCycle();
+});
+
 function stopAll() {
   isPlaying = false;
   player.pause();
@@ -344,4 +356,5 @@ speedInput.value = speed;
 speedValue.textContent = speed.toFixed(1) + "x";
 pauseInput.value = pauseSeconds;
 pauseValue.textContent = pauseSeconds + "s";
+limitSelect.value = sessionLimit;
 loadCards();
