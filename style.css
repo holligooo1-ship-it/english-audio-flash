@@ -55,7 +55,6 @@ html, body {
   font-size: 18px;
 }
 
-/* ---------- TOPBAR ACTIONS ---------- */
 .topbar-actions {
   margin-left: auto;
   display: flex;
@@ -133,15 +132,29 @@ html, body {
 .word-es {
   font-size: 20px;
   color: var(--muted);
-  margin-bottom: 32px;
+  margin-bottom: 16px;
   min-height: 26px;
   transition: opacity 0.3s;
 }
 
-.word-en.hidden,
-.word-es.hidden {
-  opacity: 0;
-  visibility: hidden;
+.note {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted);
+  opacity: 0.85;
+  margin-bottom: 24px;
+  padding: 0 12px;
+  line-height: 1.4;
+  min-height: 0;
+}
+
+.note:empty {
+  display: none;
+}
+
+.note::before {
+  content: "💬 ";
+  font-style: normal;
 }
 
 /* ---------- PROGRESS ---------- */
@@ -253,7 +266,6 @@ html, body {
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- SELECT (Tarjetas) ---------- */
 .limit-wrap select {
   flex: 1;
   padding: 8px 30px 8px 12px;
@@ -286,10 +298,170 @@ html, body {
   color: var(--text);
 }
 
+/* ---------- MODAL DEL MAZO ---------- */
+.deck-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.deck-modal.open {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.deck-modal-content {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.deck-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+}
+
+.deck-modal-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.close-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  background: #dc2626;
+  color: white;
+  border-color: #dc2626;
+}
+
+.deck-list {
+  padding: 16px 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.deck-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.deck-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.deck-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.deck-item {
+  background: #020617;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.deck-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.deck-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.deck-item-en {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.deck-item-index {
+  font-size: 11px;
+  color: var(--muted);
+  background: #1f2937;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.deck-item-es {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.deck-item-note {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--muted);
+  opacity: 0.85;
+  padding-left: 4px;
+  line-height: 1.4;
+  border-left: 2px solid var(--accent);
+  padding: 4px 8px;
+  margin-top: 6px;
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 4px;
+}
+
 /* ---------- MOBILE ---------- */
 @media (max-width: 480px) {
   .word-en { font-size: 26px; }
   .word-es { font-size: 17px; }
+  .note { font-size: 12px; }
   .card { padding: 28px 20px; }
   .controls > button { width: 48px; height: 48px; font-size: 18px; }
   .controls > button.primary { width: 64px; height: 64px; font-size: 22px; }
@@ -298,4 +470,7 @@ html, body {
   .pause-wrap label,
   .limit-wrap label { min-width: 60px; font-size: 12px; }
   .limit-wrap select { font-size: 12px; padding: 6px 26px 6px 10px; }
+  .deck-modal-content { max-height: 92vh; }
+  .deck-item-en { font-size: 15px; }
+  .deck-item-es { font-size: 13px; }
 }
