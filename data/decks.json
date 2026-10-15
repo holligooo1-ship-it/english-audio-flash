@@ -6,6 +6,7 @@
       "en": "i'm on my way",
       "es": "voy en camino",
       "audio": "audios/im-on-my-way.mp3",
+      "note": "Se usa cuando estás dirigiéndote a un lugar.",
       "tags": ["frases"]
     },
     {
@@ -13,6 +14,7 @@
       "en": "it doesn't work",
       "es": "no funciona",
       "audio": "audios/it-doesnt-work.mp3",
+      "note": "",
       "tags": ["frases"]
     },
     {
@@ -20,6 +22,7 @@
       "en": "sure",
       "es": "seguro, claro",
       "audio": "audios/sure.mp3",
+      "note": "Respuesta informal para decir \"sí\" o \"claro\".",
       "tags": ["respuestas"]
     },
     {
@@ -27,6 +30,7 @@
       "en": "next time",
       "es": "la próxima vez",
       "audio": "audios/next-time.mp3",
+      "note": "",
       "tags": ["frases"]
     },
     {
@@ -34,13 +38,15 @@
       "en": "take care",
       "es": "cuídate",
       "audio": "audios/take-care.mp3",
+      "note": "Despedida cariñosa, informal.",
       "tags": ["despedidas"]
     },
     {
       "id": 6,
       "en": "hey there",
-      "es": "hola",
+      "es": "buenos días",
       "audio": "audios/hey-there.mp3",
+      "note": "Saludo informal, más relajado que \"hello\".",
       "tags": ["saludos"]
     }
   ]
