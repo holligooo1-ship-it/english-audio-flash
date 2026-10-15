@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v11
-// Diseño profesional + fix botón play/pausa con SVG
+// ENGLISH AUDIO FLASH - v12
+// Fix: pausa real + cambio de modo sin auto-reinicio
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -18,6 +18,10 @@ let cyclePlayed = [];
 let history = [];
 let cycleCompleted = false;
 let sessionPlayed = 0;
+
+// ---------- CONTROL DE GENERACIÓN (para abortar promesas) ----------
+let loopGeneration = 0;
+let pendingResolve = null;
 
 // ---------- PERSISTENCIA ----------
 function loadSettings() {
@@ -68,7 +72,7 @@ const deckList    = document.getElementById("deckList");
 const btnCloseDeck = document.getElementById("btnCloseDeck");
 const deckTitle   = document.getElementById("deckTitle");
 
-// ---------- HELPERS DE PLAY/PAUSA ----------
+// ---------- HELPERS ----------
 function setPlayState(playing) {
   if (playing) {
     btnPlay.classList.add("playing");
@@ -116,18 +120,11 @@ async function loadCards() {
   }
 }
 
-// ---------- BOTONES ----------
 function updateButtons() {
-  directionLabel.textContent = direction === "en-es"
-    ? "EN → ES"
-    : "ES → EN";
-
-  orderLabel.textContent = order === "secuencial"
-    ? "🔁 Secuencial"
-    : "🎲 Aleatorio";
+  directionLabel.textContent = direction === "en-es" ? "EN → ES" : "ES → EN";
+  orderLabel.textContent = order === "secuencial" ? "🔁 Secuencial" : "🎲 Aleatorio";
 }
 
-// ---------- LÍMITE EFECTIVO ----------
 function effectiveLimit() {
   if (cards.length === 0) return 1;
   if (sessionLimit === "all") return cards.length;
@@ -137,18 +134,15 @@ function effectiveLimit() {
 }
 
 function buildSession() {
-  const limit = effectiveLimit();
-  sessionCards = cards.slice(0, limit);
+  sessionCards = cards.slice(0, effectiveLimit());
 }
 
-// ---------- RESET ----------
 function resetCycle() {
   buildSession();
   cyclePlayed = [];
   history = [];
   cycleCompleted = false;
   sessionPlayed = 0;
-
   if (sessionCards.length === 0) return;
 
   if (order === "aleatorio") {
@@ -160,11 +154,9 @@ function resetCycle() {
   renderCard();
 }
 
-// ---------- ALEATORIO SIN REPETICIÓN ----------
 function pickNextRandom() {
   const total = sessionCards.length;
   if (cyclePlayed.length >= total) cyclePlayed = [];
-
   const candidates = [];
   for (let i = 0; i < total; i++) {
     if (i === currentIndex) continue;
@@ -182,7 +174,6 @@ function pickNextRandom() {
   return next;
 }
 
-// ---------- SIGUIENTE / ANTERIOR ----------
 function goNext() {
   history.push(currentIndex);
   cycleCompleted = false;
@@ -207,11 +198,12 @@ function goPrev() {
   }
 }
 
-// ---------- FIN DE SESIÓN ----------
 function finishCycle() {
   isPlaying = false;
   cycleCompleted = true;
   player.pause();
+  player.onended = null;
+  player.onerror = null;
   if ("speechSynthesis" in window) speechSynthesis.cancel();
   cardEl.classList.remove("playing");
   setPlayState(false);
@@ -219,11 +211,9 @@ function finishCycle() {
   statusEl.textContent = "✅ Completado";
 }
 
-// ---------- RENDER ----------
 function renderCard() {
   const c = sessionCards[currentIndex];
   if (!c) return;
-
   wordEn.textContent = direction === "en-es" ? c.es : c.en;
   wordEs.textContent = "";
   noteEl.textContent = (c.note || "").trim();
@@ -239,44 +229,48 @@ function renderCard() {
   }
 }
 
-// ---------- REPRODUCIR ----------
-function playCard() {
+// ---------- REPRODUCIR (con generación) ----------
+function playCard(gen) {
   return new Promise((resolve) => {
     const c = sessionCards[currentIndex];
     if (!c) return resolve();
 
+    pendingResolve = resolve;
     cardEl.classList.add("playing");
+
+    const done = () => {
+      if (gen !== loopGeneration) return;   // abortado
+      pendingResolve = null;
+      statusEl.textContent = "⏸ Pausa";
+      statusEl.classList.remove("active");
+      cardEl.classList.remove("playing");
+      setTimeout(() => {
+        if (gen !== loopGeneration) return; // abortado
+        resolve();
+      }, pauseSeconds * 1000);
+    };
 
     if (direction === "en-es") {
       statusEl.textContent = "🔊 Inglés";
       statusEl.classList.add("active");
 
+      player.onended = done;
+      player.onerror = () => {
+        console.warn("Error al reproducir:", c.audio);
+        done();
+      };
       player.src = c.audio;
       player.playbackRate = speed;
       player.currentTime = 0;
-
-      player.onended = () => afterCard(resolve);
-      player.onerror = () => {
-        console.warn("Error al reproducir:", c.audio);
-        afterCard(resolve);
-      };
-      player.play().catch(() => afterCard(resolve));
+      player.play().catch(done);
     } else {
       statusEl.textContent = "🇪🇸 Español";
       statusEl.classList.add("active");
-      speakSpanish(c.es, () => afterCard(resolve));
+      speakSpanish(c.es, done);
     }
   });
 }
 
-function afterCard(resolve) {
-  statusEl.textContent = "⏸ Pausa";
-  statusEl.classList.remove("active");
-  cardEl.classList.remove("playing");
-  setTimeout(() => resolve(), pauseSeconds * 1000);
-}
-
-// ---------- TTS ----------
 function speakSpanish(text, onDone) {
   if (!("speechSynthesis" in window)) {
     onDone && onDone();
@@ -293,9 +287,12 @@ function speakSpanish(text, onDone) {
 
 // ---------- LOOP ----------
 async function loop() {
+  const myGen = ++loopGeneration;
   const limit = sessionCards.length;
-  while (isPlaying) {
-    await playCard();
+
+  while (isPlaying && myGen === loopGeneration) {
+    await playCard(myGen);
+    if (myGen !== loopGeneration) return;  // abortado
     if (!isPlaying) break;
     sessionPlayed++;
 
@@ -365,6 +362,29 @@ deckModal.addEventListener("click", (e) => {
   if (e.target === deckModal) closeDeck();
 });
 
+// ---------- STOP REAL ----------
+function stopAll() {
+  isPlaying = false;
+  loopGeneration++;                       // aborta el loop actual
+
+  player.pause();
+  player.onended = null;
+  player.onerror = null;
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+
+  // Resolver la promesa pendiente (si existe)
+  if (pendingResolve) {
+    const r = pendingResolve;
+    pendingResolve = null;
+    r();
+  }
+
+  cardEl.classList.remove("playing");
+  setPlayState(false);
+  statusEl.classList.remove("active");
+  if (!cycleCompleted) statusEl.textContent = "Pausado";
+}
+
 // ---------- CONTROLES ----------
 btnPlay.addEventListener("click", () => {
   if (sessionCards.length === 0) return;
@@ -380,56 +400,34 @@ btnPlay.addEventListener("click", () => {
 
 btnNext.addEventListener("click", () => {
   if (sessionCards.length === 0) return;
-  const wasPlaying = isPlaying;
   stopAll();
   goNext();
   renderCard();
-  if (wasPlaying) {
-    isPlaying = true;
-    setPlayState(true);
-    loop();
-  }
 });
 
 btnPrev.addEventListener("click", () => {
   if (sessionCards.length === 0) return;
-  const wasPlaying = isPlaying;
   stopAll();
   goPrev();
   renderCard();
-  if (wasPlaying) {
-    isPlaying = true;
-    setPlayState(true);
-    loop();
-  }
 });
 
+// CAMBIO DE DIRECCIÓN → STOP + reset, sin auto-resume
 btnDirection.addEventListener("click", () => {
-  const wasPlaying = isPlaying;
   stopAll();
   direction = direction === "en-es" ? "es-en" : "en-es";
   resetCycle();
   updateButtons();
   saveSettings();
-  if (wasPlaying) {
-    isPlaying = true;
-    setPlayState(true);
-    loop();
-  }
 });
 
+// CAMBIO DE ORDEN → STOP + reset, sin auto-resume
 btnOrder.addEventListener("click", () => {
-  const wasPlaying = isPlaying;
   stopAll();
   order = order === "secuencial" ? "aleatorio" : "secuencial";
   resetCycle();
   updateButtons();
   saveSettings();
-  if (wasPlaying) {
-    isPlaying = true;
-    setPlayState(true);
-    loop();
-  }
 });
 
 speedInput.addEventListener("input", () => {
@@ -446,24 +444,13 @@ pauseInput.addEventListener("input", () => {
 });
 
 limitSelect.addEventListener("change", () => {
-  const wasPlaying = isPlaying;
   sessionLimit = limitSelect.value === "all"
     ? "all"
     : parseInt(limitSelect.value, 10);
   saveSettings();
-  if (wasPlaying) stopAll();
+  stopAll();
   resetCycle();
 });
-
-function stopAll() {
-  isPlaying = false;
-  player.pause();
-  if ("speechSynthesis" in window) speechSynthesis.cancel();
-  cardEl.classList.remove("playing");
-  setPlayState(false);
-  statusEl.classList.remove("active");
-  if (!cycleCompleted) statusEl.textContent = "Pausado";
-}
 
 // ---------- INIT ----------
 loadSettings();
