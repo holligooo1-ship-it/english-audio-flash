@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v10
-// Panel del mazo + notas por tarjeta
+// ENGLISH AUDIO FLASH - v11
+// Diseño profesional + fix botón play/pausa con SVG
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -54,19 +54,34 @@ const btnDirection = document.getElementById("btnDirection");
 const btnOrder     = document.getElementById("btnOrder");
 const btnDeck      = document.getElementById("btnDeck");
 
+const directionLabel = document.getElementById("directionLabel");
+const orderLabel     = document.getElementById("orderLabel");
+
 const speedInput = document.getElementById("speed");
 const speedValue = document.getElementById("speedValue");
 const pauseInput = document.getElementById("pause");
 const pauseValue = document.getElementById("pauseValue");
 const limitSelect = document.getElementById("limit");
 
-// Modal
 const deckModal   = document.getElementById("deckModal");
 const deckList    = document.getElementById("deckList");
 const btnCloseDeck = document.getElementById("btnCloseDeck");
 const deckTitle   = document.getElementById("deckTitle");
 
-// ---------- POBLAR SELECTOR 1-100 ----------
+// ---------- HELPERS DE PLAY/PAUSA ----------
+function setPlayState(playing) {
+  if (playing) {
+    btnPlay.classList.add("playing");
+    btnPlay.setAttribute("aria-label", "Pausar");
+    btnPlay.title = "Pausar";
+  } else {
+    btnPlay.classList.remove("playing");
+    btnPlay.setAttribute("aria-label", "Reproducir");
+    btnPlay.title = "Reproducir";
+  }
+}
+
+// ---------- POBLAR SELECTOR ----------
 function populateLimitOptions() {
   limitSelect.innerHTML = "";
   for (let i = 1; i <= 100; i++) {
@@ -103,11 +118,11 @@ async function loadCards() {
 
 // ---------- BOTONES ----------
 function updateButtons() {
-  btnDirection.textContent = direction === "en-es"
-    ? "EN → ES 🔄"
-    : "ES → EN 🔄";
+  directionLabel.textContent = direction === "en-es"
+    ? "EN → ES"
+    : "ES → EN";
 
-  btnOrder.textContent = order === "secuencial"
+  orderLabel.textContent = order === "secuencial"
     ? "🔁 Secuencial"
     : "🎲 Aleatorio";
 }
@@ -121,7 +136,6 @@ function effectiveLimit() {
   return Math.min(n, cards.length);
 }
 
-// ---------- CONSTRUIR SESIÓN ----------
 function buildSession() {
   const limit = effectiveLimit();
   sessionCards = cards.slice(0, limit);
@@ -143,7 +157,6 @@ function resetCycle() {
     currentIndex = 0;
   }
   cyclePlayed = [currentIndex];
-
   renderCard();
 }
 
@@ -158,14 +171,12 @@ function pickNextRandom() {
     if (cyclePlayed.includes(i)) continue;
     candidates.push(i);
   }
-
   if (candidates.length === 0) {
     for (let i = 0; i < total; i++) {
       if (i !== currentIndex) candidates.push(i);
     }
     if (candidates.length === 0) return currentIndex;
   }
-
   const next = candidates[Math.floor(Math.random() * candidates.length)];
   cyclePlayed.push(next);
   return next;
@@ -203,7 +214,7 @@ function finishCycle() {
   player.pause();
   if ("speechSynthesis" in window) speechSynthesis.cancel();
   cardEl.classList.remove("playing");
-  btnPlay.textContent = "▶";
+  setPlayState(false);
   statusEl.classList.remove("active");
   statusEl.textContent = "✅ Completado";
 }
@@ -215,10 +226,7 @@ function renderCard() {
 
   wordEn.textContent = direction === "en-es" ? c.es : c.en;
   wordEs.textContent = "";
-
-  // Nota
-  const note = (c.note || "").trim();
-  noteEl.textContent = note;
+  noteEl.textContent = (c.note || "").trim();
 
   const limit = sessionCards.length;
   const shown = Math.min(sessionPlayed + 1, limit);
@@ -322,7 +330,6 @@ function buildDeckList() {
     `;
 
     item.addEventListener("click", () => {
-      // Reproduce solo el audio en inglés de esa tarjeta
       if (!c.audio) return;
       player.src = c.audio;
       player.playbackRate = speed;
@@ -345,7 +352,6 @@ function escapeHtml(str) {
 
 function openDeck() {
   deckModal.classList.add("open");
-  // Pausar la reproducción al abrir el mazo
   if (isPlaying) stopAll();
 }
 
@@ -367,7 +373,7 @@ btnPlay.addEventListener("click", () => {
   } else {
     if (cycleCompleted) resetCycle();
     isPlaying = true;
-    btnPlay.textContent = "⏸";
+    setPlayState(true);
     loop();
   }
 });
@@ -380,7 +386,7 @@ btnNext.addEventListener("click", () => {
   renderCard();
   if (wasPlaying) {
     isPlaying = true;
-    btnPlay.textContent = "⏸";
+    setPlayState(true);
     loop();
   }
 });
@@ -393,7 +399,7 @@ btnPrev.addEventListener("click", () => {
   renderCard();
   if (wasPlaying) {
     isPlaying = true;
-    btnPlay.textContent = "⏸";
+    setPlayState(true);
     loop();
   }
 });
@@ -407,7 +413,7 @@ btnDirection.addEventListener("click", () => {
   saveSettings();
   if (wasPlaying) {
     isPlaying = true;
-    btnPlay.textContent = "⏸";
+    setPlayState(true);
     loop();
   }
 });
@@ -421,7 +427,7 @@ btnOrder.addEventListener("click", () => {
   saveSettings();
   if (wasPlaying) {
     isPlaying = true;
-    btnPlay.textContent = "⏸";
+    setPlayState(true);
     loop();
   }
 });
@@ -454,7 +460,7 @@ function stopAll() {
   player.pause();
   if ("speechSynthesis" in window) speechSynthesis.cancel();
   cardEl.classList.remove("playing");
-  btnPlay.textContent = "▶";
+  setPlayState(false);
   statusEl.classList.remove("active");
   if (!cycleCompleted) statusEl.textContent = "Pausado";
 }
@@ -467,4 +473,5 @@ speedInput.value = speed;
 speedValue.textContent = speed.toFixed(1) + "x";
 pauseInput.value = pauseSeconds;
 pauseValue.textContent = pauseSeconds + "s";
+setPlayState(false);
 loadCards();
