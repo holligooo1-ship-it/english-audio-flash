@@ -1,12 +1,12 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v9
-// La sesión usa las PRIMERAS N tarjetas del mazo
+// ENGLISH AUDIO FLASH - v10
+// Panel del mazo + notas por tarjeta
 // ==========================================================
 
 // ---------- ESTADO ----------
-let cards = [];              // todas las tarjetas del mazo
-let sessionCards = [];       // subconjunto de la sesión actual
-let currentIndex = 0;        // índice DENTRO de sessionCards
+let cards = [];
+let sessionCards = [];
+let currentIndex = 0;
 let isPlaying = false;
 let speed = 1;
 let pauseSeconds = 2;
@@ -42,6 +42,7 @@ const player       = document.getElementById("player");
 const statusEl     = document.getElementById("status");
 const wordEn       = document.getElementById("wordEn");
 const wordEs       = document.getElementById("wordEs");
+const noteEl       = document.getElementById("note");
 const counter      = document.getElementById("counter");
 const progressBar  = document.getElementById("progressBar");
 const cardEl       = document.getElementById("card");
@@ -51,12 +52,19 @@ const btnPrev      = document.getElementById("btnPrev");
 const btnNext      = document.getElementById("btnNext");
 const btnDirection = document.getElementById("btnDirection");
 const btnOrder     = document.getElementById("btnOrder");
+const btnDeck      = document.getElementById("btnDeck");
 
 const speedInput = document.getElementById("speed");
 const speedValue = document.getElementById("speedValue");
 const pauseInput = document.getElementById("pause");
 const pauseValue = document.getElementById("pauseValue");
 const limitSelect = document.getElementById("limit");
+
+// Modal
+const deckModal   = document.getElementById("deckModal");
+const deckList    = document.getElementById("deckList");
+const btnCloseDeck = document.getElementById("btnCloseDeck");
+const deckTitle   = document.getElementById("deckTitle");
 
 // ---------- POBLAR SELECTOR 1-100 ----------
 function populateLimitOptions() {
@@ -80,10 +88,12 @@ async function loadCards() {
     const res = await fetch("data/decks.json", { cache: "no-store" });
     const data = await res.json();
     cards = data.cards || [];
+    if (data.deck) deckTitle.textContent = data.deck;
     if (cards.length === 0) {
       statusEl.textContent = "Sin tarjetas";
       return;
     }
+    buildDeckList();
     resetCycle();
   } catch (err) {
     console.error(err);
@@ -112,7 +122,6 @@ function effectiveLimit() {
 }
 
 // ---------- CONSTRUIR SESIÓN ----------
-// Toma las PRIMERAS N tarjetas del mazo.
 function buildSession() {
   const limit = effectiveLimit();
   sessionCards = cards.slice(0, limit);
@@ -121,7 +130,6 @@ function buildSession() {
 // ---------- RESET ----------
 function resetCycle() {
   buildSession();
-
   cyclePlayed = [];
   history = [];
   cycleCompleted = false;
@@ -129,8 +137,6 @@ function resetCycle() {
 
   if (sessionCards.length === 0) return;
 
-  // En aleatorio, empieza por una cualquiera.
-  // En secuencial, empieza por la primera.
   if (order === "aleatorio") {
     currentIndex = Math.floor(Math.random() * sessionCards.length);
   } else {
@@ -141,13 +147,10 @@ function resetCycle() {
   renderCard();
 }
 
-// ---------- ALEATORIO SIN REPETICIÓN (dentro de la sesión) ----------
+// ---------- ALEATORIO SIN REPETICIÓN ----------
 function pickNextRandom() {
   const total = sessionCards.length;
-
-  if (cyclePlayed.length >= total) {
-    cyclePlayed = [];
-  }
+  if (cyclePlayed.length >= total) cyclePlayed = [];
 
   const candidates = [];
   for (let i = 0; i < total; i++) {
@@ -212,6 +215,10 @@ function renderCard() {
 
   wordEn.textContent = direction === "en-es" ? c.es : c.en;
   wordEs.textContent = "";
+
+  // Nota
+  const note = (c.note || "").trim();
+  noteEl.textContent = note;
 
   const limit = sessionCards.length;
   const shown = Math.min(sessionPlayed + 1, limit);
@@ -292,6 +299,65 @@ async function loop() {
     renderCard();
   }
 }
+
+// ---------- PANEL DEL MAZO ----------
+function buildDeckList() {
+  deckList.innerHTML = "";
+  cards.forEach((c, i) => {
+    const item = document.createElement("div");
+    item.className = "deck-item";
+    item.dataset.index = i;
+
+    const noteHtml = c.note && c.note.trim()
+      ? `<div class="deck-item-note">${escapeHtml(c.note)}</div>`
+      : "";
+
+    item.innerHTML = `
+      <div class="deck-item-header">
+        <div class="deck-item-en">${escapeHtml(c.en)}</div>
+        <div class="deck-item-index">#${i + 1}</div>
+      </div>
+      <div class="deck-item-es">${escapeHtml(c.es)}</div>
+      ${noteHtml}
+    `;
+
+    item.addEventListener("click", () => {
+      // Reproduce solo el audio en inglés de esa tarjeta
+      if (!c.audio) return;
+      player.src = c.audio;
+      player.playbackRate = speed;
+      player.currentTime = 0;
+      player.play().catch(() => {});
+    });
+
+    deckList.appendChild(item);
+  });
+}
+
+function escapeHtml(str) {
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function openDeck() {
+  deckModal.classList.add("open");
+  // Pausar la reproducción al abrir el mazo
+  if (isPlaying) stopAll();
+}
+
+function closeDeck() {
+  deckModal.classList.remove("open");
+}
+
+btnDeck.addEventListener("click", openDeck);
+btnCloseDeck.addEventListener("click", closeDeck);
+deckModal.addEventListener("click", (e) => {
+  if (e.target === deckModal) closeDeck();
+});
 
 // ---------- CONTROLES ----------
 btnPlay.addEventListener("click", () => {
