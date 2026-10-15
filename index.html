@@ -18,6 +18,7 @@
     <img src="english memory logo.png" alt="Logo" class="logo">
     <span class="app-name">Audio Flash</span>
     <div class="topbar-actions">
+      <button id="btnDeck" class="toolbar-btn">📖 Mazo</button>
       <button id="btnOrder" class="toolbar-btn">🔁 Secuencial</button>
       <button id="btnDirection" class="toolbar-btn">EN → ES 🔄</button>
     </div>
@@ -28,6 +29,7 @@
       <div class="status" id="status">Cargando…</div>
       <div class="word-en" id="wordEn">—</div>
       <div class="word-es" id="wordEs">—</div>
+      <div class="note" id="note"></div>
       <div class="progress-wrap">
         <div class="progress-bar" id="progressBar"></div>
       </div>
@@ -58,6 +60,17 @@
     </div>
   </footer>
 
+</div>
+
+<!-- PANEL DEL MAZO -->
+<div class="deck-modal" id="deckModal">
+  <div class="deck-modal-content">
+    <div class="deck-modal-header">
+      <h2 id="deckTitle">Mazo completo</h2>
+      <button id="btnCloseDeck" class="close-btn" title="Cerrar">✕</button>
+    </div>
+    <div class="deck-list" id="deckList"></div>
+  </div>
 </div>
 
 <audio id="player"></audio>
