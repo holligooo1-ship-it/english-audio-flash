@@ -3,51 +3,387 @@
   "cards": [
     {
       "id": 1,
-      "en": "i'm on my way",
-      "es": "voy en camino",
+      "en": "I'm on my way",
+      "es": "Voy en camino",
       "audio": "audios/im-on-my-way.mp3",
       "note": "Se usa cuando estás dirigiéndote a un lugar.",
       "tags": ["frases"]
     },
     {
       "id": 2,
-      "en": "it doesn't work",
-      "es": "no funciona",
+      "en": "It doesn't work",
+      "es": "No funciona",
       "audio": "audios/it-doesnt-work.mp3",
       "note": "",
       "tags": ["frases"]
     },
     {
       "id": 3,
-      "en": "sure",
-      "es": "seguro, claro",
+      "en": "Sure",
+      "es": "Seguro, claro",
       "audio": "audios/sure.mp3",
       "note": "Respuesta informal para decir \"sí\" o \"claro\".",
       "tags": ["respuestas"]
     },
     {
       "id": 4,
-      "en": "next time",
-      "es": "la próxima vez",
+      "en": "Next time",
+      "es": "La próxima vez",
       "audio": "audios/next-time.mp3",
       "note": "",
       "tags": ["frases"]
     },
     {
       "id": 5,
-      "en": "take care",
-      "es": "cuídate",
+      "en": "Take care",
+      "es": "Cuídate",
       "audio": "audios/take-care.mp3",
       "note": "Despedida cariñosa, informal.",
       "tags": ["despedidas"]
     },
     {
       "id": 6,
-      "en": "hey there",
-      "es": "hola",
+      "en": "Hey there",
+      "es": "Hola",
       "audio": "audios/hey-there.mp3",
       "note": "Saludo informal, más relajado que \"hello\".",
       "tags": ["saludos"]
+    },
+    {
+      "id": 7,
+      "en": "I suppose so",
+      "es": "Supongo que sí",
+      "audio": "audios/i-suppose-so.mp3",
+      "note": "Se usa cuando aceptas algo con algo de duda.",
+      "tags": ["respuestas"]
+    },
+    {
+      "id": 8,
+      "en": "How wonderful",
+      "es": "¡Qué maravilloso!",
+      "audio": "audios/how-wonderful.mp3",
+      "note": "Exclamación para mostrar alegría o admiración.",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 9,
+      "en": "I'm so happy for you",
+      "es": "Me alegro mucho por ti",
+      "audio": "audios/im-so-happy-for-you.mp3",
+      "note": "Se dice cuando alguien recibe una buena noticia.",
+      "tags": ["emociones"]
+    },
+    {
+      "id": 10,
+      "en": "Maybe another time",
+      "es": "Quizás en otro momento",
+      "audio": "audios/maybe-another-time.mp3",
+      "note": "Forma amable de rechazar una invitación.",
+      "tags": ["frases"]
+    },
+    {
+      "id": 11,
+      "en": "I should get going",
+      "es": "Debería irme",
+      "audio": "audios/i-should-get-going.mp3",
+      "note": "Se usa para despedirse sin sonar brusco.",
+      "tags": ["despedidas"]
+    },
+    {
+      "id": 12,
+      "en": "Just a moment",
+      "es": "Solo un momento",
+      "audio": "audios/just-a-moment.mp3",
+      "note": "Pide una pequeña espera.",
+      "tags": ["frases"]
+    },
+    {
+      "id": 13,
+      "en": "Let's have a look",
+      "es": "Echemos un vistazo",
+      "audio": "audios/lets-have-a-look.mp3",
+      "note": "",
+      "tags": ["frases"]
+    },
+    {
+      "id": 14,
+      "en": "It takes time",
+      "es": "Toma tiempo",
+      "audio": "audios/it-takes-time.mp3",
+      "note": "Se dice cuando algo requiere paciencia.",
+      "tags": ["frases"]
+    },
+    {
+      "id": 15,
+      "en": "Catch you later",
+      "es": "Te veo luego",
+      "audio": "audios/catch-you-later.mp3",
+      "note": "Despedida muy informal, típica entre amigos.",
+      "tags": ["despedidas"]
+    },
+    {
+      "id": 16,
+      "en": "Look who's talking",
+      "es": "Mira quién habla",
+      "audio": "audios/look-whos-talking.mp3",
+      "note": "Se dice a alguien que critica algo que él mismo hace.",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 17,
+      "en": "Keep the change",
+      "es": "Quédate con el cambio",
+      "audio": "audios/keep-the-change.mp3",
+      "note": "Se dice al pagar, dejando propina.",
+      "tags": ["cortesía"]
+    },
+    {
+      "id": 18,
+      "en": "Sweet dreams",
+      "es": "Dulces sueños",
+      "audio": "audios/sweet-dreams.mp3",
+      "note": "Se dice antes de dormir.",
+      "tags": ["despedidas"]
+    },
+    {
+      "id": 19,
+      "en": "I don't mind",
+      "es": "No me importa, no me molesta",
+      "audio": "audios/i-dont-mind.mp3",
+      "note": "Indica que algo te es indiferente.",
+      "tags": ["respuestas"]
+    },
+    {
+      "id": 20,
+      "en": "Speak for yourself",
+      "es": "Habla por ti mismo",
+      "audio": "audios/speak-for-yourself.mp3",
+      "note": "Se usa cuando alguien habla como si todos pensaran igual.",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 21,
+      "en": "I appreciate that",
+      "es": "Te lo agradezco",
+      "audio": "audios/i-appreciate-that.mp3",
+      "note": "Agradecimiento más formal que \"thank you\".",
+      "tags": ["cortesía"]
+    },
+    {
+      "id": 22,
+      "en": "Not at all",
+      "es": "Para nada",
+      "audio": "audios/not-at-all.mp3",
+      "note": "Respuesta cortés cuando te dan las gracias.",
+      "tags": ["respuestas"]
+    },
+    {
+      "id": 23,
+      "en": "I'm in a hurry",
+      "es": "Tengo prisa",
+      "audio": "audios/im-in-a-hurry.mp3",
+      "note": "",
+      "tags": ["frases"]
+    },
+    {
+      "id": 24,
+      "en": "That's enough",
+      "es": "Es suficiente, ya basta",
+      "audio": "audios/thats-enough.mp3",
+      "note": "Se usa para cortar algo que ya se pasó de límite.",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 25,
+      "en": "Thanks for having me over",
+      "es": "Gracias por invitarme",
+      "audio": "audios/thanks-for-having-me-over.mp3",
+      "note": "Se dice al salir de casa de alguien.",
+      "tags": ["cortesía"]
+    },
+    {
+      "id": 26,
+      "en": "I'll be with you in a moment",
+      "es": "Estaré contigo en un momento",
+      "audio": "audios/ill-be-with-you-in-a-moment.mp3",
+      "note": "Forma educada de pedir que esperen.",
+      "tags": ["frases"]
+    },
+    {
+      "id": 27,
+      "en": "How does that sound?",
+      "es": "¿Qué te parece?",
+      "audio": "audios/how-does-that-sound.mp3",
+      "note": "Se usa para pedir opinión sobre una propuesta.",
+      "tags": ["frases"]
+    },
+    {
+      "id": 28,
+      "en": "Anytime",
+      "es": "Cuando quieras",
+      "audio": "audios/anytime.mp3",
+      "note": "Respuesta cordial cuando alguien te agradece.",
+      "tags": ["cortesía"]
+    },
+    {
+      "id": 29,
+      "en": "Got it",
+      "es": "Entendido",
+      "audio": "audios/got-it.mp3",
+      "note": "Confirmación informal de que entendiste.",
+      "tags": ["respuestas"]
+    },
+    {
+      "id": 30,
+      "en": "Easy",
+      "es": "Despacio, tranquilo",
+      "audio": "audios/easy.mp3",
+      "note": "Se dice para calmar a alguien.",
+      "tags": ["coloquial"]
+    },
+    {
+      "id": 31,
+      "en": "That does it",
+      "es": "Se acabó",
+      "audio": "audios/that-does-it.mp3",
+      "note": "Se dice cuando algo llega a su límite.",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 32,
+      "en": "Will do",
+      "es": "Lo haré",
+      "audio": "audios/will-do.mp3",
+      "note": "Respuesta breve para aceptar una tarea.",
+      "tags": ["respuestas"]
+    },
+    {
+      "id": 33,
+      "en": "Holy cow",
+      "es": "¡Santo cielo!",
+      "audio": "audios/holy-cow.mp3",
+      "note": "Exclamación de sorpresa, informal.",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 34,
+      "en": "Try it",
+      "es": "Inténtalo",
+      "audio": "audios/try-it.mp3",
+      "note": "",
+      "tags": ["frases"]
+    },
+    {
+      "id": 35,
+      "en": "Knock it off",
+      "es": "Ya basta, para",
+      "audio": "audios/knock-it-off.mp3",
+      "note": "Se dice para que alguien deje de molestar.",
+      "tags": ["coloquial"]
+    },
+    {
+      "id": 36,
+      "en": "No comment",
+      "es": "Sin comentarios",
+      "audio": "audios/no-comment.mp3",
+      "note": "Se usa para no opinar sobre algo.",
+      "tags": ["respuestas"]
+    },
+    {
+      "id": 37,
+      "en": "Don't mind if I do",
+      "es": "Si no te importa",
+      "audio": "audios/dont-mind-if-i-do.mp3",
+      "note": "Se dice al aceptar algo con educación.",
+      "tags": ["cortesía"]
+    },
+    {
+      "id": 38,
+      "en": "Probably not",
+      "es": "Probablemente no",
+      "audio": "audios/probably-not.mp3",
+      "note": "",
+      "tags": ["respuestas"]
+    },
+    {
+      "id": 39,
+      "en": "Watch your mouth",
+      "es": "Cuida tu lenguaje",
+      "audio": "audios/watch-your-mouth.mp3",
+      "note": "Se dice a alguien que habla groseramente.",
+      "tags": ["coloquial"]
+    },
+    {
+      "id": 40,
+      "en": "What else is new?",
+      "es": "¿Cuál es la novedad?",
+      "audio": "audios/what-else-is-new.mp3",
+      "note": "Se puede usar irónicamente cuando algo es predecible.",
+      "tags": ["coloquial"]
+    },
+    {
+      "id": 41,
+      "en": "I'm off",
+      "es": "Me voy",
+      "audio": "audios/im-off.mp3",
+      "note": "Despedida breve.",
+      "tags": ["despedidas"]
+    },
+    {
+      "id": 42,
+      "en": "My treat",
+      "es": "Yo invito",
+      "audio": "audios/my-treat.mp3",
+      "note": "Se dice cuando vas a pagar tú.",
+      "tags": ["cortesía"]
+    },
+    {
+      "id": 43,
+      "en": "Butt out",
+      "es": "No te metas",
+      "audio": "audios/butt-out.mp3",
+      "note": "Informal, un poco agresivo. Se dice a quien se entromete.",
+      "tags": ["coloquial"]
+    },
+    {
+      "id": 44,
+      "en": "Have a heart",
+      "es": "Ten corazón",
+      "audio": "audios/have-a-heart.mp3",
+      "note": "Se pide compasión o consideración.",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 45,
+      "en": "I'm with you",
+      "es": "Estoy de acuerdo contigo",
+      "audio": "audios/im-with-you.mp3",
+      "note": "Muestra apoyo o acuerdo.",
+      "tags": ["respuestas"]
+    },
+    {
+      "id": 46,
+      "en": "I can't argue with that",
+      "es": "No puedo discutirte eso",
+      "audio": "audios/i-cant-argue-with-that.mp3",
+      "note": "Se acepta que la otra persona tiene razón.",
+      "tags": ["respuestas"]
+    },
+    {
+      "id": 47,
+      "en": "Out with it",
+      "es": "Suéltalo ya",
+      "audio": "audios/out-with-it.mp3",
+      "note": "Se pide que alguien diga lo que piensa sin rodeos.",
+      "tags": ["coloquial"]
+    },
+    {
+      "id": 48,
+      "en": "Don't bother",
+      "es": "No te molestes",
+      "audio": "audios/dont-bother.mp3",
+      "note": "Se usa para decir que no hace falta esfuerzo.",
+      "tags": ["cortesía"]
     }
   ]
 }
