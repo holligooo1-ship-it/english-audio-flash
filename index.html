@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>English Audio Flash</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0f172a">
+<meta name="theme-color" content="#0a0f1e">
 <link rel="icon" type="image/png" href="Icono 192.png">
 <link rel="apple-touch-icon" href="Icono 192.png">
 <link rel="stylesheet" href="style.css">
@@ -15,12 +15,29 @@
 <div class="app">
 
   <header class="topbar">
-    <img src="english memory logo.png" alt="Logo" class="logo">
-    <span class="app-name">Audio Flash</span>
+    <div class="topbar-brand">
+      <img src="english memory logo.png" alt="Logo" class="logo">
+      <span class="app-name">Audio Flash</span>
+    </div>
     <div class="topbar-actions">
-      <button id="btnDeck" class="toolbar-btn">📖 Mazo</button>
-      <button id="btnOrder" class="toolbar-btn">🔁 Secuencial</button>
-      <button id="btnDirection" class="toolbar-btn">EN → ES 🔄</button>
+      <button id="btnDeck" class="toolbar-btn" title="Ver mazo completo">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+        <span class="btn-label">Mazo</span>
+      </button>
+      <button id="btnOrder" class="toolbar-btn" title="Cambiar orden">
+        <span class="btn-label" id="orderLabel">🔁 Secuencial</span>
+      </button>
+      <button id="btnDirection" class="toolbar-btn" title="Cambiar dirección">
+        <span class="btn-label" id="directionLabel">EN → ES</span>
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 16l-4-4 4-4"/>
+          <path d="M3 12h18"/>
+          <path d="M17 8l4 4-4 4"/>
+        </svg>
+      </button>
     </div>
   </header>
 
@@ -38,9 +55,27 @@
   </main>
 
   <footer class="controls">
-    <button id="btnPrev" title="Anterior">⏮</button>
-    <button id="btnPlay" class="primary" title="Play/Pausa">▶</button>
-    <button id="btnNext" title="Siguiente">⏭</button>
+    <button id="btnPrev" class="ctrl-btn" title="Anterior" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 6h2v12H6zM20 6v12l-8.5-6z"/>
+      </svg>
+    </button>
+
+    <button id="btnPlay" class="ctrl-btn primary" title="Reproducir" aria-label="Reproducir">
+      <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="6" y="5" width="4" height="14" rx="1"/>
+        <rect x="14" y="5" width="4" height="14" rx="1"/>
+      </svg>
+    </button>
+
+    <button id="btnNext" class="ctrl-btn" title="Siguiente" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16 6h2v12h-2zM4 6v12l8.5-6z"/>
+      </svg>
+    </button>
 
     <div class="speed-wrap">
       <label for="speed">Velocidad</label>
@@ -67,7 +102,7 @@
   <div class="deck-modal-content">
     <div class="deck-modal-header">
       <h2 id="deckTitle">Mazo completo</h2>
-      <button id="btnCloseDeck" class="close-btn" title="Cerrar">✕</button>
+      <button id="btnCloseDeck" class="close-btn" title="Cerrar" aria-label="Cerrar">✕</button>
     </div>
     <div class="deck-list" id="deckList"></div>
   </div>
