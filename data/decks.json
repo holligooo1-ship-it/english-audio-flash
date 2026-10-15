@@ -44,7 +44,7 @@
     {
       "id": 6,
       "en": "hey there",
-      "es": "buenos días",
+      "es": "hola",
       "audio": "audios/hey-there.mp3",
       "note": "Saludo informal, más relajado que \"hello\".",
       "tags": ["saludos"]
