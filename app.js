@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v12
-// Fix: pausa real + cambio de modo sin auto-reinicio
+// ENGLISH AUDIO FLASH - v13
+// Lucide icons + status dinámicos con iconos
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -19,9 +19,16 @@ let history = [];
 let cycleCompleted = false;
 let sessionPlayed = 0;
 
-// ---------- CONTROL DE GENERACIÓN (para abortar promesas) ----------
+// ---------- CONTROL DE GENERACIÓN ----------
 let loopGeneration = 0;
 let pendingResolve = null;
+
+// ---------- HELPERS LUCIDE ----------
+function refreshIcons() {
+  if (window.lucide && typeof window.lucide.createIcons === "function") {
+    window.lucide.createIcons();
+  }
+}
 
 // ---------- PERSISTENCIA ----------
 function loadSettings() {
@@ -85,6 +92,15 @@ function setPlayState(playing) {
   }
 }
 
+function setStatus(text, icon) {
+  if (icon) {
+    statusEl.innerHTML = `<i data-lucide="${icon}"></i><span>${text}</span>`;
+    refreshIcons();
+  } else {
+    statusEl.textContent = text;
+  }
+}
+
 // ---------- POBLAR SELECTOR ----------
 function populateLimitOptions() {
   limitSelect.innerHTML = "";
@@ -109,22 +125,39 @@ async function loadCards() {
     cards = data.cards || [];
     if (data.deck) deckTitle.textContent = data.deck;
     if (cards.length === 0) {
-      statusEl.textContent = "Sin tarjetas";
+      setStatus("Sin tarjetas", "alert-circle");
       return;
     }
     buildDeckList();
     resetCycle();
   } catch (err) {
     console.error(err);
-    statusEl.textContent = "Error al cargar datos";
+    setStatus("Error al cargar", "alert-circle");
   }
 }
 
+// ---------- ACTUALIZAR BOTONES ----------
 function updateButtons() {
+  // Direction label
   directionLabel.textContent = direction === "en-es" ? "EN → ES" : "ES → EN";
-  orderLabel.textContent = order === "secuencial" ? "🔁 Secuencial" : "🎲 Aleatorio";
+
+  // Order: icono + texto cambian juntos
+  const iconName = order === "secuencial" ? "repeat" : "dices";
+  const labelText = order === "secuencial" ? "Secuencial" : "Aleatorio";
+
+  orderLabel.textContent = labelText;
+
+  // Reemplazar el icono
+  const oldIcon = btnOrder.querySelector("svg, i[data-lucide]");
+  if (oldIcon) oldIcon.remove();
+  const newIcon = document.createElement("i");
+  newIcon.setAttribute("data-lucide", iconName);
+  btnOrder.insertBefore(newIcon, orderLabel);
+
+  refreshIcons();
 }
 
+// ---------- LÍMITE ----------
 function effectiveLimit() {
   if (cards.length === 0) return 1;
   if (sessionLimit === "all") return cards.length;
@@ -154,6 +187,7 @@ function resetCycle() {
   renderCard();
 }
 
+// ---------- ALEATORIO ----------
 function pickNextRandom() {
   const total = sessionCards.length;
   if (cyclePlayed.length >= total) cyclePlayed = [];
@@ -208,7 +242,7 @@ function finishCycle() {
   cardEl.classList.remove("playing");
   setPlayState(false);
   statusEl.classList.remove("active");
-  statusEl.textContent = "✅ Completado";
+  setStatus("Completado", "check-circle");
 }
 
 function renderCard() {
@@ -216,7 +250,14 @@ function renderCard() {
   if (!c) return;
   wordEn.textContent = direction === "en-es" ? c.es : c.en;
   wordEs.textContent = "";
-  noteEl.textContent = (c.note || "").trim();
+
+  const note = (c.note || "").trim();
+  if (note) {
+    noteEl.innerHTML = `<i data-lucide="message-circle"></i><span>${escapeHtml(note)}</span>`;
+    refreshIcons();
+  } else {
+    noteEl.innerHTML = "";
+  }
 
   const limit = sessionCards.length;
   const shown = Math.min(sessionPlayed + 1, limit);
@@ -224,12 +265,12 @@ function renderCard() {
   progressBar.style.width = (shown / limit) * 100 + "%";
 
   if (!cycleCompleted) {
-    statusEl.textContent = "Listo";
+    setStatus("Listo", null);
     statusEl.classList.remove("active");
   }
 }
 
-// ---------- REPRODUCIR (con generación) ----------
+// ---------- REPRODUCIR ----------
 function playCard(gen) {
   return new Promise((resolve) => {
     const c = sessionCards[currentIndex];
@@ -239,19 +280,19 @@ function playCard(gen) {
     cardEl.classList.add("playing");
 
     const done = () => {
-      if (gen !== loopGeneration) return;   // abortado
+      if (gen !== loopGeneration) return;
       pendingResolve = null;
-      statusEl.textContent = "⏸ Pausa";
+      setStatus("Pausa", "pause");
       statusEl.classList.remove("active");
       cardEl.classList.remove("playing");
       setTimeout(() => {
-        if (gen !== loopGeneration) return; // abortado
+        if (gen !== loopGeneration) return;
         resolve();
       }, pauseSeconds * 1000);
     };
 
     if (direction === "en-es") {
-      statusEl.textContent = "🔊 Inglés";
+      setStatus("Inglés", "volume-2");
       statusEl.classList.add("active");
 
       player.onended = done;
@@ -264,7 +305,7 @@ function playCard(gen) {
       player.currentTime = 0;
       player.play().catch(done);
     } else {
-      statusEl.textContent = "🇪🇸 Español";
+      setStatus("Español", "languages");
       statusEl.classList.add("active");
       speakSpanish(c.es, done);
     }
@@ -285,14 +326,13 @@ function speakSpanish(text, onDone) {
   speechSynthesis.speak(u);
 }
 
-// ---------- LOOP ----------
 async function loop() {
   const myGen = ++loopGeneration;
   const limit = sessionCards.length;
 
   while (isPlaying && myGen === loopGeneration) {
     await playCard(myGen);
-    if (myGen !== loopGeneration) return;  // abortado
+    if (myGen !== loopGeneration) return;
     if (!isPlaying) break;
     sessionPlayed++;
 
@@ -311,7 +351,6 @@ function buildDeckList() {
   cards.forEach((c, i) => {
     const item = document.createElement("div");
     item.className = "deck-item";
-    item.dataset.index = i;
 
     const noteHtml = c.note && c.note.trim()
       ? `<div class="deck-item-note">${escapeHtml(c.note)}</div>`
@@ -336,6 +375,7 @@ function buildDeckList() {
 
     deckList.appendChild(item);
   });
+  refreshIcons();
 }
 
 function escapeHtml(str) {
@@ -362,17 +402,15 @@ deckModal.addEventListener("click", (e) => {
   if (e.target === deckModal) closeDeck();
 });
 
-// ---------- STOP REAL ----------
+// ---------- STOP ----------
 function stopAll() {
   isPlaying = false;
-  loopGeneration++;                       // aborta el loop actual
-
+  loopGeneration++;
   player.pause();
   player.onended = null;
   player.onerror = null;
   if ("speechSynthesis" in window) speechSynthesis.cancel();
 
-  // Resolver la promesa pendiente (si existe)
   if (pendingResolve) {
     const r = pendingResolve;
     pendingResolve = null;
@@ -382,7 +420,7 @@ function stopAll() {
   cardEl.classList.remove("playing");
   setPlayState(false);
   statusEl.classList.remove("active");
-  if (!cycleCompleted) statusEl.textContent = "Pausado";
+  if (!cycleCompleted) setStatus("Pausado", "pause");
 }
 
 // ---------- CONTROLES ----------
@@ -412,7 +450,6 @@ btnPrev.addEventListener("click", () => {
   renderCard();
 });
 
-// CAMBIO DE DIRECCIÓN → STOP + reset, sin auto-resume
 btnDirection.addEventListener("click", () => {
   stopAll();
   direction = direction === "en-es" ? "es-en" : "en-es";
@@ -421,7 +458,6 @@ btnDirection.addEventListener("click", () => {
   saveSettings();
 });
 
-// CAMBIO DE ORDEN → STOP + reset, sin auto-resume
 btnOrder.addEventListener("click", () => {
   stopAll();
   order = order === "secuencial" ? "aleatorio" : "secuencial";
@@ -462,3 +498,4 @@ pauseInput.value = pauseSeconds;
 pauseValue.textContent = pauseSeconds + "s";
 setPlayState(false);
 loadCards();
+refreshIcons();
