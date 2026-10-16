@@ -4,7 +4,7 @@
       "id": "frases",
       "name": "100 Frases Que Realmente Usarás en Conversaciones Diarias",
       "short": "100 Frases",
-      "description": "Frases cotidianas con audio en inglés",
+      "description": "Frases cotidianas ",
       "file": "data/frases.json",
       "color": "frases",
       "icon": "message-square-quote"
