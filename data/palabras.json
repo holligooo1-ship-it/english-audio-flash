@@ -3,66 +3,138 @@
   "cards": [
     {
       "id": 1,
-      "en": "to be",
-      "es": "ser / estar",
-      "note": "El verbo más importante del inglés.",
-      "tags": ["verbos"]
+      "en": "Coaster",
+      "es": "Posavasos",
+      "example_en": "Put the glass on the coaster.",
+      "example_es": "Pon el vaso sobre el posavasos.",
+      "note": "",
+      "tags": ["sustantivos"]
     },
     {
       "id": 2,
-      "en": "to have",
-      "es": "tener",
+      "en": "As",
+      "es": "Como",
+      "example_en": "She works as a teacher.",
+      "example_es": "Ella trabaja como profesora.",
       "note": "",
-      "tags": ["verbos"]
+      "tags": ["conjunciones"]
     },
     {
       "id": 3,
-      "en": "to do",
-      "es": "hacer",
-      "note": "También se usa como auxiliar.",
+      "en": "Guess",
+      "es": "Adivinar",
+      "example_en": "Can you guess my age?",
+      "example_es": "¿Puedes adivinar mi edad?",
+      "note": "",
       "tags": ["verbos"]
     },
     {
       "id": 4,
-      "en": "I",
-      "es": "yo",
+      "en": "Cotton",
+      "es": "Algodón",
+      "example_en": "This shirt is made of cotton.",
+      "example_es": "Esta camisa está hecha de algodón.",
       "note": "",
-      "tags": ["sujetos"]
+      "tags": ["sustantivos"]
     },
     {
       "id": 5,
-      "en": "you",
-      "es": "tú / ustedes",
-      "note": "Sirve para singular y plural.",
-      "tags": ["sujetos"]
+      "en": "Effort",
+      "es": "Esfuerzo",
+      "example_en": "Learning English takes effort.",
+      "example_es": "Aprender inglés requiere esfuerzo.",
+      "note": "",
+      "tags": ["sustantivos"]
     },
     {
       "id": 6,
-      "en": "he",
-      "es": "él",
+      "en": "Avoid",
+      "es": "Evitar",
+      "example_en": "I want to avoid problems.",
+      "example_es": "Quiero evitar problemas.",
       "note": "",
-      "tags": ["sujetos"]
+      "tags": ["verbos"]
     },
     {
       "id": 7,
-      "en": "she",
-      "es": "ella",
+      "en": "Freedom",
+      "es": "Libertad",
+      "example_en": "Freedom is very important.",
+      "example_es": "La libertad es muy importante.",
       "note": "",
-      "tags": ["sujetos"]
+      "tags": ["sustantivos"]
     },
     {
       "id": 8,
-      "en": "we",
-      "es": "nosotros",
+      "en": "Fear",
+      "es": "Miedo",
+      "example_en": "He has a fear of heights.",
+      "example_es": "Él tiene miedo a las alturas.",
       "note": "",
-      "tags": ["sujetos"]
+      "tags": ["sustantivos"]
     },
     {
       "id": 9,
-      "en": "they",
-      "es": "ellos / ellas",
+      "en": "Stall",
+      "es": "Estancarse",
+      "example_en": "The car might stall.",
+      "example_es": "El carro podría estancarse.",
       "note": "",
-      "tags": ["sujetos"]
+      "tags": ["verbos"]
+    },
+    {
+      "id": 10,
+      "en": "Hope",
+      "es": "Esperanza",
+      "example_en": "I hope you feel better.",
+      "example_es": "Espero que te sientas mejor.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 11,
+      "en": "If",
+      "es": "Si",
+      "example_en": "If it rains, we stay home.",
+      "example_es": "Si llueve, nos quedamos en casa.",
+      "note": "",
+      "tags": ["conjunciones"]
+    },
+    {
+      "id": 12,
+      "en": "Hardship",
+      "es": "Dificultad",
+      "example_en": "She overcame many hardships.",
+      "example_es": "Ella superó muchas dificultades.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 13,
+      "en": "Left",
+      "es": "Izquierda",
+      "example_en": "Turn left at the corner.",
+      "example_es": "Gira a la izquierda en la esquina.",
+      "note": "",
+      "tags": ["direcciones"]
+    },
+    {
+      "id": 14,
+      "en": "Empty",
+      "es": "Vacío",
+      "example_en": "The bottle is empty.",
+      "example_es": "La botella está vacía.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 15,
+      "en": "Rule",
+      "es": "Regla",
+      "example_en": "Follow the rules of the game.",
+      "example_es": "Sigue las reglas del juego.",
+      "note": "",
+      "tags": ["sustantivos"]
     }
   ]
 }
