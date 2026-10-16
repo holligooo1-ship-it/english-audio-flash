@@ -51,7 +51,6 @@ svg.lucide {
 .ctrl-btn svg.lucide { width: 24px; height: 24px; stroke-width: 2.4; }
 .ctrl-btn.primary svg.lucide { width: 30px; height: 30px; stroke-width: 2.6; }
 .status svg.lucide { width: 14px; height: 14px; stroke-width: 2.5; }
-.note svg.lucide { width: 13px; height: 13px; stroke-width: 2.2; margin-right: 2px; vertical-align: -2px; }
 .close-btn svg.lucide { width: 16px; height: 16px; }
 
 .app-name,
@@ -430,9 +429,9 @@ svg.lucide {
 /* ---------- EXAMPLE ---------- */
 .example {
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
-  gap: 2px;
+  justify-content: flex-start;
+  gap: 8px;
   font-size: 13px;
   color: var(--text-dim);
   line-height: 1.5;
@@ -447,16 +446,27 @@ svg.lucide {
 
 .example:empty { display: none; }
 
+.example svg.lucide {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2.2;
+  color: var(--accent);
+  margin-top: 3px;
+}
+
+.example .ex-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
 .example .ex-en {
   font-style: italic;
   color: var(--text-dim);
   font-weight: 600;
-}
-
-.example .ex-en::before {
-  content: "📝 ";
-  font-style: normal;
-  margin-right: 2px;
+  word-break: break-word;
 }
 
 .example .ex-es {
@@ -464,13 +474,14 @@ svg.lucide {
   color: var(--muted);
   font-style: italic;
   opacity: 0.9;
+  word-break: break-word;
 }
 
 .note {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: 4px;
+  gap: 6px;
   font-size: 12.5px;
   color: var(--muted);
   font-style: italic;
@@ -481,6 +492,20 @@ svg.lucide {
 }
 
 .note:empty { display: none; }
+
+.note svg.lucide {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2.2;
+  color: var(--accent-2);
+  margin-top: 3px;
+}
+
+.note span {
+  flex: 1;
+  text-align: left;
+  min-width: 0;
+}
 
 /* ---------- PROGRESS ---------- */
 .progress-wrap {
@@ -823,15 +848,42 @@ svg.lucide {
 }
 
 .deck-item-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
   font-size: 12px;
   font-style: italic;
   color: var(--muted-2);
   line-height: 1.5;
   padding: 6px 10px;
-  margin-top: 8px;
+  margin-top: 6px;
   background: rgba(139, 92, 246, 0.08);
   border-left: 2px solid var(--accent-2);
   border-radius: 0 6px 6px 0;
+}
+
+.deck-item-note svg.lucide {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2.2;
+  color: var(--accent-2);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.deck-item-note span {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.deck-item-note.example-note {
+  background: rgba(236, 72, 153, 0.08);
+  border-left-color: var(--accent);
+}
+
+.deck-item-note.example-note svg.lucide {
+  color: var(--accent);
 }
 
 .deck-item-tags {
