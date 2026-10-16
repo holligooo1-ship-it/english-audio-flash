@@ -22,22 +22,16 @@
     </div>
     <div class="topbar-actions">
       <button id="btnDeck" class="toolbar-btn" title="Ver mazo completo">
-        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-        </svg>
+        <i data-lucide="book-open"></i>
         <span class="btn-label">Mazo</span>
       </button>
       <button id="btnOrder" class="toolbar-btn" title="Cambiar orden">
-        <span class="btn-label" id="orderLabel">🔁 Secuencial</span>
+        <i data-lucide="repeat"></i>
+        <span class="btn-label" id="orderLabel">Secuencial</span>
       </button>
       <button id="btnDirection" class="toolbar-btn" title="Cambiar dirección">
+        <i data-lucide="arrow-right-left"></i>
         <span class="btn-label" id="directionLabel">EN → ES</span>
-        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M7 16l-4-4 4-4"/>
-          <path d="M3 12h18"/>
-          <path d="M17 8l4 4-4 4"/>
-        </svg>
       </button>
     </div>
   </header>
@@ -57,25 +51,16 @@
 
   <footer class="controls">
     <button id="btnPrev" class="ctrl-btn" title="Anterior" aria-label="Anterior">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M6 6h2v12H6zM20 6v12l-8.5-6z"/>
-      </svg>
+      <i data-lucide="skip-back"></i>
     </button>
 
     <button id="btnPlay" class="ctrl-btn primary" title="Reproducir" aria-label="Reproducir">
-      <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M8 5v14l11-7z"/>
-      </svg>
-      <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor">
-        <rect x="6" y="5" width="4" height="14" rx="1"/>
-        <rect x="14" y="5" width="4" height="14" rx="1"/>
-      </svg>
+      <i data-lucide="play" class="icon-play"></i>
+      <i data-lucide="pause" class="icon-pause"></i>
     </button>
 
     <button id="btnNext" class="ctrl-btn" title="Siguiente" aria-label="Siguiente">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M16 6h2v12h-2zM4 6v12l8.5-6z"/>
-      </svg>
+      <i data-lucide="skip-forward"></i>
     </button>
 
     <div class="speed-wrap">
@@ -103,7 +88,9 @@
   <div class="deck-modal-content">
     <div class="deck-modal-header">
       <h2 id="deckTitle">Mazo completo</h2>
-      <button id="btnCloseDeck" class="close-btn" title="Cerrar" aria-label="Cerrar">✕</button>
+      <button id="btnCloseDeck" class="close-btn" title="Cerrar" aria-label="Cerrar">
+        <i data-lucide="x"></i>
+      </button>
     </div>
     <div class="deck-list" id="deckList"></div>
   </div>
@@ -111,6 +98,7 @@
 
 <audio id="player"></audio>
 
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script src="app.js"></script>
 
 </body>
