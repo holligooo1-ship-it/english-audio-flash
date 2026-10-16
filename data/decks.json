@@ -4,10 +4,11 @@
       "id": "frases",
       "name": "100 Frases Que Realmente Usarás en Conversaciones Diarias",
       "short": "100 Frases",
-      "description": "Frases cotidianas ",
+      "description": "Frases cotidianas con audio en inglés",
       "file": "data/frases.json",
       "color": "frases",
-      "icon": "message-square-quote"
+      "icon": "message-square-quote",
+      "limitMax": 100
     },
     {
       "id": "palabras",
@@ -16,7 +17,8 @@
       "description": "Verbos, sujetos y vocabulario básico",
       "file": "data/palabras.json",
       "color": "palabras",
-      "icon": "type"
+      "icon": "type",
+      "limitMax": 1000
     }
   ]
 }
