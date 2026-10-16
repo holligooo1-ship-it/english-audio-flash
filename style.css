@@ -427,6 +427,45 @@ svg.lucide {
   font-weight: 700;
 }
 
+/* ---------- EXAMPLE ---------- */
+.example {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  min-height: 0;
+  background: rgba(236, 72, 153, 0.06);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  text-align: left;
+}
+
+.example:empty { display: none; }
+
+.example .ex-en {
+  font-style: italic;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.example .ex-en::before {
+  content: "📝 ";
+  font-style: normal;
+  margin-right: 2px;
+}
+
+.example .ex-es {
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  opacity: 0.9;
+}
+
 .note {
   display: flex;
   align-items: flex-start;
@@ -850,6 +889,8 @@ svg.lucide {
   .word-en { font-size: 26px; }
   .word-es { font-size: 16px; }
   .note { font-size: 12px; }
+  .example { font-size: 12px; padding: 8px 10px; }
+  .example .ex-es { font-size: 11px; }
   .card { padding: 30px 20px 24px; border-radius: 22px; }
 
   .ctrl-btn {
