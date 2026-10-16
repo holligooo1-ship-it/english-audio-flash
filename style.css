@@ -26,7 +26,7 @@
 
 html, body {
   height: 100%;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
   background: var(--bg-1);
   color: var(--text);
   overflow: hidden;
@@ -41,6 +41,56 @@ body {
     linear-gradient(180deg, var(--bg-0), var(--bg-1));
 }
 
+/* ---------- ICONOS LUCIDE ---------- */
+svg.lucide {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.2;
+  flex-shrink: 0;
+}
+
+.ctrl-btn svg.lucide {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2.4;
+}
+
+.ctrl-btn.primary svg.lucide {
+  width: 30px;
+  height: 30px;
+  stroke-width: 2.6;
+}
+
+.status svg.lucide {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.5;
+}
+
+.note svg.lucide {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2.2;
+  margin-right: 2px;
+  vertical-align: -2px;
+}
+
+.close-btn svg.lucide {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- FUENTES ---------- */
+.app-name,
+.word-en,
+.toolbar-btn,
+.status,
+.deck-modal-header h2,
+.deck-item-en {
+  font-family: 'Fredoka', 'Nunito', system-ui, sans-serif;
+}
+
+/* ---------- APP ---------- */
 .app {
   display: flex;
   flex-direction: column;
@@ -76,8 +126,8 @@ body {
 }
 
 .app-name {
-  font-weight: 800;
-  letter-spacing: 0.3px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
   background: linear-gradient(90deg, #ec4899, #8b5cf6, #06b6d4);
   -webkit-background-clip: text;
   background-clip: text;
@@ -94,26 +144,25 @@ body {
 .toolbar-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   background: linear-gradient(180deg, var(--card-2), var(--card));
   border: 1px solid var(--border-2);
   color: var(--text);
   padding: 8px 12px;
   border-radius: 12px;
   font-family: inherit;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
   cursor: pointer;
   transition: transform 0.08s ease, box-shadow 0.15s ease;
   white-space: nowrap;
   box-shadow: 0 3px 0 var(--accent-deep), 0 5px 12px rgba(0, 0, 0, 0.35);
 }
 
-.toolbar-btn .btn-icon {
-  width: 13px;
-  height: 13px;
-  flex-shrink: 0;
+.toolbar-btn svg.lucide {
+  width: 14px;
+  height: 14px;
 }
 
 .toolbar-btn:hover {
@@ -162,28 +211,32 @@ body {
 }
 
 .status {
-  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 2.5px;
+  letter-spacing: 2.2px;
   color: var(--muted);
   margin-bottom: 26px;
-  min-height: 14px;
-  font-weight: 700;
+  min-height: 18px;
+  font-weight: 600;
 }
 
 .status.active {
   color: var(--accent);
-  text-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
+  text-shadow: 0 0 12px rgba(236, 72, 153, 0.5);
 }
 
 .word-en {
   font-size: 34px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.25;
   margin-bottom: 14px;
   word-break: break-word;
   color: var(--text);
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
 }
 
 .word-es {
@@ -191,10 +244,14 @@ body {
   color: var(--text-dim);
   margin-bottom: 8px;
   min-height: 24px;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .note {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
   font-size: 12.5px;
   color: var(--muted);
   font-style: italic;
@@ -205,11 +262,6 @@ body {
 }
 
 .note:empty { display: none; }
-
-.note::before {
-  content: "💬 ";
-  font-style: normal;
-}
 
 /* ---------- PROGRESS ---------- */
 .progress-wrap {
@@ -234,7 +286,7 @@ body {
 .counter {
   font-size: 12px;
   color: var(--muted-2);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.5px;
   font-variant-numeric: tabular-nums;
 }
@@ -281,8 +333,6 @@ body {
   box-shadow: 0 4px 0 var(--accent-deep), 0 8px 18px rgba(0, 0, 0, 0.4);
 }
 
-.ctrl-btn svg { width: 22px; height: 22px; }
-
 .ctrl-btn:hover {
   background: linear-gradient(180deg, #4a2b8a, #352066);
   box-shadow: 0 4px 0 var(--accent-deep), 0 10px 22px rgba(139, 92, 246, 0.4);
@@ -304,12 +354,6 @@ body {
     0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
-.ctrl-btn.primary svg {
-  width: 30px;
-  height: 30px;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
-}
-
 .ctrl-btn.primary:hover {
   background: linear-gradient(180deg, #fb7bbf, #e050f5 55%, #b266ff);
   box-shadow:
@@ -328,7 +372,7 @@ body {
 /* Toggle play/pause */
 .ctrl-btn .icon-pause { display: none; }
 .ctrl-btn.playing .icon-play { display: none; }
-.ctrl-btn.playing .icon-pause { display: block; }
+.ctrl-btn.playing .icon-pause { display: inline-block; }
 
 /* ---------- WRAPS ---------- */
 .speed-wrap,
@@ -341,7 +385,7 @@ body {
   max-width: 420px;
   font-size: 12.5px;
   color: var(--muted);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .speed-wrap label,
@@ -365,7 +409,7 @@ body {
   min-width: 44px;
   text-align: right;
   color: var(--text);
-  font-weight: 700;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
   font-size: 12px;
 }
@@ -379,7 +423,7 @@ body {
   border-radius: 10px;
   font-family: inherit;
   font-size: 12.5px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   outline: none;
   transition: all 0.2s;
@@ -456,8 +500,8 @@ body {
 
 .deck-modal-header h2 {
   font-size: 17px;
-  font-weight: 800;
-  letter-spacing: 0.3px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
   background: linear-gradient(90deg, #ec4899, #8b5cf6, #06b6d4);
   -webkit-background-clip: text;
   background-clip: text;
@@ -471,7 +515,6 @@ body {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
@@ -529,7 +572,7 @@ body {
 
 .deck-item-en {
   font-size: 15.5px;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text);
   letter-spacing: -0.2px;
 }
@@ -586,7 +629,7 @@ body {
     letter-spacing: 0;
     border-radius: 10px;
   }
-  .toolbar-btn .btn-icon { display: none; }
+  .toolbar-btn svg.lucide { display: none; }
   .app-name { font-size: 15px; }
 }
 
@@ -603,13 +646,13 @@ body {
     height: 50px;
     box-shadow: 0 3px 0 var(--accent-deep), 0 6px 14px rgba(0, 0, 0, 0.4);
   }
-  .ctrl-btn svg { width: 20px; height: 20px; }
+  .ctrl-btn svg.lucide { width: 20px; height: 20px; }
   .ctrl-btn.primary {
     width: 66px;
     height: 66px;
     box-shadow: 0 5px 0 var(--accent-deep), 0 10px 24px rgba(236, 72, 153, 0.5);
   }
-  .ctrl-btn.primary svg { width: 26px; height: 26px; }
+  .ctrl-btn.primary svg.lucide { width: 26px; height: 26px; }
 
   .speed-wrap label,
   .pause-wrap label,
@@ -622,50 +665,4 @@ body {
   .deck-modal-content { max-height: 92vh; border-radius: 18px; }
   .deck-item-en { font-size: 15px; }
   .deck-item-es { font-size: 13px; }
-}
-/* ============ FUENTES LLAMATIVAS ============ */
-body {
-  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
-}
-
-.app-name,
-.word-en,
-.toolbar-btn,
-.ctrl-btn,
-.status,
-.deck-modal-header h2,
-.deck-item-en {
-  font-family: 'Fredoka', 'Nunito', system-ui, sans-serif;
-}
-
-/* Pesos redondeados pero llamativos */
-.app-name {
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.word-en {
-  font-weight: 600;
-  letter-spacing: -0.3px;
-}
-
-.toolbar-btn {
-  font-weight: 500;
-  letter-spacing: 0.3px;
-}
-
-.status {
-  font-weight: 600;
-  letter-spacing: 2.5px;
-}
-
-.speed-wrap label,
-.pause-wrap label,
-.limit-wrap label,
-.counter,
-.note,
-.deck-item-es,
-.deck-item-note {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
 }
