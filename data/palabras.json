@@ -4,10 +4,10 @@
     {
       "id": 1,
       "en": "Coaster",
-      "es": "Posavasos",
+      "es": "Posavasos, montaña rusa",
       "example_en": "Put the glass on the coaster.",
       "example_es": "Pon el vaso sobre el posavasos.",
-      "note": "",
+      "note": "Como 'montaña rusa' se usa más en inglés americano.",
       "tags": ["sustantivos"]
     },
     {
@@ -135,6 +135,294 @@
       "example_es": "Sigue las reglas del juego.",
       "note": "",
       "tags": ["sustantivos"]
+    },
+    {
+      "id": 16,
+      "en": "Brought",
+      "es": "Trajo",
+      "example_en": "She brought food.",
+      "example_es": "Ella trajo comida.",
+      "note": "Pasado del verbo 'bring'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 17,
+      "en": "Huge",
+      "es": "Enorme",
+      "example_en": "It is a huge house.",
+      "example_es": "Es una casa enorme.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 18,
+      "en": "Within",
+      "es": "Dentro de, en un plazo de",
+      "example_en": "Finish within an hour.",
+      "example_es": "Termina en una hora.",
+      "note": "Se usa para hablar de plazos de tiempo.",
+      "tags": ["preposiciones"]
+    },
+    {
+      "id": 19,
+      "en": "Improve",
+      "es": "Mejorar",
+      "example_en": "I want to improve.",
+      "example_es": "Quiero mejorar.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 20,
+      "en": "Shut down",
+      "es": "Apagar, cerrar",
+      "example_en": "Shut down the computer.",
+      "example_es": "Apaga el computador.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 21,
+      "en": "Increased",
+      "es": "Aumentó, incrementó",
+      "example_en": "Prices increased.",
+      "example_es": "Los precios aumentaron.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 22,
+      "en": "Buyers",
+      "es": "Compradores",
+      "example_en": "The buyers are here.",
+      "example_es": "Los compradores están aquí.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 23,
+      "en": "Overcapacity",
+      "es": "Exceso de capacidad",
+      "example_en": "The factory has overcapacity.",
+      "example_es": "La fábrica tiene exceso de capacidad.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 24,
+      "en": "Citizens",
+      "es": "Ciudadanos",
+      "example_en": "The citizens are happy.",
+      "example_es": "Los ciudadanos están felices.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 25,
+      "en": "Another",
+      "es": "Otro, otra",
+      "example_en": "Give me another chance.",
+      "example_es": "Dame otra oportunidad.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 26,
+      "en": "Develop",
+      "es": "Desarrollar",
+      "example_en": "I want to develop a skill.",
+      "example_es": "Quiero desarrollar una habilidad.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 27,
+      "en": "Aims",
+      "es": "Objetivos, pretende",
+      "example_en": "She aims to win.",
+      "example_es": "Ella pretende ganar.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 28,
+      "en": "False",
+      "es": "Falso",
+      "example_en": "The news is false.",
+      "example_es": "La noticia es falsa.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 29,
+      "en": "Fake",
+      "es": "Falsificado",
+      "example_en": "This is a fake watch.",
+      "example_es": "Este es un reloj falsificado.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 30,
+      "en": "Such",
+      "es": "Tal, semejante, tanto",
+      "example_en": "It is such a beautiful day.",
+      "example_es": "Es un día tan hermoso.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 31,
+      "en": "Resembles",
+      "es": "Se parece a",
+      "example_en": "He resembles his father.",
+      "example_es": "Él se parece a su padre.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 32,
+      "en": "Deepfake",
+      "es": "Falsificación digital creada mediante inteligencia artificial",
+      "example_en": "This video is a deepfake.",
+      "example_es": "Este video es una falsificación creada con IA.",
+      "note": "Palabra moderna.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 33,
+      "en": "Beyond",
+      "es": "Más allá de",
+      "example_en": "It is beyond my control.",
+      "example_es": "Está fuera de mi control.",
+      "note": "",
+      "tags": ["preposiciones"]
+    },
+    {
+      "id": 34,
+      "en": "Without",
+      "es": "Sin",
+      "example_en": "I went without money.",
+      "example_es": "Fui sin dinero.",
+      "note": "",
+      "tags": ["preposiciones"]
+    },
+    {
+      "id": 35,
+      "en": "Script",
+      "es": "Guion, libreto",
+      "example_en": "I wrote a script.",
+      "example_es": "Escribí un guion.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 36,
+      "en": "Glad",
+      "es": "Contento, feliz",
+      "example_en": "I am glad to see you.",
+      "example_es": "Me alegra verte.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 37,
+      "en": "Tool",
+      "es": "Herramienta",
+      "example_en": "This tool is useful.",
+      "example_es": "Esta herramienta es útil.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 38,
+      "en": "Speech",
+      "es": "Discurso, habla",
+      "example_en": "His speech was great.",
+      "example_es": "Su discurso fue excelente.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 39,
+      "en": "Taught",
+      "es": "Enseñó",
+      "example_en": "She taught me English.",
+      "example_es": "Ella me enseñó inglés.",
+      "note": "Pasado del verbo 'teach'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 40,
+      "en": "Hiking",
+      "es": "Senderismo, excursionismo",
+      "example_en": "I enjoy hiking.",
+      "example_es": "Disfruto del senderismo.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 41,
+      "en": "Outdoor",
+      "es": "Al aire libre, exterior",
+      "example_en": "I like outdoor activities.",
+      "example_es": "Me gustan las actividades al aire libre.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 42,
+      "en": "Less",
+      "es": "Menos",
+      "example_en": "Less sugar, please.",
+      "example_es": "Menos azúcar, por favor.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 43,
+      "en": "Gather some",
+      "es": "Reunir algunos, juntar algunos",
+      "example_en": "Let's gather some friends.",
+      "example_es": "Reunamos algunos amigos.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 44,
+      "en": "Afraid",
+      "es": "Asustado, temeroso",
+      "example_en": "I am afraid of spiders.",
+      "example_es": "Tengo miedo a las arañas.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 45,
+      "en": "Embroidery",
+      "es": "Bordado",
+      "example_en": "She does beautiful embroidery.",
+      "example_es": "Ella hace bordados hermosos.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 46,
+      "en": "Invaders",
+      "es": "Invasores",
+      "example_en": "The invaders arrived at dawn.",
+      "example_es": "Los invasores llegaron al amanecer.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 47,
+      "en": "Sake",
+      "es": "Bien, beneficio, causa",
+      "example_en": "Do it for my sake.",
+      "example_es": "Hazlo por mí.",
+      "note": "Se usa en la expresión 'for my sake' (por mí).",
+      "tags": ["expresiones"]
     }
   ]
 }
