@@ -13,12 +13,26 @@
 </head>
 <body>
 
-<div class="app">
+<!-- ================== HOME: SELECTOR DE MAZOS ================== -->
+<div class="view home-view" id="homeView">
+  <div class="home-header">
+    <img src="english memory logo.png" alt="Logo" class="home-logo">
+    <h1>Audio Flash</h1>
+    <p class="home-subtitle">Elige tu mazo</p>
+  </div>
+  <div class="deck-grid" id="deckGrid"></div>
+  <div class="home-footer">English Memory</div>
+</div>
+
+<!-- ================== PLAYER: REPRODUCTOR ================== -->
+<div class="view player-view hidden" id="playerView">
 
   <header class="topbar">
+    <button id="btnBack" class="back-btn" title="Volver" aria-label="Volver">
+      <i data-lucide="chevron-left"></i>
+    </button>
     <div class="topbar-brand">
-      <img src="english memory logo.png" alt="Logo" class="logo">
-      <span class="app-name">Audio Flash</span>
+      <span class="app-name" id="deckName">—</span>
     </div>
     <div class="topbar-actions">
       <button id="btnDeck" class="toolbar-btn" title="Ver mazo completo">
@@ -78,6 +92,11 @@
     <div class="limit-wrap">
       <label for="limit">Tarjetas</label>
       <select id="limit"></select>
+    </div>
+
+    <div class="tag-wrap">
+      <label for="tag">Categoría</label>
+      <select id="tag"></select>
     </div>
   </footer>
 
