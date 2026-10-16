@@ -446,12 +446,13 @@ svg.lucide {
 
 .example:empty { display: none; }
 
-.example svg.lucide {
+.example > svg.lucide {
   width: 15px;
   height: 15px;
   stroke-width: 2.2;
   color: var(--accent);
   margin-top: 3px;
+  flex-shrink: 0;
 }
 
 .example .ex-body {
@@ -475,6 +476,52 @@ svg.lucide {
   font-style: italic;
   opacity: 0.9;
   word-break: break-word;
+}
+
+/* ---------- BOTÓN PLAY DEL EJEMPLO ---------- */
+.example-play-btn {
+  background: linear-gradient(180deg, #f472b6, #d946ef 60%, #a855f7);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  align-self: center;
+  transition: transform 0.08s ease, box-shadow 0.15s ease;
+  box-shadow: 0 3px 0 var(--accent-deep), 0 4px 10px rgba(236, 72, 153, 0.4);
+  margin-left: 4px;
+}
+
+.example-play-btn svg.lucide {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2.6;
+  color: white;
+}
+
+.example-play-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 var(--accent-deep), 0 6px 14px rgba(236, 72, 153, 0.55);
+}
+
+.example-play-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 var(--accent-deep), 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.example-play-btn.playing svg.lucide {
+  animation: pulse-icon 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-icon {
+  from { opacity: 0.6; transform: scale(0.95); }
+  to   { opacity: 1;   transform: scale(1.05); }
 }
 
 .note {
@@ -943,6 +990,9 @@ svg.lucide {
   .note { font-size: 12px; }
   .example { font-size: 12px; padding: 8px 10px; }
   .example .ex-es { font-size: 11px; }
+  .example-play-btn { width: 28px; height: 28px; }
+  .example-play-btn svg.lucide { width: 13px; height: 13px; }
+
   .card { padding: 30px 20px 24px; border-radius: 22px; }
 
   .ctrl-btn {
