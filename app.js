@@ -1,12 +1,12 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v16
-// Selector de mazos + soporte TTS para tarjetas sin audio
+// ENGLISH AUDIO FLASH - v17
+// Límite por mazo + ejemplos de uso (example_en / example_es)
 // ==========================================================
 
 // ---------- ESTADO ----------
-let decksIndex = [];           // lista de mazos del índice
-let currentDeck = null;        // mazo activo (objeto del índice)
-let cards = [];                // tarjetas del mazo activo
+let decksIndex = [];
+let currentDeck = null;
+let cards = [];
 let sessionCards = [];
 let currentIndex = 0;
 let isPlaying = false;
@@ -61,6 +61,7 @@ const statusEl     = document.getElementById("status");
 const wordEn       = document.getElementById("wordEn");
 const wordEs       = document.getElementById("wordEs");
 const noteEl       = document.getElementById("note");
+const exampleEl    = document.getElementById("example");
 const counter      = document.getElementById("counter");
 const progressBar  = document.getElementById("progressBar");
 const cardEl       = document.getElementById("card");
@@ -181,6 +182,7 @@ async function openDeck(deck) {
     sessionPlayed = 0;
     currentTag = "all";
 
+    populateLimitOptions();
     populateTagOptions();
     buildDeckList();
 
@@ -205,20 +207,35 @@ function goHome() {
 
 btnBack.addEventListener("click", goHome);
 
-// ---------- POBLAR SELECTOR LÍMITE ----------
+// ---------- POBLAR SELECTOR LÍMITE (por mazo) ----------
 function populateLimitOptions() {
   limitSelect.innerHTML = "";
-  for (let i = 1; i <= 100; i++) {
-    const opt = document.createElement("option");
-    opt.value = String(i);
-    opt.textContent = String(i);
-    limitSelect.appendChild(opt);
+
+  // Opciones por defecto si el mazo no define las suyas
+  let opts = [1, 2, 3, 5, 10, 20, 30, 50, 100, "all"];
+
+  if (currentDeck && Array.isArray(currentDeck.limitOptions)) {
+    opts = currentDeck.limitOptions;
   }
-  const allOpt = document.createElement("option");
-  allOpt.value = "all";
-  allOpt.textContent = "Todas";
-  limitSelect.appendChild(allOpt);
-  limitSelect.value = sessionLimit === "all" ? "all" : String(sessionLimit);
+
+  opts.forEach(v => {
+    const opt = document.createElement("option");
+    if (v === "all") {
+      opt.value = "all";
+      opt.textContent = "Todas";
+    } else {
+      opt.value = String(v);
+      opt.textContent = String(v);
+    }
+    limitSelect.appendChild(opt);
+  });
+
+  // Si el límite guardado no está en las opciones, usar "all"
+  const availableValues = opts.map(v => String(v));
+  if (!availableValues.includes(String(sessionLimit))) {
+    sessionLimit = "all";
+  }
+  limitSelect.value = String(sessionLimit);
 }
 
 // ---------- POBLAR SELECTOR DE TAG ----------
@@ -295,6 +312,7 @@ function resetCycle() {
     wordEn.textContent = "Sin tarjetas";
     wordEs.textContent = "";
     noteEl.innerHTML = "";
+    exampleEl.innerHTML = "";
     counter.textContent = "0 / 0";
     progressBar.style.width = "0%";
     setStatus("Sin tarjetas", "alert-circle");
@@ -374,6 +392,19 @@ function renderCard() {
   wordEn.textContent = direction === "en-es" ? c.es : c.en;
   wordEs.textContent = "";
 
+  // Ejemplo de uso
+  const exEn = (c.example_en || "").trim();
+  const exEs = (c.example_es || "").trim();
+  if (exEn || exEs) {
+    let html = "";
+    if (exEn) html += `<span class="ex-en">${escapeHtml(exEn)}</span>`;
+    if (exEs) html += `<span class="ex-es">${escapeHtml(exEs)}</span>`;
+    exampleEl.innerHTML = html;
+  } else {
+    exampleEl.innerHTML = "";
+  }
+
+  // Nota
   const note = (c.note || "").trim();
   if (note) {
     noteEl.innerHTML = `<i data-lucide="message-circle"></i><span>${escapeHtml(note)}</span>`;
@@ -433,12 +464,10 @@ function playCard(gen) {
     };
 
     if (direction === "en-es") {
-      // Pregunta = Inglés → se muestra en español
       setStatus("Inglés", "volume-2");
       statusEl.classList.add("active");
 
       if (c.audio) {
-        // Reproducir MP3
         player.onended = done;
         player.onerror = () => { console.warn("Error audio:", c.audio); done(); };
         player.src = c.audio;
@@ -446,11 +475,9 @@ function playCard(gen) {
         player.currentTime = 0;
         player.play().catch(done);
       } else {
-        // TTS inglés
         speakEnglish(c.en, done);
       }
     } else {
-      // Pregunta = Español
       setStatus("Español", "languages");
       statusEl.classList.add("active");
       speakSpanish(c.es, done);
@@ -488,6 +515,10 @@ function buildDeckList() {
       ? `<div class="deck-item-note">${escapeHtml(c.note)}</div>`
       : "";
 
+    const exampleHtml = (c.example_en || c.example_es)
+      ? `<div class="deck-item-note">📝 ${escapeHtml(c.example_en || "")}${c.example_es ? " — " + escapeHtml(c.example_es) : ""}</div>`
+      : "";
+
     const tagsHtml = Array.isArray(c.tags) && c.tags.length
       ? `<div class="deck-item-tags">${c.tags.map(t => `<span class="deck-tag">${escapeHtml(t)}</span>`).join("")}</div>`
       : "";
@@ -498,12 +529,12 @@ function buildDeckList() {
         <div class="deck-item-index">#${i + 1}</div>
       </div>
       <div class="deck-item-es">${escapeHtml(c.es)}</div>
+      ${exampleHtml}
       ${noteHtml}
       ${tagsHtml}
     `;
 
     item.addEventListener("click", () => {
-      // Si tiene audio → MP3. Si no → TTS inglés
       if (c.audio) {
         player.src = c.audio;
         player.playbackRate = speed;
@@ -631,7 +662,6 @@ tagSelect.addEventListener("change", () => {
 
 // ---------- INIT ----------
 loadSettings();
-populateLimitOptions();
 updateButtons();
 speedInput.value = speed;
 speedValue.textContent = speed.toFixed(1) + "x";
