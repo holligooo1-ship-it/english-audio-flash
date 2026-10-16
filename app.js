@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v19
-// limitMax configurable por mazo (100 por defecto, 1000 en Palabras)
+// ENGLISH AUDIO FLASH - v20
+// Iconos Lucide en ejemplo y nota (sin emojis)
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -245,17 +245,15 @@ function goHome() {
 
 btnBack.addEventListener("click", goHome);
 
-// ---------- POBLAR SELECTOR LÍMITE (por mazo) ----------
+// ---------- POBLAR SELECTOR LÍMITE ----------
 function populateLimitOptions() {
   limitSelect.innerHTML = "";
 
-  // Máximo desde el mazo (por defecto 100)
   let max = 100;
   if (currentDeck && typeof currentDeck.limitMax === "number") {
     max = currentDeck.limitMax;
   }
 
-  // Generar 1..max + Todas
   for (let i = 1; i <= max; i++) {
     const opt = document.createElement("option");
     opt.value = String(i);
@@ -267,7 +265,6 @@ function populateLimitOptions() {
   allOpt.textContent = "Todas";
   limitSelect.appendChild(allOpt);
 
-  // Aplicar valor guardado si sigue siendo válido
   const saved = String(sessionLimit);
   const isValid =
     saved === "all" ||
@@ -431,17 +428,21 @@ function renderCard() {
   wordEn.textContent = direction === "en-es" ? c.es : c.en;
   wordEs.textContent = "";
 
+  // Ejemplo (con icono Lucide)
   const exEn = (c.example_en || "").trim();
   const exEs = (c.example_es || "").trim();
   if (exEn || exEs) {
-    let html = "";
+    let html = `<i data-lucide="book-open"></i><div class="ex-body">`;
     if (exEn) html += `<span class="ex-en">${escapeHtml(exEn)}</span>`;
     if (exEs) html += `<span class="ex-es">${escapeHtml(exEs)}</span>`;
+    html += `</div>`;
     exampleEl.innerHTML = html;
+    refreshIcons();
   } else {
     exampleEl.innerHTML = "";
   }
 
+  // Nota (con icono Lucide)
   const note = (c.note || "").trim();
   if (note) {
     noteEl.innerHTML = `<i data-lucide="message-circle"></i><span>${escapeHtml(note)}</span>`;
@@ -548,12 +549,18 @@ function buildDeckList() {
     const item = document.createElement("div");
     item.className = "deck-item";
 
-    const noteHtml = c.note && c.note.trim()
-      ? `<div class="deck-item-note">${escapeHtml(c.note)}</div>`
+    const exampleHtml = (c.example_en || c.example_es)
+      ? `<div class="deck-item-note example-note">
+          <i data-lucide="book-open"></i>
+          <span>${escapeHtml(c.example_en || "")}${c.example_es ? " — " + escapeHtml(c.example_es) : ""}</span>
+        </div>`
       : "";
 
-    const exampleHtml = (c.example_en || c.example_es)
-      ? `<div class="deck-item-note">📝 ${escapeHtml(c.example_en || "")}${c.example_es ? " — " + escapeHtml(c.example_es) : ""}</div>`
+    const noteHtml = c.note && c.note.trim()
+      ? `<div class="deck-item-note">
+          <i data-lucide="message-circle"></i>
+          <span>${escapeHtml(c.note)}</span>
+        </div>`
       : "";
 
     const tagsHtml = Array.isArray(c.tags) && c.tags.length
@@ -677,7 +684,7 @@ speedInput.addEventListener("input", () => {
 
 pauseInput.addEventListener("input", () => {
   pauseSeconds = parseFloat(pauseInput.value);
-  pauseValue.textContent = pauseSeconds + "s";
+  pauseValue.textContent = pauseSeconds.toFixed(1).replace(/\.0$/, "") + "s";
   saveGlobalSettings();
 });
 
