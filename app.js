@@ -1,7 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v18
-// Ajustes por mazo (dirección/orden/tarjetas/categoría)
-// Global: velocidad + pausa
+// ENGLISH AUDIO FLASH - v19
+// limitMax configurable por mazo (100 por defecto, 1000 en Palabras)
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -12,11 +11,11 @@ let sessionCards = [];
 let currentIndex = 0;
 let isPlaying = false;
 
-// GLOBAL (compartido entre mazos)
+// GLOBAL
 let speed = 1;
 let pauseSeconds = 2;
 
-// POR MAZO (se recarga al abrir un mazo)
+// POR MAZO
 let direction = "en-es";
 let order = "secuencial";
 let sessionLimit = "all";
@@ -207,30 +206,25 @@ async function openDeck(deck) {
       setStatus("Sin tarjetas", "alert-circle");
     }
 
-    // Resetear estado de sesión
     currentIndex = 0;
     cyclePlayed = [];
     history = [];
     cycleCompleted = false;
     sessionPlayed = 0;
 
-    // Cargar ajustes GUARDADOS de ESTE mazo
     loadDeckSettings(deck.id);
 
-    // Poblar selectores
     populateLimitOptions();
     populateTagOptions();
     buildDeckList();
     updateButtons();
 
-    // Aplicar valores guardados a los controles visuales
     speedInput.value = speed;
     speedValue.textContent = speed.toFixed(1) + "x";
     pauseInput.value = pauseSeconds;
     pauseValue.textContent = pauseSeconds + "s";
     limitSelect.value = String(sessionLimit);
 
-    // Cambiar vista
     homeView.classList.add("hidden");
     playerView.classList.remove("hidden");
     refreshIcons();
@@ -251,12 +245,18 @@ function goHome() {
 
 btnBack.addEventListener("click", goHome);
 
-// ---------- POBLAR SELECTOR LÍMITE ----------
+// ---------- POBLAR SELECTOR LÍMITE (por mazo) ----------
 function populateLimitOptions() {
   limitSelect.innerHTML = "";
 
-  // Generar 1..100 + Todas
-  for (let i = 1; i <= 100; i++) {
+  // Máximo desde el mazo (por defecto 100)
+  let max = 100;
+  if (currentDeck && typeof currentDeck.limitMax === "number") {
+    max = currentDeck.limitMax;
+  }
+
+  // Generar 1..max + Todas
+  for (let i = 1; i <= max; i++) {
     const opt = document.createElement("option");
     opt.value = String(i);
     opt.textContent = String(i);
@@ -267,14 +267,13 @@ function populateLimitOptions() {
   allOpt.textContent = "Todas";
   limitSelect.appendChild(allOpt);
 
-  // Aplicar valor guardado
-  const available = [];
-  for (let i = 1; i <= 100; i++) available.push(String(i));
-  available.push("all");
+  // Aplicar valor guardado si sigue siendo válido
+  const saved = String(sessionLimit);
+  const isValid =
+    saved === "all" ||
+    (parseInt(saved, 10) >= 1 && parseInt(saved, 10) <= max);
 
-  if (!available.includes(String(sessionLimit))) {
-    sessionLimit = "all";
-  }
+  if (!isValid) sessionLimit = "all";
   limitSelect.value = String(sessionLimit);
 }
 
@@ -432,7 +431,6 @@ function renderCard() {
   wordEn.textContent = direction === "en-es" ? c.es : c.en;
   wordEs.textContent = "";
 
-  // Ejemplo
   const exEn = (c.example_en || "").trim();
   const exEs = (c.example_es || "").trim();
   if (exEn || exEs) {
@@ -444,7 +442,6 @@ function renderCard() {
     exampleEl.innerHTML = "";
   }
 
-  // Nota
   const note = (c.note || "").trim();
   if (note) {
     noteEl.innerHTML = `<i data-lucide="message-circle"></i><span>${escapeHtml(note)}</span>`;
@@ -655,13 +652,12 @@ btnPrev.addEventListener("click", () => {
   renderCard();
 });
 
-// CAMBIOS QUE GUARDAN POR MAZO
 btnDirection.addEventListener("click", () => {
   stopAll();
   direction = direction === "en-es" ? "es-en" : "en-es";
   resetCycle();
   updateButtons();
-  saveDeckSettings();   // ← por mazo
+  saveDeckSettings();
 });
 
 btnOrder.addEventListener("click", () => {
@@ -669,35 +665,34 @@ btnOrder.addEventListener("click", () => {
   order = order === "secuencial" ? "aleatorio" : "secuencial";
   resetCycle();
   updateButtons();
-  saveDeckSettings();   // ← por mazo
+  saveDeckSettings();
 });
 
-// CAMBIOS QUE GUARDAN GLOBAL
 speedInput.addEventListener("input", () => {
   speed = parseFloat(speedInput.value);
   speedValue.textContent = speed.toFixed(1) + "x";
   player.playbackRate = speed;
-  saveGlobalSettings(); // ← global
+  saveGlobalSettings();
 });
 
 pauseInput.addEventListener("input", () => {
   pauseSeconds = parseFloat(pauseInput.value);
   pauseValue.textContent = pauseSeconds + "s";
-  saveGlobalSettings(); // ← global
+  saveGlobalSettings();
 });
 
 limitSelect.addEventListener("change", () => {
   sessionLimit = limitSelect.value === "all"
     ? "all"
     : parseInt(limitSelect.value, 10);
-  saveDeckSettings();   // ← por mazo
+  saveDeckSettings();
   stopAll();
   resetCycle();
 });
 
 tagSelect.addEventListener("change", () => {
   currentTag = tagSelect.value;
-  saveDeckSettings();   // ← por mazo
+  saveDeckSettings();
   stopAll();
   resetCycle();
 });
