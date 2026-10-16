@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v20
-// Iconos Lucide en ejemplo y nota (sin emojis)
+// ENGLISH AUDIO FLASH - v21
+// Botón 🔊 para escuchar el ejemplo por separado
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -28,6 +28,9 @@ let sessionPlayed = 0;
 
 let loopGeneration = 0;
 let pendingResolve = null;
+
+// Estado del ejemplo (para saber si está sonando)
+let examplePlaying = false;
 
 // ---------- HELPERS LUCIDE ----------
 function refreshIcons() {
@@ -428,21 +431,42 @@ function renderCard() {
   wordEn.textContent = direction === "en-es" ? c.es : c.en;
   wordEs.textContent = "";
 
-  // Ejemplo (con icono Lucide)
+  // Ejemplo (icono Lucide + botón de audio)
   const exEn = (c.example_en || "").trim();
   const exEs = (c.example_es || "").trim();
+
   if (exEn || exEs) {
-    let html = `<i data-lucide="book-open"></i><div class="ex-body">`;
+    let html = `<i data-lucide="book-open"></i>`;
+    html += `<div class="ex-body">`;
     if (exEn) html += `<span class="ex-en">${escapeHtml(exEn)}</span>`;
     if (exEs) html += `<span class="ex-es">${escapeHtml(exEs)}</span>`;
     html += `</div>`;
+
+    // Botón de escuchar ejemplo (solo si hay inglés para leer)
+    if (exEn) {
+      html += `
+        <button class="example-play-btn" title="Escuchar ejemplo" aria-label="Escuchar ejemplo">
+          <i data-lucide="volume-2"></i>
+        </button>
+      `;
+    }
+
     exampleEl.innerHTML = html;
     refreshIcons();
+
+    // Conectar click al botón (con stopPropagation)
+    const exBtn = exampleEl.querySelector(".example-play-btn");
+    if (exBtn && exEn) {
+      exBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        playExample(exEn, exBtn);
+      });
+    }
   } else {
     exampleEl.innerHTML = "";
   }
 
-  // Nota (con icono Lucide)
+  // Nota
   const note = (c.note || "").trim();
   if (note) {
     noteEl.innerHTML = `<i data-lucide="message-circle"></i><span>${escapeHtml(note)}</span>`;
@@ -460,6 +484,43 @@ function renderCard() {
     setStatus("Listo", null);
     statusEl.classList.remove("active");
   }
+}
+
+// ---------- REPRODUCIR EJEMPLO (por separado) ----------
+function playExample(text, btn) {
+  if (!("speechSynthesis" in window)) return;
+
+  // Si ya está sonando, detener
+  if (examplePlaying) {
+    speechSynthesis.cancel();
+    examplePlaying = false;
+    document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing"));
+    return;
+  }
+
+  // Detener cualquier audio MP3 o TTS en curso
+  player.pause();
+  player.onended = null;
+  player.onerror = null;
+  speechSynthesis.cancel();
+
+  // Marcar como playing
+  examplePlaying = true;
+  if (btn) btn.classList.add("playing");
+
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "en-US";
+  u.rate = speed;
+
+  const cleanup = () => {
+    examplePlaying = false;
+    if (btn) btn.classList.remove("playing");
+  };
+
+  u.onend = cleanup;
+  u.onerror = cleanup;
+
+  speechSynthesis.speak(u);
 }
 
 // ---------- TTS ----------
@@ -480,7 +541,7 @@ function speak(text, lang, onDone) {
 function speakSpanish(text, onDone) { speak(text, "es-ES", onDone); }
 function speakEnglish(text, onDone) { speak(text, "en-US", onDone); }
 
-// ---------- REPRODUCIR ----------
+// ---------- REPRODUCIR TARJETA (principal) ----------
 function playCard(gen) {
   return new Promise((resolve) => {
     const c = sessionCards[currentIndex];
@@ -617,6 +678,10 @@ function stopAll() {
   player.onended = null;
   player.onerror = null;
   if ("speechSynthesis" in window) speechSynthesis.cancel();
+
+  // Limpiar estado del ejemplo
+  examplePlaying = false;
+  document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing"));
 
   if (pendingResolve) {
     const r = pendingResolve;
