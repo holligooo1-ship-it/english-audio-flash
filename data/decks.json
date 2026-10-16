@@ -1,0 +1,22 @@
+{
+  "decks": [
+    {
+      "id": "frases",
+      "name": "100 Frases Que Realmente Usarás en Conversaciones Diarias",
+      "short": "100 Frases",
+      "description": "Frases cotidianas con audio en inglés",
+      "file": "data/frases.json",
+      "color": "frases",
+      "icon": "message-square-quote"
+    },
+    {
+      "id": "palabras",
+      "name": "Palabras Esenciales",
+      "short": "Palabras",
+      "description": "Verbos, sujetos y vocabulario básico",
+      "file": "data/palabras.json",
+      "color": "palabras",
+      "icon": "type"
+    }
+  ]
+}
