@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v13
-// Lucide icons + status dinámicos con iconos
+// ENGLISH AUDIO FLASH - v14
+// Fix: contador sincronizado con navegación manual
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -138,16 +138,13 @@ async function loadCards() {
 
 // ---------- ACTUALIZAR BOTONES ----------
 function updateButtons() {
-  // Direction label
   directionLabel.textContent = direction === "en-es" ? "EN → ES" : "ES → EN";
 
-  // Order: icono + texto cambian juntos
   const iconName = order === "secuencial" ? "repeat" : "dices";
   const labelText = order === "secuencial" ? "Secuencial" : "Aleatorio";
 
   orderLabel.textContent = labelText;
 
-  // Reemplazar el icono
   const oldIcon = btnOrder.querySelector("svg, i[data-lucide]");
   if (oldIcon) oldIcon.remove();
   const newIcon = document.createElement("i");
@@ -259,8 +256,9 @@ function renderCard() {
     noteEl.innerHTML = "";
   }
 
+  // ✅ CAMBIO 1: usamos currentIndex para el contador (refleja la posición real)
   const limit = sessionCards.length;
-  const shown = Math.min(sessionPlayed + 1, limit);
+  const shown = currentIndex + 1;
   counter.textContent = `${shown} / ${limit}`;
   progressBar.style.width = (shown / limit) * 100 + "%";
 
@@ -436,10 +434,12 @@ btnPlay.addEventListener("click", () => {
   }
 });
 
+// ✅ CAMBIO 2: sincronizar sessionPlayed con currentIndex al navegar
 btnNext.addEventListener("click", () => {
   if (sessionCards.length === 0) return;
   stopAll();
   goNext();
+  sessionPlayed = currentIndex;
   renderCard();
 });
 
@@ -447,6 +447,7 @@ btnPrev.addEventListener("click", () => {
   if (sessionCards.length === 0) return;
   stopAll();
   goPrev();
+  sessionPlayed = currentIndex;
   renderCard();
 });
 
