@@ -623,3 +623,49 @@ body {
   .deck-item-en { font-size: 15px; }
   .deck-item-es { font-size: 13px; }
 }
+/* ============ FUENTES LLAMATIVAS ============ */
+body {
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+}
+
+.app-name,
+.word-en,
+.toolbar-btn,
+.ctrl-btn,
+.status,
+.deck-modal-header h2,
+.deck-item-en {
+  font-family: 'Fredoka', 'Nunito', system-ui, sans-serif;
+}
+
+/* Pesos redondeados pero llamativos */
+.app-name {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.word-en {
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.toolbar-btn {
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.status {
+  font-weight: 600;
+  letter-spacing: 2.5px;
+}
+
+.speed-wrap label,
+.pause-wrap label,
+.limit-wrap label,
+.counter,
+.note,
+.deck-item-es,
+.deck-item-note {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+}
