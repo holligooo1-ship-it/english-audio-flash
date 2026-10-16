@@ -1,0 +1,68 @@
+{
+  "deck": "Palabras Esenciales",
+  "cards": [
+    {
+      "id": 1,
+      "en": "to be",
+      "es": "ser / estar",
+      "note": "El verbo más importante del inglés.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 2,
+      "en": "to have",
+      "es": "tener",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 3,
+      "en": "to do",
+      "es": "hacer",
+      "note": "También se usa como auxiliar.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 4,
+      "en": "I",
+      "es": "yo",
+      "note": "",
+      "tags": ["sujetos"]
+    },
+    {
+      "id": 5,
+      "en": "you",
+      "es": "tú / ustedes",
+      "note": "Sirve para singular y plural.",
+      "tags": ["sujetos"]
+    },
+    {
+      "id": 6,
+      "en": "he",
+      "es": "él",
+      "note": "",
+      "tags": ["sujetos"]
+    },
+    {
+      "id": 7,
+      "en": "she",
+      "es": "ella",
+      "note": "",
+      "tags": ["sujetos"]
+    },
+    {
+      "id": 8,
+      "en": "we",
+      "es": "nosotros",
+      "note": "",
+      "tags": ["sujetos"]
+    },
+    {
+      "id": 9,
+      "en": "they",
+      "es": "ellos / ellas",
+      "note": "",
+      "tags": ["sujetos"]
+    }
+  ]
+}
