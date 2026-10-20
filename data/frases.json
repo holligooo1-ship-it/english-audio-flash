@@ -384,6 +384,54 @@
       "audio": "audios/dont-bother.mp3",
       "note": "Se usa para decir que no hace falta esfuerzo.",
       "tags": ["cortesía"]
+    },
+        {
+      "id": 49,
+      "en": "Don't go there",
+      "es": "No hables de eso",
+      "audio": "audios/dont-go-there.mp3",
+      "note": "Expresión figurada. No significa 'no vayas allí', sino 'mejor no toques ese tema'.",
+      "tags": ["coloquial"]
+    },
+    {
+      "id": 50,
+      "en": "I can live with that",
+      "es": "Puedo vivir con eso",
+      "audio": "audios/i-can-live-with-that.mp3",
+      "note": "Se usa para aceptar un acuerdo o situación que no es perfecta pero es tolerable.",
+      "tags": ["frases"]
+    },
+    {
+      "id": 51,
+      "en": "I wouldn't go that far",
+      "es": "Yo no diría eso, no diría que es para tanto",
+      "audio": "audios/i-wouldnt-go-that-far.mp3",
+      "note": "Se usa para moderar la opinión de alguien que está exagerando.",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 52,
+      "en": "Time is of the essence",
+      "es": "El tiempo es oro, cada segundo cuenta",
+      "audio": "audios/time-is-of-the-essence.mp3",
+      "note": "Frase formal para indicar que hay mucha prisa o urgencia.",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 53,
+      "en": "You know better than that",
+      "es": "Tú bien lo sabes, eres mejor que eso",
+      "audio": "audios/you-know-better-than-that.mp3",
+      "note": "Se dice cuando alguien comete un error que no debería porque sabe cómo hacerlo bien.",
+      "tags": ["frases"]
+    },
+    {
+      "id": 54,
+      "en": "You know the drill",
+      "es": "Ya sabes qué hacer",
+      "audio": "audios/you-know-the-drill.mp3",
+      "note": "'Drill' aquí significa rutina o procedimiento. Se usa cuando algo ya es costumbre.",
+      "tags": ["coloquial"]
     }
   ]
 }
