@@ -423,6 +423,411 @@
       "example_es": "Hazlo por mí.",
       "note": "Se usa en la expresión 'for my sake' (por mí).",
       "tags": ["expresiones"]
+    },
+        {
+      "id": 48,
+      "en": "Workforce",
+      "es": "Fuerza laboral, mano de obra",
+      "example_en": "The company needs a larger workforce.",
+      "example_es": "La empresa necesita una fuerza laboral más grande.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 49,
+      "en": "Boomer",
+      "es": "Persona de la generación del baby boom",
+      "example_en": "My dad is a boomer.",
+      "example_es": "Mi papá es de la generación del baby boom.",
+      "note": "Término informal para personas nacidas entre 1946 y 1964.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 50,
+      "en": "Mostly",
+      "es": "Mayormente, principalmente",
+      "example_en": "It is mostly sunny today.",
+      "example_es": "Hoy está mayormente soleado.",
+      "note": "",
+      "tags": ["adverbios"]
+    },
+    {
+      "id": 51,
+      "en": "Skills",
+      "es": "Habilidades, destrezas",
+      "example_en": "She has great communication skills.",
+      "example_es": "Ella tiene grandes habilidades de comunicación.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 52,
+      "en": "Punish",
+      "es": "Castigar, sancionar",
+      "example_en": "Don't punish the dog.",
+      "example_es": "No castigues al perro.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 53,
+      "en": "Beverage",
+      "es": "Bebida",
+      "example_en": "Would you like a cold beverage?",
+      "example_es": "¿Te gustaría una bebida fría?",
+      "note": "Palabra formal para referirse a una bebida.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 54,
+      "en": "Among",
+      "es": "Entre",
+      "example_en": "Divide the cake among the kids.",
+      "example_es": "Divide el pastel entre los niños.",
+      "note": "Se usa generalmente cuando hay más de dos elementos.",
+      "tags": ["preposiciones"]
+    },
+    {
+      "id": 55,
+      "en": "Choice",
+      "es": "Elección, opción",
+      "example_en": "You have a difficult choice.",
+      "example_es": "Tienes una elección difícil.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 56,
+      "en": "Told",
+      "es": "Dijo, contó",
+      "example_en": "He told me the truth.",
+      "example_es": "Él me dijo la verdad.",
+      "note": "Pasado del verbo 'tell'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 57,
+      "en": "Statement",
+      "es": "Declaración, afirmación",
+      "example_en": "The witness gave a statement.",
+      "example_es": "El testigo dio una declaración.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 58,
+      "en": "Device",
+      "es": "Dispositivo, aparato",
+      "example_en": "My phone is a useful device.",
+      "example_es": "Mi teléfono es un dispositivo útil.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 59,
+      "en": "Course",
+      "es": "Curso, recorrido",
+      "example_en": "This course is very easy.",
+      "example_es": "Este curso es muy fácil.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 60,
+      "en": "Based",
+      "es": "Basado",
+      "example_en": "The movie is based on a book.",
+      "example_es": "La película está basada en un libro.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 61,
+      "en": "Recent",
+      "es": "Reciente",
+      "example_en": "This is a recent photo.",
+      "example_es": "Esta es una foto reciente.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 62,
+      "en": "Won",
+      "es": "Ganó, venció",
+      "example_en": "Our team won the game.",
+      "example_es": "Nuestro equipo ganó el juego.",
+      "note": "Pasado del verbo 'win'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 63,
+      "en": "Surprise",
+      "es": "Sorpresa, sorprender",
+      "example_en": "The party was a surprise.",
+      "example_es": "La fiesta fue una sorpresa.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 64,
+      "en": "Performance",
+      "es": "Desempeño, actuación, rendimiento",
+      "example_en": "Her performance was amazing.",
+      "example_es": "Su actuación fue increíble.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 65,
+      "en": "Award",
+      "es": "Premio, galardón",
+      "example_en": "He received an award.",
+      "example_es": "Él recibió un premio.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 66,
+      "en": "Spent",
+      "es": "Gastó, pasó (tiempo)",
+      "example_en": "I spent all my money.",
+      "example_es": "Gasté todo mi dinero.",
+      "note": "Pasado del verbo 'spend'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 67,
+      "en": "Along",
+      "es": "A lo largo de, junto con",
+      "example_en": "Walk along the river.",
+      "example_es": "Camina a lo largo del río.",
+      "note": "",
+      "tags": ["preposiciones"]
+    },
+    {
+      "id": 68,
+      "en": "Deadly",
+      "es": "Mortal, letal",
+      "example_en": "This snake is deadly.",
+      "example_es": "Esta serpiente es mortal.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 69,
+      "en": "Unaffected",
+      "es": "No afectado, ileso",
+      "example_en": "The house was unaffected by the storm.",
+      "example_es": "La casa no se vio afectada por la tormenta.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 70,
+      "en": "Mosquitoes",
+      "es": "Mosquitos",
+      "example_en": "Mosquitoes bite at night.",
+      "example_es": "Los mosquitos pican de noche.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 71,
+      "en": "Flour",
+      "es": "Harina",
+      "example_en": "We need flour to make bread.",
+      "example_es": "Necesitamos harina para hacer pan.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 72,
+      "en": "Awful",
+      "es": "Horrible, terrible",
+      "example_en": "The weather is awful.",
+      "example_es": "El clima es horrible.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 73,
+      "en": "Aid",
+      "es": "Ayuda, ayudar, auxiliar",
+      "example_en": "First aid is important.",
+      "example_es": "Los primeros auxilios son importantes.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 74,
+      "en": "Able",
+      "es": "Capaz, hábil",
+      "example_en": "I am able to swim.",
+      "example_es": "Soy capaz de nadar.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 75,
+      "en": "Themselves",
+      "es": "Ellos mismos, ellas mismas",
+      "example_en": "They hurt themselves.",
+      "example_es": "Ellos se lastimaron a sí mismos.",
+      "note": "Pronombre reflexivo.",
+      "tags": ["pronombres"]
+    },
+    {
+      "id": 76,
+      "en": "Proud",
+      "es": "Orgulloso, orgullosa",
+      "example_en": "I am very proud of you.",
+      "example_es": "Estoy muy orgulloso de ti.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 77,
+      "en": "Weight",
+      "es": "Peso",
+      "example_en": "I want to lose weight.",
+      "example_es": "Quiero perder peso.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 78,
+      "en": "Force",
+      "es": "Fuerza, obligar",
+      "example_en": "Don't force the door.",
+      "example_es": "No fuerces la puerta.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 79,
+      "en": "Replace",
+      "es": "Reemplazar, sustituir",
+      "example_en": "I need to replace my phone.",
+      "example_es": "Necesito reemplazar mi teléfono.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 80,
+      "en": "Require",
+      "es": "Requerir, necesitar, exigir",
+      "example_en": "This job requires experience.",
+      "example_es": "Este trabajo requiere experiencia.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 81,
+      "en": "Aging",
+      "es": "Envejecimiento",
+      "example_en": "Aging is a natural process.",
+      "example_es": "El envejecimiento es un proceso natural.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 82,
+      "en": "Mean",
+      "es": "Significar, querer decir, mezquino",
+      "example_en": "What does this word mean?",
+      "example_es": "¿Qué significa esta palabra?",
+      "note": "",
+      "tags": ["verbos", "adjetivos"]
+    },
+    {
+      "id": 83,
+      "en": "Knowledge",
+      "es": "Conocimiento, saber",
+      "example_en": "Knowledge is power.",
+      "example_es": "El conocimiento es poder.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 84,
+      "en": "Aimed",
+      "es": "Dirigido, apuntado",
+      "example_en": "He aimed at the target.",
+      "example_es": "Él apuntó al objetivo.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 85,
+      "en": "Designed",
+      "es": "Diseñado, concebido",
+      "example_en": "This app is well designed.",
+      "example_es": "Esta aplicación está bien diseñada.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 86,
+      "en": "Songwriter",
+      "es": "Compositor de canciones",
+      "example_en": "She is a famous songwriter.",
+      "example_es": "Ella es una compositora famosa.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 87,
+      "en": "Harm",
+      "es": "Daño, perjudicar",
+      "example_en": "Smoking can harm your health.",
+      "example_es": "Fumar puede dañar tu salud.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 88,
+      "en": "Employee",
+      "es": "Empleado, trabajador",
+      "example_en": "He is a new employee.",
+      "example_es": "Él es un nuevo empleado.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 89,
+      "en": "Deputy",
+      "es": "Diputado, suplente, subdirector",
+      "example_en": "The deputy gave a speech.",
+      "example_es": "El diputado dio un discurso.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 90,
+      "en": "Voters",
+      "es": "Votantes, electores",
+      "example_en": "Voters went to the polls.",
+      "example_es": "Los votantes acudieron a las urnas.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 91,
+      "en": "Campaign",
+      "es": "Campaña",
+      "example_en": "She started a political campaign.",
+      "example_es": "Ella comenzó una campaña política.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 92,
+      "en": "Added",
+      "es": "Añadió, agregado, sumado",
+      "example_en": "I added sugar to my coffee.",
+      "example_es": "Agregué azúcar a mi café.",
+      "note": "Pasado del verbo 'add'.",
+      "tags": ["verbos"]
     }
   ]
 }
