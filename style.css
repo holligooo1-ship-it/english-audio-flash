@@ -418,12 +418,16 @@ svg.lucide {
   letter-spacing: -0.3px;
 }
 
+/* ✅ CAMBIO AQUÍ: Estilo de subtítulo para el segundo idioma */
 .word-es {
-  font-size: 18px;
-  color: var(--text-dim);
-  margin-bottom: 8px;
+  font-size: 17px;
+  color: var(--muted);
+  margin-bottom: 18px;
   min-height: 24px;
-  font-weight: 700;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.3px;
+  opacity: 0.85;
 }
 
 /* ---------- EXAMPLE ---------- */
