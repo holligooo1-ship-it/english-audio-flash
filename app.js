@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v22
-// Voz profesional (selección automática de voces neuronales)
+// ENGLISH AUDIO FLASH - v23
+// Traducción visible en ambos idiomas (subtítulo)
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -431,8 +431,15 @@ function finishCycle() {
 function renderCard() {
   const c = sessionCards[currentIndex];
   if (!c) return;
-  wordEn.textContent = direction === "en-es" ? c.es : c.en;
-  wordEs.textContent = "";
+
+  // ✅ CAMBIO AQUÍ: Mostrar ambos idiomas en pantalla
+  if (direction === "en-es") {
+    wordEn.textContent = c.es;   // Principal en español
+    wordEs.textContent = c.en;   // Subtítulo en inglés
+  } else {
+    wordEn.textContent = c.en;   // Principal en inglés
+    wordEs.textContent = c.es;   // Subtítulo en español
+  }
 
   // Ejemplo (icono Lucide + botón de audio)
   const exEn = (c.example_en || "").trim();
@@ -445,7 +452,6 @@ function renderCard() {
     if (exEs) html += `<span class="ex-es">${escapeHtml(exEs)}</span>`;
     html += `</div>`;
 
-    // Botón de escuchar ejemplo (solo si hay inglés para leer)
     if (exEn) {
       html += `
         <button class="example-play-btn" title="Escuchar ejemplo" aria-label="Escuchar ejemplo">
@@ -457,7 +463,6 @@ function renderCard() {
     exampleEl.innerHTML = html;
     refreshIcons();
 
-    // Conectar click al botón (con stopPropagation)
     const exBtn = exampleEl.querySelector(".example-play-btn");
     if (exBtn && exEn) {
       exBtn.addEventListener("click", (e) => {
@@ -493,7 +498,6 @@ function renderCard() {
 function playExample(text, btn) {
   if (!("speechSynthesis" in window)) return;
 
-  // Si ya está sonando, detener
   if (examplePlaying) {
     speechSynthesis.cancel();
     examplePlaying = false;
@@ -501,13 +505,11 @@ function playExample(text, btn) {
     return;
   }
 
-  // Detener cualquier audio MP3 o TTS en curso
   player.pause();
   player.onended = null;
   player.onerror = null;
   speechSynthesis.cancel();
 
-  // Marcar como playing
   examplePlaying = true;
   if (btn) btn.classList.add("playing");
 
@@ -515,7 +517,6 @@ function playExample(text, btn) {
   u.lang = "en-US";
   u.rate = speed;
 
-  // AQUI TAMBIEN APLICAMOS LA VOZ PROFESIONAL
   const bestVoice = getBestVoice("en-US");
   if (bestVoice) u.voice = bestVoice;
 
@@ -535,26 +536,21 @@ function loadVoices() {
   availableVoices = window.speechSynthesis.getVoices();
 }
 
-// Escuchar el evento para cuando las voces estén listas
 if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
   speechSynthesis.onvoiceschanged = loadVoices;
 }
-loadVoices(); // Intento inicial
+loadVoices();
 
 function getBestVoice(lang) {
-  // Si aún no hay voces, forzar carga
   if (availableVoices.length === 0) loadVoices();
 
-  // Filtrar por el idioma (ej. 'en' o 'es')
   const langCode = lang.split('-')[0]; 
   const filtered = availableVoices.filter(v => v.lang.startsWith(langCode));
 
   if (filtered.length === 0) return null;
 
-  // Lista de palabras clave para voces de alta calidad (neuronales/naturales)
   const highQualityKeywords = ['natural', 'neural', 'google', 'premium', 'enhanced'];
   
-  // Buscar una voz que contenga alguna de las palabras clave
   for (const keyword of highQualityKeywords) {
     const bestVoice = filtered.find(v => v.name.toLowerCase().includes(keyword));
     if (bestVoice) {
@@ -563,7 +559,6 @@ function getBestVoice(lang) {
     }
   }
 
-  // Si no encuentra ninguna "premium", usar la primera disponible
   console.log(`🎙️ Usando voz disponible: ${filtered[0].name} (${filtered[0].lang})`);
   return filtered[0];
 }
@@ -574,14 +569,12 @@ function speak(text, lang, onDone) {
     return;
   }
 
-  // Cancelar cualquier reproducción anterior
   speechSynthesis.cancel();
 
   const u = new SpeechSynthesisUtterance(text);
   u.lang = lang;
   u.rate = speed;
 
-  // Asignar la mejor voz encontrada
   const bestVoice = getBestVoice(lang);
   if (bestVoice) {
     u.voice = bestVoice;
@@ -734,7 +727,6 @@ function stopAll() {
   player.onerror = null;
   if ("speechSynthesis" in window) speechSynthesis.cancel();
 
-  // Limpiar estado del ejemplo
   examplePlaying = false;
   document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing"));
 
