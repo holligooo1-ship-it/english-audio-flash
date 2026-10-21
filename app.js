@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v21
-// Botón 🔊 para escuchar el ejemplo por separado
+// ENGLISH AUDIO FLASH - v22
+// Voz profesional (selección automática de voces neuronales)
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -31,6 +31,9 @@ let pendingResolve = null;
 
 // Estado del ejemplo (para saber si está sonando)
 let examplePlaying = false;
+
+// Voces disponibles
+let availableVoices = [];
 
 // ---------- HELPERS LUCIDE ----------
 function refreshIcons() {
@@ -512,6 +515,10 @@ function playExample(text, btn) {
   u.lang = "en-US";
   u.rate = speed;
 
+  // AQUI TAMBIEN APLICAMOS LA VOZ PROFESIONAL
+  const bestVoice = getBestVoice("en-US");
+  if (bestVoice) u.voice = bestVoice;
+
   const cleanup = () => {
     examplePlaying = false;
     if (btn) btn.classList.remove("playing");
@@ -523,18 +530,66 @@ function playExample(text, btn) {
   speechSynthesis.speak(u);
 }
 
-// ---------- TTS ----------
+// ---------- TTS PROFESIONAL (SELECCIÓN DE VOCES) ----------
+function loadVoices() {
+  availableVoices = window.speechSynthesis.getVoices();
+}
+
+// Escuchar el evento para cuando las voces estén listas
+if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+loadVoices(); // Intento inicial
+
+function getBestVoice(lang) {
+  // Si aún no hay voces, forzar carga
+  if (availableVoices.length === 0) loadVoices();
+
+  // Filtrar por el idioma (ej. 'en' o 'es')
+  const langCode = lang.split('-')[0]; 
+  const filtered = availableVoices.filter(v => v.lang.startsWith(langCode));
+
+  if (filtered.length === 0) return null;
+
+  // Lista de palabras clave para voces de alta calidad (neuronales/naturales)
+  const highQualityKeywords = ['natural', 'neural', 'google', 'premium', 'enhanced'];
+  
+  // Buscar una voz que contenga alguna de las palabras clave
+  for (const keyword of highQualityKeywords) {
+    const bestVoice = filtered.find(v => v.name.toLowerCase().includes(keyword));
+    if (bestVoice) {
+      console.log(`🎙️ Usando voz de alta calidad: ${bestVoice.name} (${bestVoice.lang})`);
+      return bestVoice;
+    }
+  }
+
+  // Si no encuentra ninguna "premium", usar la primera disponible
+  console.log(`🎙️ Usando voz disponible: ${filtered[0].name} (${filtered[0].lang})`);
+  return filtered[0];
+}
+
 function speak(text, lang, onDone) {
   if (!("speechSynthesis" in window)) {
     onDone && onDone();
     return;
   }
+
+  // Cancelar cualquier reproducción anterior
+  speechSynthesis.cancel();
+
   const u = new SpeechSynthesisUtterance(text);
   u.lang = lang;
   u.rate = speed;
+
+  // Asignar la mejor voz encontrada
+  const bestVoice = getBestVoice(lang);
+  if (bestVoice) {
+    u.voice = bestVoice;
+  }
+
   u.onend = () => onDone && onDone();
   u.onerror = () => onDone && onDone();
-  speechSynthesis.cancel();
+  
   speechSynthesis.speak(u);
 }
 
