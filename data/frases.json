@@ -62,7 +62,7 @@
       "en": "How wonderful",
       "es": "¡Qué maravilloso!",
       "audio": "audios/how-wonderful.mp3",
-      "note": "Exclamación para mostrar alegría o admiración.",
+      "note": "Exclamación para mostrar alegría o admiración (a veces usado con sarcasmo).",
       "tags": ["expresiones"]
     },
     {
@@ -118,7 +118,7 @@
       "en": "Catch you later",
       "es": "Te veo luego",
       "audio": "audios/catch-you-later.mp3",
-      "note": "Despedida muy informal, típica entre amigos.",
+      "note": "Lit: Te atrapo luego. Uso: Nos vemos al rato (despedida informal).",
       "tags": ["despedidas"]
     },
     {
@@ -126,7 +126,7 @@
       "en": "Look who's talking",
       "es": "Mira quién habla",
       "audio": "audios/look-whos-talking.mp3",
-      "note": "Se dice a alguien que critica algo que él mismo hace.",
+      "note": "Lit: Mira quién está hablando. Uso: Mira quién fue a hablar (se dice a quien critica algo que él mismo hace).",
       "tags": ["expresiones"]
     },
     {
@@ -198,7 +198,7 @@
       "en": "Thanks for having me over",
       "es": "Gracias por invitarme",
       "audio": "audios/thanks-for-having-me-over.mp3",
-      "note": "Se dice al salir de casa de alguien.",
+      "note": "Lit: Gracias por tenerme aquí. Uso: Gracias por invitarme a tu casa.",
       "tags": ["cortesía"]
     },
     {
@@ -214,7 +214,7 @@
       "en": "How does that sound?",
       "es": "¿Qué te parece?",
       "audio": "audios/how-does-that-sound.mp3",
-      "note": "Se usa para pedir opinión sobre una propuesta.",
+      "note": "Lit: ¿Cómo suena eso? Uso: Se usa para pedir opinión sobre una propuesta.",
       "tags": ["frases"]
     },
     {
@@ -238,7 +238,7 @@
       "en": "Easy",
       "es": "Despacio, tranquilo",
       "audio": "audios/easy.mp3",
-      "note": "Se dice para calmar a alguien.",
+      "note": "Lit: Fácil. Uso: Tranquilo, cálmate, ve despacio.",
       "tags": ["coloquial"]
     },
     {
@@ -246,7 +246,7 @@
       "en": "That does it",
       "es": "Se acabó",
       "audio": "audios/that-does-it.mp3",
-      "note": "Se dice cuando algo llega a su límite.",
+      "note": "Lit: Eso lo hace. Uso: Ya es el colmo, se acabó (cuando algo llega a su límite).",
       "tags": ["expresiones"]
     },
     {
@@ -262,7 +262,7 @@
       "en": "Holy cow",
       "es": "¡Santo cielo!",
       "audio": "audios/holy-cow.mp3",
-      "note": "Exclamación de sorpresa, informal.",
+      "note": "Lit: Vaca santa. Uso: ¡Santo cielo! / ¡Madre mía! (Exclamación de sorpresa).",
       "tags": ["expresiones"]
     },
     {
@@ -278,7 +278,7 @@
       "en": "Knock it off",
       "es": "Ya basta, para",
       "audio": "audios/knock-it-off.mp3",
-      "note": "Se dice para que alguien deje de molestar.",
+      "note": "Lit: Tíralo. Uso: Ya basta, deja de molestar.",
       "tags": ["coloquial"]
     },
     {
@@ -310,7 +310,7 @@
       "en": "Watch your mouth",
       "es": "Cuida tu lenguaje",
       "audio": "audios/watch-your-mouth.mp3",
-      "note": "Se dice a alguien que habla groseramente.",
+      "note": "Lit: Cuida tu boca. Uso: Cuida tu lenguaje, no hables groserías.",
       "tags": ["coloquial"]
     },
     {
@@ -318,7 +318,7 @@
       "en": "What else is new?",
       "es": "¿Cuál es la novedad?",
       "audio": "audios/what-else-is-new.mp3",
-      "note": "Se puede usar irónicamente cuando algo es predecible.",
+      "note": "Lit: ¿Qué más es nuevo? Uso: Se puede usar irónicamente para decir 'nada ha cambiado'.",
       "tags": ["coloquial"]
     },
     {
@@ -326,7 +326,7 @@
       "en": "I'm off",
       "es": "Me voy",
       "audio": "audios/im-off.mp3",
-      "note": "Despedida breve.",
+      "note": "Lit: Estoy apagado/fuera. Uso: Me voy / Me retiro.",
       "tags": ["despedidas"]
     },
     {
@@ -334,7 +334,7 @@
       "en": "My treat",
       "es": "Yo invito",
       "audio": "audios/my-treat.mp3",
-      "note": "Se dice cuando vas a pagar tú.",
+      "note": "Lit: Mi trato/regalo. Uso: Yo pago la cuenta, yo invito.",
       "tags": ["cortesía"]
     },
     {
@@ -342,7 +342,7 @@
       "en": "Butt out",
       "es": "No te metas",
       "audio": "audios/butt-out.mp3",
-      "note": "Informal, un poco agresivo. Se dice a quien se entromete.",
+      "note": "Lit: Sal por el trasero. Uso: No te metas, no te incumbe (informal y agresivo).",
       "tags": ["coloquial"]
     },
     {
@@ -350,7 +350,7 @@
       "en": "Have a heart",
       "es": "Ten corazón",
       "audio": "audios/have-a-heart.mp3",
-      "note": "Se pide compasión o consideración.",
+      "note": "Se pide compasión, piedad o consideración.",
       "tags": ["expresiones"]
     },
     {
@@ -358,7 +358,7 @@
       "en": "I'm with you",
       "es": "Estoy de acuerdo contigo",
       "audio": "audios/im-with-you.mp3",
-      "note": "Muestra apoyo o acuerdo.",
+      "note": "Lit: Estoy contigo. Uso: Te apoyo, estoy de acuerdo.",
       "tags": ["respuestas"]
     },
     {
@@ -374,7 +374,7 @@
       "en": "Out with it",
       "es": "Suéltalo ya",
       "audio": "audios/out-with-it.mp3",
-      "note": "Se pide que alguien diga lo que piensa sin rodeos.",
+      "note": "Lit: Fuera con eso. Uso: Suéltalo ya, di lo que piensas.",
       "tags": ["coloquial"]
     },
     {
@@ -385,12 +385,12 @@
       "note": "Se usa para decir que no hace falta esfuerzo.",
       "tags": ["cortesía"]
     },
-        {
+    {
       "id": 49,
       "en": "Don't go there",
       "es": "No hables de eso",
       "audio": "audios/dont-go-there.mp3",
-      "note": "Expresión figurada. No significa 'no vayas allí', sino 'mejor no toques ese tema'.",
+      "note": "Lit: No vayas allí. Uso figurado: No toques ese tema, no hables de eso.",
       "tags": ["coloquial"]
     },
     {
@@ -398,7 +398,7 @@
       "en": "I can live with that",
       "es": "Puedo vivir con eso",
       "audio": "audios/i-can-live-with-that.mp3",
-      "note": "Se usa para aceptar un acuerdo o situación que no es perfecta pero es tolerable.",
+      "note": "Lit: Puedo vivir con eso. Uso: Lo acepto, puedo tolerarlo.",
       "tags": ["frases"]
     },
     {
@@ -406,7 +406,7 @@
       "en": "I wouldn't go that far",
       "es": "Yo no diría eso, no diría que es para tanto",
       "audio": "audios/i-wouldnt-go-that-far.mp3",
-      "note": "Se usa para moderar la opinión de alguien que está exagerando.",
+      "note": "Lit: No iría tan lejos. Uso: Se usa para moderar la opinión de alguien que exagera.",
       "tags": ["expresiones"]
     },
     {
@@ -414,7 +414,7 @@
       "en": "Time is of the essence",
       "es": "El tiempo es oro, cada segundo cuenta",
       "audio": "audios/time-is-of-the-essence.mp3",
-      "note": "Frase formal para indicar que hay mucha prisa o urgencia.",
+      "note": "Lit: El tiempo es de la esencia. Uso: Frase formal para indicar que hay mucha urgencia.",
       "tags": ["expresiones"]
     },
     {
@@ -422,7 +422,7 @@
       "en": "You know better than that",
       "es": "Tú bien lo sabes, eres mejor que eso",
       "audio": "audios/you-know-better-than-that.mp3",
-      "note": "Se dice cuando alguien comete un error que no debería porque sabe cómo hacerlo bien.",
+      "note": "Lit: Sabes mejor que eso. Uso: Se dice cuando alguien comete un error que no debería porque sabe cómo hacerlo bien.",
       "tags": ["frases"]
     },
     {
@@ -430,7 +430,7 @@
       "en": "You know the drill",
       "es": "Ya sabes qué hacer",
       "audio": "audios/you-know-the-drill.mp3",
-      "note": "'Drill' aquí significa rutina o procedimiento. Se usa cuando algo ya es costumbre.",
+      "note": "Lit: Conoces el taladro. Uso: Ya sabes cómo funciona esto, ya sabes la rutina.",
       "tags": ["coloquial"]
     }
   ]
