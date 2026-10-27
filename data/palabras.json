@@ -828,6 +828,420 @@
       "example_es": "Agregué azúcar a mi café.",
       "note": "Pasado del verbo 'add'.",
       "tags": ["verbos"]
+    },
+        {
+      "id": 93,
+      "en": "Attract",
+      "es": "Atraer, atractivo, atractiva",
+      "example_en": "The magnet will attract the metal.",
+      "example_es": "El imán atraerá el metal.",
+      "note": "",
+      "tags": ["verbos", "adjetivos"]
+    },
+    {
+      "id": 94,
+      "en": "Flying",
+      "es": "Volando, volador, voladora",
+      "example_en": "I saw a flying bird.",
+      "example_es": "Vi un pájaro volador.",
+      "note": "Participio presente del verbo 'fly'.",
+      "tags": ["adjetivos", "verbos"]
+    },
+    {
+      "id": 95,
+      "en": "Lamps",
+      "es": "Lámparas",
+      "example_en": "The lamps are on.",
+      "example_es": "Las lámparas están encendidas.",
+      "note": "Plural de 'lamp'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 96,
+      "en": "Sense",
+      "es": "Sentido, sensación, percibir",
+      "example_en": "That makes no sense.",
+      "example_es": "Eso no tiene sentido.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 97,
+      "en": "Midair",
+      "es": "En el aire, en pleno vuelo",
+      "example_en": "The ball exploded in midair.",
+      "example_es": "La pelota explotó en el aire.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 98,
+      "en": "Attach",
+      "es": "Adjuntar, sujetar, unir",
+      "example_en": "Please attach the file.",
+      "example_es": "Por favor, adjunta el archivo.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 99,
+      "en": "Field",
+      "es": "Campo, ámbito",
+      "example_en": "He works in the medical field.",
+      "example_es": "Él trabaja en el campo médico.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 100,
+      "en": "Straight",
+      "es": "Recto, directo",
+      "example_en": "Draw a straight line.",
+      "example_es": "Dibuja una línea recta.",
+      "note": "",
+      "tags": ["adjetivos", "adverbios"]
+    },
+    {
+      "id": 101,
+      "en": "Owns",
+      "es": "Posee, es dueño de",
+      "example_en": "She owns a big house.",
+      "example_es": "Ella posee una casa grande.",
+      "note": "Tercera persona del singular del verbo 'own'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 102,
+      "en": "Coverage",
+      "es": "Cobertura",
+      "example_en": "The phone has good coverage.",
+      "example_es": "El teléfono tiene buena cobertura.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 103,
+      "en": "Mistake",
+      "es": "Error, equivocación",
+      "example_en": "Everyone makes mistakes.",
+      "example_es": "Todos cometen errores.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 104,
+      "en": "Attention",
+      "es": "Atención",
+      "example_en": "Pay attention to the teacher.",
+      "example_es": "Presta atención al profesor.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 105,
+      "en": "Withdraw",
+      "es": "Retirar, retirarse",
+      "example_en": "I need to withdraw money.",
+      "example_es": "Necesito retirar dinero.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 106,
+      "en": "Aircraft",
+      "es": "Aeronave, avión",
+      "example_en": "The aircraft is landing.",
+      "example_es": "La aeronave está aterrizando.",
+      "note": "Palabra igual en singular y plural.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 107,
+      "en": "Extended",
+      "es": "Extendido, extendida, prolongado, prolongada",
+      "example_en": "We had an extended vacation.",
+      "example_es": "Tuvimos unas vacaciones prolongadas.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 108,
+      "en": "Agency",
+      "es": "Agencia, organismo",
+      "example_en": "I work for an advertising agency.",
+      "example_es": "Trabajo para una agencia de publicidad.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 109,
+      "en": "Praised",
+      "es": "Elogió, alabó",
+      "example_en": "The teacher praised the student.",
+      "example_es": "El profesor elogió al estudiante.",
+      "note": "Pasado del verbo 'praise'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 110,
+      "en": "Damage",
+      "es": "Daño, dañar",
+      "example_en": "The storm caused damage.",
+      "example_es": "La tormenta causó daños.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 111,
+      "en": "Though",
+      "es": "Aunque, sin embargo",
+      "example_en": "It's cold, though sunny.",
+      "example_es": "Hace frío, aunque está soleado.",
+      "note": "",
+      "tags": ["conjunciones"]
+    },
+    {
+      "id": 112,
+      "en": "Valuable",
+      "es": "Valioso, valiosa",
+      "example_en": "This is a valuable jewel.",
+      "example_es": "Esta es una joya valiosa.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 113,
+      "en": "Several",
+      "es": "Varios, varias",
+      "example_en": "I have several books.",
+      "example_es": "Tengo varios libros.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 114,
+      "en": "Supplier",
+      "es": "Proveedor, proveedora",
+      "example_en": "They are our main supplier.",
+      "example_es": "Ellos son nuestro principal proveedor.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 115,
+      "en": "Measure",
+      "es": "Medida, medir",
+      "example_en": "Measure the length of the table.",
+      "example_es": "Mide la longitud de la mesa.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 116,
+      "en": "Rent",
+      "es": "Alquilar, alquiler",
+      "example_en": "I want to rent a car.",
+      "example_es": "Quiero alquilar un coche.",
+      "note": "",
+      "tags": ["verbos", "sustantivos"]
+    },
+    {
+      "id": 117,
+      "en": "Deal",
+      "es": "Trato, acuerdo, negociar",
+      "example_en": "We made a good deal.",
+      "example_es": "Hicimos un buen trato.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 118,
+      "en": "Lower",
+      "es": "Bajar, inferior, más bajo",
+      "example_en": "Lower the volume, please.",
+      "example_es": "Baja el volumen, por favor.",
+      "note": "",
+      "tags": ["verbos", "adjetivos"]
+    },
+    {
+      "id": 119,
+      "en": "Drove",
+      "es": "Condujo, manejó",
+      "example_en": "He drove to work.",
+      "example_es": "Él condujo al trabajo.",
+      "note": "Pasado del verbo 'drive'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 120,
+      "en": "Protester",
+      "es": "Manifestante, protestante",
+      "example_en": "The protester held a sign.",
+      "example_es": "El manifestante sostenía un cartel.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 121,
+      "en": "Major",
+      "es": "Principal, importante, mayor",
+      "example_en": "This is a major problem.",
+      "example_es": "Este es un problema importante.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 122,
+      "en": "Fuel",
+      "es": "Combustible, alimentar",
+      "example_en": "We need fuel for the car.",
+      "example_es": "Necesitamos combustible para el coche.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 123,
+      "en": "Targeted",
+      "es": "Dirigido, dirigida, seleccionado como objetivo, seleccionada como objetivo",
+      "example_en": "It was a targeted attack.",
+      "example_es": "Fue un ataque dirigido.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 124,
+      "en": "Whom",
+      "es": "A quién, a quien",
+      "example_en": "With whom did you speak?",
+      "example_es": "¿Con quién hablaste?",
+      "note": "Forma formal de 'who' usada como objeto.",
+      "tags": ["pronombres"]
+    },
+    {
+      "id": 125,
+      "en": "Mainly",
+      "es": "Principalmente",
+      "example_en": "I eat mainly vegetables.",
+      "example_es": "Como principalmente verduras.",
+      "note": "",
+      "tags": ["adverbios"]
+    },
+    {
+      "id": 126,
+      "en": "Proposal",
+      "es": "Propuesta",
+      "example_en": "She accepted the proposal.",
+      "example_es": "Ella aceptó la propuesta.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 127,
+      "en": "Tax break",
+      "es": "Exención fiscal, reducción de impuestos",
+      "example_en": "The government offered a tax break.",
+      "example_es": "El gobierno ofreció una exención fiscal.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 128,
+      "en": "Chiefs",
+      "es": "Jefes, dirigentes",
+      "example_en": "The company chiefs met today.",
+      "example_es": "Los jefes de la empresa se reunieron hoy.",
+      "note": "Plural de 'chief'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 129,
+      "en": "Singer",
+      "es": "Cantante",
+      "example_en": "She is a famous singer.",
+      "example_es": "Ella es una cantante famosa.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 130,
+      "en": "Ers",
+      "es": "Terminación usada en algunas palabras para indicar personas que realizan una actividad",
+      "example_en": "Words like workers use 'ers'.",
+      "example_es": "Palabras como 'workers' usan 'ers'.",
+      "note": "'Ers' por sí sola no suele ser una palabra completa, es un sufijo.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 131,
+      "en": "Spokesperson",
+      "es": "Portavoz",
+      "example_en": "The spokesperson gave a statement.",
+      "example_es": "El portavoz dio una declaración.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 132,
+      "en": "Rent homes",
+      "es": "Alquilar viviendas, viviendas en alquiler",
+      "example_en": "They rent homes to tourists.",
+      "example_es": "Ellos alquilan viviendas a turistas.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 133,
+      "en": "Childcare",
+      "es": "Cuidado infantil",
+      "example_en": "Childcare is expensive.",
+      "example_es": "El cuidado infantil es caro.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 134,
+      "en": "Poverty",
+      "es": "Pobreza",
+      "example_en": "Many people live in poverty.",
+      "example_es": "Muchas personas viven en la pobreza.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 135,
+      "en": "Taboo",
+      "es": "Tabú",
+      "example_en": "It is a taboo subject.",
+      "example_es": "Es un tema tabú.",
+      "note": "",
+      "tags": ["sustantivos", "adjetivos"]
+    },
+    {
+      "id": 136,
+      "en": "Childhood",
+      "es": "Infancia, niñez",
+      "example_en": "I had a happy childhood.",
+      "example_es": "Tuve una infancia feliz.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 137,
+      "en": "Poor",
+      "es": "Pobre",
+      "example_en": "He is a poor man.",
+      "example_es": "Él es un hombre pobre.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 138,
+      "en": "Fewer",
+      "es": "Menos (para sustantivos contables)",
+      "example_en": "There are fewer cars today.",
+      "example_es": "Hay menos coches hoy.",
+      "note": "Se usa para cosas que se pueden contar. Para incontables (como agua) se usa 'less'.",
+      "tags": ["adjetivos"]
     }
   ]
 }
