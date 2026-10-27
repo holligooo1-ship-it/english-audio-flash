@@ -92,7 +92,7 @@
     {
       "id": 12,
       "en": "Just a moment",
-      "es": "Solo un momento",
+      "es": "Solo un momento, espere un momento",
       "audio": "audios/just-a-moment.mp3",
       "note": "Pide una pequeña espera.",
       "tags": ["frases"]
@@ -172,7 +172,7 @@
     {
       "id": 22,
       "en": "Not at all",
-      "es": "Para nada",
+      "es": "Para nada, en lo absoluto",
       "audio": "audios/not-at-all.mp3",
       "note": "Respuesta cortés cuando te dan las gracias.",
       "tags": ["respuestas"]
@@ -212,7 +212,7 @@
     {
       "id": 27,
       "en": "How does that sound?",
-      "es": "¿Qué te parece?",
+      "es": "¿Qué te parece?,¿Como te suena?",
       "audio": "audios/how-does-that-sound.mp3",
       "note": "Lit: ¿Cómo suena eso? Uso: Se usa para pedir opinión sobre una propuesta.",
       "tags": ["frases"]
@@ -244,7 +244,7 @@
     {
       "id": 31,
       "en": "That does it",
-      "es": "Se acabó",
+      "es": "Se acabó , eso es todo",
       "audio": "audios/that-does-it.mp3",
       "note": "Lit: Eso lo hace. Uso: Ya es el colmo, se acabó (cuando algo llega a su límite).",
       "tags": ["expresiones"]
@@ -292,7 +292,7 @@
     {
       "id": 37,
       "en": "Don't mind if I do",
-      "es": "Si no te importa",
+      "es": "Si no te importa, si no te molesta",
       "audio": "audios/dont-mind-if-i-do.mp3",
       "note": "Se dice al aceptar algo con educación.",
       "tags": ["cortesía"]
@@ -340,7 +340,7 @@
     {
       "id": 43,
       "en": "Butt out",
-      "es": "No te metas",
+      "es": "No te metas, ocúpate de lo tuyo",
       "audio": "audios/butt-out.mp3",
       "note": "Lit: Sal por el trasero. Uso: No te metas, no te incumbe (informal y agresivo).",
       "tags": ["coloquial"]
@@ -348,7 +348,7 @@
     {
       "id": 44,
       "en": "Have a heart",
-      "es": "Ten corazón",
+      "es": "Ten corazón, no seas tan duro",
       "audio": "audios/have-a-heart.mp3",
       "note": "Se pide compasión, piedad o consideración.",
       "tags": ["expresiones"]
@@ -372,7 +372,7 @@
     {
       "id": 47,
       "en": "Out with it",
-      "es": "Suéltalo ya",
+      "es": "Suéltalo ya , di lo que piensas",
       "audio": "audios/out-with-it.mp3",
       "note": "Lit: Fuera con eso. Uso: Suéltalo ya, di lo que piensas.",
       "tags": ["coloquial"]
@@ -380,7 +380,7 @@
     {
       "id": 48,
       "en": "Don't bother",
-      "es": "No te molestes",
+      "es": "No te molestes , no  hace falta",
       "audio": "audios/dont-bother.mp3",
       "note": "Se usa para decir que no hace falta esfuerzo.",
       "tags": ["cortesía"]
