@@ -12,8 +12,8 @@
     },
     {
       "id": "palabras",
-      "name": "Palabras Esenciales",
-      "short": "Palabras",
+      "name": "1000 Palabras Esenciales",
+      "short": "1000 Palabras",
       "description": "Verbos, sujetos y vocabulario básico",
       "file": "data/palabras.json",
       "color": "palabras",
