@@ -1242,6 +1242,609 @@
       "example_es": "Hay menos coches hoy.",
       "note": "Se usa para cosas que se pueden contar. Para incontables (como agua) se usa 'less'.",
       "tags": ["adjetivos"]
+    },
+        {
+      "id": 139,
+      "en": "Bold",
+      "es": "Audaz, valiente, atrevido",
+      "example_en": "It was a bold decision.",
+      "example_es": "Fue una decisión audaz.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 140,
+      "en": "Stance",
+      "es": "Postura, posición",
+      "example_en": "What is your stance on this issue?",
+      "example_es": "¿Cuál es tu postura sobre este tema?",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 141,
+      "en": "Currently",
+      "es": "Actualmente",
+      "example_en": "I am currently working.",
+      "example_es": "Actualmente estoy trabajando.",
+      "note": "",
+      "tags": ["adverbios"]
+    },
+    {
+      "id": 142,
+      "en": "Peace",
+      "es": "Paz",
+      "example_en": "We want world peace.",
+      "example_es": "Queremos paz mundial.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 143,
+      "en": "Killed",
+      "es": "Asesinado, mató",
+      "example_en": "The accident killed him.",
+      "example_es": "El accidente lo mató.",
+      "note": "Pasado del verbo 'kill'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 144,
+      "en": "Civilian",
+      "es": "Civil, ciudadano",
+      "example_en": "The civilian population was safe.",
+      "example_es": "La población civil estaba a salvo.",
+      "note": "",
+      "tags": ["sustantivos", "adjetivos"]
+    },
+    {
+      "id": 145,
+      "en": "Struggling",
+      "es": "Luchando, esforzándose, teniendo dificultades",
+      "example_en": "She is struggling with math.",
+      "example_es": "Ella está teniendo dificultades con las matemáticas.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 146,
+      "en": "Disorder",
+      "es": "Desorden, trastorno",
+      "example_en": "The room is in disorder.",
+      "example_es": "La habitación está en desorden.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 147,
+      "en": "Recently",
+      "es": "Recientemente",
+      "example_en": "I recently moved here.",
+      "example_es": "Me mudé aquí recientemente.",
+      "note": "",
+      "tags": ["adverbios"]
+    },
+    {
+      "id": 148,
+      "en": "Smaller",
+      "es": "Más pequeño",
+      "example_en": "This shirt is smaller.",
+      "example_es": "Esta camisa es más pequeña.",
+      "note": "Comparativo de 'small'.",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 149,
+      "en": "Sclerosis",
+      "es": "Esclerosis",
+      "example_en": "Multiple sclerosis is a disease.",
+      "example_es": "La esclerosis múltiple es una enfermedad.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 150,
+      "en": "Using",
+      "es": "Usando, utilizando",
+      "example_en": "I am using my phone.",
+      "example_es": "Estoy usando mi teléfono.",
+      "note": "Gerundio del verbo 'use'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 151,
+      "en": "Cells",
+      "es": "Células, celdas",
+      "example_en": "The body has many cells.",
+      "example_es": "El cuerpo tiene muchas células.",
+      "note": "Plural de 'cell'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 152,
+      "en": "Patient",
+      "es": "Paciente",
+      "example_en": "The doctor is with a patient.",
+      "example_es": "El doctor está con un paciente.",
+      "note": "",
+      "tags": ["sustantivos", "adjetivos"]
+    },
+    {
+      "id": 153,
+      "en": "Happen",
+      "es": "Ocurrir, suceder",
+      "example_en": "What will happen next?",
+      "example_es": "¿Qué ocurrirá después?",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 154,
+      "en": "Prefix",
+      "es": "Prefijo",
+      "example_en": "A prefix goes at the start of a word.",
+      "example_es": "Un prefijo va al inicio de una palabra.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 155,
+      "en": "Unique",
+      "es": "Único",
+      "example_en": "This is a unique piece.",
+      "example_es": "Esta es una pieza única.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 156,
+      "en": "Weaver",
+      "es": "Tejedor, tejedora",
+      "example_en": "The weaver made a rug.",
+      "example_es": "El tejedor hizo una alfombra.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 157,
+      "en": "Meaning",
+      "es": "Significado, sentido",
+      "example_en": "What is the meaning of this?",
+      "example_es": "¿Cuál es el significado de esto?",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 158,
+      "en": "Handshake",
+      "es": "Apretón de manos",
+      "example_en": "They sealed the deal with a handshake.",
+      "example_es": "Sellaron el trato con un apretón de manos.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 159,
+      "en": "Hostages",
+      "es": "Rehenes",
+      "example_en": "The hostages were released.",
+      "example_es": "Los rehenes fueron liberados.",
+      "note": "Plural de 'hostage'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 160,
+      "en": "Unclear",
+      "es": "Poco claro, confuso",
+      "example_en": "The instructions are unclear.",
+      "example_es": "Las instrucciones son poco claras.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 161,
+      "en": "Troops",
+      "es": "Tropas",
+      "example_en": "The troops are moving.",
+      "example_es": "Las tropas se están moviendo.",
+      "note": "Plural de 'troop'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 162,
+      "en": "Ducklings",
+      "es": "Patitos",
+      "example_en": "The ducklings follow their mother.",
+      "example_es": "Los patitos siguen a su madre.",
+      "note": "Plural de 'duckling'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 163,
+      "en": "Ducks",
+      "es": "Patos",
+      "example_en": "The ducks are swimming.",
+      "example_es": "Los patos están nadando.",
+      "note": "Plural de 'duck'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 164,
+      "en": "Duck",
+      "es": "Pato, agacharse",
+      "example_en": "Duck your head!",
+      "example_es": "¡Agacha la cabeza!",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 165,
+      "en": "I got it",
+      "es": "Lo tengo, lo entendí",
+      "example_en": "Don't explain, I got it.",
+      "example_es": "No expliques, lo entendí.",
+      "note": "",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 166,
+      "en": "Ambassador",
+      "es": "Embajador, embajadora",
+      "example_en": "He is the new ambassador.",
+      "example_es": "Él es el nuevo embajador.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 167,
+      "en": "Vaccine",
+      "es": "Vacuna",
+      "example_en": "The vaccine is safe.",
+      "example_es": "La vacuna es segura.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 168,
+      "en": "Exchange",
+      "es": "Intercambio, intercambiar",
+      "example_en": "We can exchange numbers.",
+      "example_es": "Podemos intercambiar números.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 169,
+      "en": "Remain",
+      "es": "Permanecer, quedarse",
+      "example_en": "Please remain seated.",
+      "example_es": "Por favor, permanezca sentado.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 170,
+      "en": "Risk",
+      "es": "Riesgo, arriesgarse",
+      "example_en": "It is a big risk.",
+      "example_es": "Es un gran riesgo.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 171,
+      "en": "Shot",
+      "es": "Disparo, inyección, fotografía",
+      "example_en": "I need a flu shot.",
+      "example_es": "Necesito una inyección contra la gripe.",
+      "note": "También puede significar 'disparo' o 'toma fotográfica'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 172,
+      "en": "Update",
+      "es": "Actualización, actualizar",
+      "example_en": "Give me an update.",
+      "example_es": "Dame una actualización.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 173,
+      "en": "Effectiveness",
+      "es": "Eficacia, efectividad",
+      "example_en": "We need to test its effectiveness.",
+      "example_es": "Necesitamos probar su eficacia.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 174,
+      "en": "Health",
+      "es": "Salud",
+      "example_en": "Health is wealth.",
+      "example_es": "La salud es riqueza.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 175,
+      "en": "Release",
+      "es": "Liberar, lanzamiento, publicación",
+      "example_en": "The movie release is today.",
+      "example_es": "El lanzamiento de la película es hoy.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 176,
+      "en": "Include",
+      "es": "Incluir",
+      "example_en": "Does the price include tax?",
+      "example_es": "¿El precio incluye impuestos?",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 177,
+      "en": "Ensure",
+      "es": "Asegurar, garantizar",
+      "example_en": "Ensure the door is locked.",
+      "example_es": "Asegúrate de que la puerta esté cerrada.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 178,
+      "en": "Dealt",
+      "es": "Trató, se ocupó de, repartió",
+      "example_en": "He dealt with the problem.",
+      "example_es": "Él se ocupó del problema.",
+      "note": "Pasado del verbo 'deal'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 179,
+      "en": "Path",
+      "es": "Camino, sendero, ruta",
+      "example_en": "Follow this path.",
+      "example_es": "Sigue este camino.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 180,
+      "en": "Offit",
+      "es": "Posible nombre propio o error de escritura",
+      "example_en": "Is this word 'offit'?",
+      "example_es": "¿Es esta palabra 'offit'?",
+      "note": "Posible error tipográfico. Tal vez quisiste decir 'Profit' (ganancia).",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 181,
+      "en": "Benefit",
+      "es": "Beneficio, beneficiar",
+      "example_en": "Exercise has many benefits.",
+      "example_es": "El ejercicio tiene muchos beneficios.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 182,
+      "en": "Flu",
+      "es": "Gripe",
+      "example_en": "I have the flu.",
+      "example_es": "Tengo gripe.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 183,
+      "en": "Age",
+      "es": "Edad, envejecer",
+      "example_en": "What is your age?",
+      "example_es": "¿Cuál es tu edad?",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 184,
+      "en": "Duoblo",
+      "es": "Posible error de escritura",
+      "example_en": "Maybe you meant 'double'?",
+      "example_es": "¿Quizás quisiste decir 'double'?",
+      "note": "Posible error tipográfico. Tal vez quisiste decir 'Double' (doble).",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 185,
+      "en": "Dries",
+      "es": "Seca, se seca",
+      "example_en": "The sun dries the clothes.",
+      "example_es": "El sol seca la ropa.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 186,
+      "en": "Refuge",
+      "es": "Refugio",
+      "example_en": "We found a refuge from the rain.",
+      "example_es": "Encontramos un refugio de la lluvia.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 187,
+      "en": "Cool",
+      "es": "Genial, fresco, enfriar",
+      "example_en": "That is a cool car.",
+      "example_es": "Ese es un coche genial.",
+      "note": "",
+      "tags": ["adjetivos", "verbos"]
+    },
+    {
+      "id": 188,
+      "en": "Begin",
+      "es": "Comenzar, empezar",
+      "example_en": "Let's begin the class.",
+      "example_es": "Comencemos la clase.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 189,
+      "en": "Leopard",
+      "es": "Leopardo",
+      "example_en": "The leopard is fast.",
+      "example_es": "El leopardo es rápido.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 190,
+      "en": "Hidden",
+      "es": "Oculto, escondido",
+      "example_en": "The treasure is hidden.",
+      "example_es": "El tesoro está oculto.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 191,
+      "en": "Fate",
+      "es": "Destino",
+      "example_en": "It was fate.",
+      "example_es": "Fue el destino.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 192,
+      "en": "Arabix",
+      "es": "Posible nombre propio o error de escritura",
+      "example_en": "Maybe you meant 'Arabic'?",
+      "example_es": "¿Quizás quisiste decir 'Arabic'?",
+      "note": "Posible error tipográfico. Tal vez quisiste decir 'Arabic' (árabe).",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 193,
+      "en": "Scarred",
+      "es": "Con cicatrices, marcado emocionalmente",
+      "example_en": "He is scarred from the accident.",
+      "example_es": "Él quedó con cicatrices del accidente.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 194,
+      "en": "Riverbed",
+      "es": "Lecho del río, cauce",
+      "example_en": "The riverbed is dry.",
+      "example_es": "El lecho del río está seco.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 195,
+      "en": "Crop",
+      "es": "Cultivo, cosecha",
+      "example_en": "The corn crop was good this year.",
+      "example_es": "La cosecha de maíz fue buena este año.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 196,
+      "en": "Thrive",
+      "es": "Prosperar, desarrollarse, crecer vigorosamente",
+      "example_en": "Plants thrive in the sun.",
+      "example_es": "Las plantas prosperan al sol.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 197,
+      "en": "Grassland",
+      "es": "Pradera, pastizal",
+      "example_en": "Animals live in the grassland.",
+      "example_es": "Los animales viven en la pradera.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 198,
+      "en": "Recorded",
+      "es": "Grabado, registrado",
+      "example_en": "I recorded the video.",
+      "example_es": "Grabé el video.",
+      "note": "",
+      "tags": ["verbos", "adjetivos"]
+    },
+    {
+      "id": 199,
+      "en": "Population",
+      "es": "Población",
+      "example_en": "The city population is growing.",
+      "example_es": "La población de la ciudad está creciendo.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 200,
+      "en": "Movement",
+      "es": "Movimiento",
+      "example_en": "The movement was peaceful.",
+      "example_es": "El movimiento fue pacífico.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 201,
+      "en": "Enriches",
+      "es": "Enriquece, enriquece a",
+      "example_en": "Reading enriches the mind.",
+      "example_es": "La lectura enriquece la mente.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 202,
+      "en": "Monsoon",
+      "es": "Monzón, temporada de lluvias intensas",
+      "example_en": "The monsoon brings heavy rain.",
+      "example_es": "El monzón trae lluvias intensas.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 203,
+      "en": "Seedpods",
+      "es": "Vainas de semillas",
+      "example_en": "The tree drops seedpods.",
+      "example_es": "El árbol deja caer vainas de semillas.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 204,
+      "en": "Caterpillars",
+      "es": "Orugas",
+      "example_en": "Caterpillars turn into butterflies.",
+      "example_es": "Las orugas se convierten en mariposas.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 205,
+      "en": "Stallions",
+      "es": "Caballos sementales",
+      "example_en": "The stallions are running.",
+      "example_es": "Los caballos sementales están corriendo.",
+      "note": "",
+      "tags": ["sustantivos"]
     }
   ]
 }
