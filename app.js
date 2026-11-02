@@ -825,3 +825,12 @@ pauseValue.textContent = pauseSeconds + "s";
 setPlayState(false);
 loadDecksIndex();
 refreshIcons();
+
+// 👇 AÑADE ESTAS LÍNEAS PARA ACTIVAR EL MODO OFFLINE 👇
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg => console.log('✅ Service Worker registrado. Modo offline activo.'))
+      .catch(err => console.warn('⚠️ Error al registrar Service Worker:', err));
+  });
+}
