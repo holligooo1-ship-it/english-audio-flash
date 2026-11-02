@@ -432,6 +432,54 @@
       "audio": "audios/you-know-the-drill.mp3",
       "note": "Lit: Conoces el taladro. Uso: Ya sabes cómo funciona esto, ya sabes la rutina.",
       "tags": ["coloquial"]
+    },
+        {
+      "id": 55,
+      "en": "What's that supposed to mean?",
+      "es": "¿Qué se supone que significa eso?",
+      "audio": "audios/whats-that-supposed-to-mean.mp3",
+      "note": "Se usa cuando algo te parece confuso o sospechoso.",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 56,
+      "en": "Not again.",
+      "es": "No otra vez.",
+      "audio": "audios/not-again.mp3",
+      "note": "",
+      "tags": ["frases"]
+    },
+    {
+      "id": 57,
+      "en": "Stay safe",
+      "es": "Cuídate.",
+      "audio": "audios/stay-safe.mp3",
+      "note": "Muy usado para despedirse deseando el bienestar del otro.",
+      "tags": ["despedidas"]
+    },
+    {
+      "id": 58,
+      "en": "Not possible",
+      "es": "Imposible, no puedo.",
+      "audio": "audios/not-possible.mp3",
+      "note": "",
+      "tags": ["respuestas"]
+    },
+    {
+      "id": 59,
+      "en": "Not this time.",
+      "es": "No en esta ocasión, no esta vez.",
+      "audio": "audios/not-this-time.mp3",
+      "note": "",
+      "tags": ["frases"]
+    },
+    {
+      "id": 60,
+      "en": "Time out.",
+      "es": "Tiempo fuera.",
+      "audio": "audios/time-out.mp3",
+      "note": "Se usa en juegos o discusiones para hacer una pausa.",
+      "tags": ["expresiones"]
     }
   ]
 }
