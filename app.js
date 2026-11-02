@@ -169,6 +169,14 @@ async function loadDecksIndex() {
   } catch (err) {
     console.error(err);
     deckGrid.innerHTML = `<p style="color:#ef4444;text-align:center;">Error al cargar los mazos</p>`;
+  } finally {
+    // 👇 OCULTAR PANTALLA DE BIENVENIDA 👇
+    const splash = document.getElementById("splash-screen");
+    if (splash) {
+      splash.classList.add("hidden");
+      // Lo quitamos del DOM después de la animación
+      setTimeout(() => splash.remove(), 600);
+    }
   }
 }
 
