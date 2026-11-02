@@ -1026,3 +1026,69 @@ svg.lucide {
   .deck-item-en { font-size: 15px; }
   .deck-item-es { font-size: 13px; }
 }
+/* ---------- SPLASH SCREEN (PANTALLA DE BIENVENIDA) ---------- */
+#splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% -10%, rgba(236, 72, 153, 0.18), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 100% 100%, rgba(139, 92, 246, 0.16), transparent 60%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1));
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#splash-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.splash-logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 30px;
+  object-fit: cover;
+  animation: splashPulse 2s infinite alternate, splashFadeIn 1s ease-out;
+  box-shadow: 0 0 40px rgba(236, 72, 153, 0.4);
+}
+
+.splash-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-top: 20px;
+  background: linear-gradient(90deg, #ec4899, #8b5cf6, #06b6d4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: splashFadeIn 1.5s ease-out;
+}
+
+.splash-loader {
+  margin-top: 30px;
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(236, 72, 153, 0.2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: splashSpin 1s linear infinite;
+}
+
+@keyframes splashSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes splashFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes splashPulse {
+  from { transform: scale(1); box-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
+  to { transform: scale(1.05); box-shadow: 0 0 50px rgba(139, 92, 246, 0.6); }
+}
