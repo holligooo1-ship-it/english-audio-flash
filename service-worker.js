@@ -1,4 +1,5 @@
-const CACHE_NAME = 'audio-flash-v1';
+// 👇 SUBIMOS A v2 PARA FORZAR LA ACTUALIZACIÓN
+const CACHE_NAME = 'audio-flash-v2'; 
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -12,7 +13,7 @@ const ASSETS_TO_CACHE = [
   'https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap'
 ];
 
-// 1. Instalar y guardar en caché los archivos principales
+// 1. Instalar
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
@@ -22,7 +23,7 @@ self.addEventListener('install', event => {
   self.skipWaiting();
 });
 
-// 2. Activar y limpiar cachés viejos
+// 2. Activar y limpiar versiones viejas
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -38,15 +39,39 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// 3. Interceptar peticiones (Estrategia: Red primero, si falla, usa el caché)
+// 3. Interceptar peticiones
 self.addEventListener('fetch', event => {
-  // Ignorar peticiones que no sean GET
   if (event.request.method !== 'GET') return;
 
+  const url = event.request.url;
+
+  // 👇 TRATO ESPECIAL PARA LOS AUDIOS MP3 👇
+  if (url.includes('/audios/') && url.endsWith('.mp3')) {
+    event.respondWith(
+      caches.match(url).then(cachedResponse => {
+        // Si ya está en caché, lo devolvemos
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        // Si no, lo descargamos completo (sin rangos) para poder guardarlo
+        return fetch(url).then(response => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(url, clone);
+            });
+          }
+          return response;
+        });
+      })
+    );
+    return;
+  }
+
+  // 👇 TRATO NORMAL PARA EL RESTO DE LA APP (HTML, CSS, JS, JSON) 👇
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        // Si la red responde, guardamos una copia nueva en caché
         if (response && response.status === 200) {
           const responseClone = response.clone();
           caches.open(CACHE_NAME).then(cache => {
@@ -56,7 +81,7 @@ self.addEventListener('fetch', event => {
         return response;
       })
       .catch(() => {
-        // Si falla la red (no hay internet), buscamos en el caché
+        // Si no hay internet, usa el caché
         return caches.match(event.request);
       })
   );
