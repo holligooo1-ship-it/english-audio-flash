@@ -100,6 +100,7 @@ const wordEn       = document.getElementById("wordEn");
 const wordEs       = document.getElementById("wordEs");
 const noteEl       = document.getElementById("note");
 const exampleEl    = document.getElementById("example");
+const altEl        = document.getElementById("alt"); 
 const counter      = document.getElementById("counter");
 const progressBar  = document.getElementById("progressBar");
 const cardEl       = document.getElementById("card");
@@ -440,37 +441,27 @@ function renderCard() {
   const c = sessionCards[currentIndex];
   if (!c) return;
 
-  // ✅ CAMBIO AQUÍ: Mostrar ambos idiomas en pantalla
   if (direction === "en-es") {
-    wordEn.textContent = c.es;   // Principal en español
-    wordEs.textContent = c.en;   // Subtítulo en inglés
+    wordEn.textContent = c.es;
+    wordEs.textContent = c.en;
   } else {
-    wordEn.textContent = c.en;   // Principal en inglés
-    wordEs.textContent = c.es;   // Subtítulo en español
+    wordEn.textContent = c.en;
+    wordEs.textContent = c.es;
   }
 
-  // Ejemplo (icono Lucide + botón de audio)
+  // Ejemplo
   const exEn = (c.example_en || "").trim();
   const exEs = (c.example_es || "").trim();
-
   if (exEn || exEs) {
-    let html = `<i data-lucide="book-open"></i>`;
-    html += `<div class="ex-body">`;
+    let html = `<i data-lucide="book-open"></i><div class="ex-body">`;
     if (exEn) html += `<span class="ex-en">${escapeHtml(exEn)}</span>`;
     if (exEs) html += `<span class="ex-es">${escapeHtml(exEs)}</span>`;
     html += `</div>`;
-
     if (exEn) {
-      html += `
-        <button class="example-play-btn" title="Escuchar ejemplo" aria-label="Escuchar ejemplo">
-          <i data-lucide="volume-2"></i>
-        </button>
-      `;
+      html += `<button class="example-play-btn" title="Escuchar ejemplo"><i data-lucide="volume-2"></i></button>`;
     }
-
     exampleEl.innerHTML = html;
     refreshIcons();
-
     const exBtn = exampleEl.querySelector(".example-play-btn");
     if (exBtn && exEn) {
       exBtn.addEventListener("click", (e) => {
@@ -480,6 +471,31 @@ function renderCard() {
     }
   } else {
     exampleEl.innerHTML = "";
+  }
+
+  // 👇 NUEVA LÓGICA: ALTERNATIVA 👇
+  const altEn = (c.alt_en || "").trim();
+  const altEs = (c.alt_es || "").trim();
+  if (altEn || altEs) {
+    let html = `<i data-lucide="git-branch"></i><div class="alt-body">`;
+    html += `<span class="alt-label">También se puede decir:</span>`;
+    if (altEn) html += `<span class="alt-en">${escapeHtml(altEn)}</span>`;
+    if (altEs) html += `<span class="alt-es">${escapeHtml(altEs)}</span>`;
+    html += `</div>`;
+    if (altEn) {
+      html += `<button class="alt-play-btn" title="Escuchar alternativa"><i data-lucide="volume-2"></i></button>`;
+    }
+    altEl.innerHTML = html;
+    refreshIcons();
+    const altBtn = altEl.querySelector(".alt-play-btn");
+    if (altBtn && altEn) {
+      altBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        playAltExample(altEn, altBtn);
+      });
+    }
+  } else {
+    altEl.innerHTML = "";
   }
 
   // Nota
