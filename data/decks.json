@@ -19,6 +19,16 @@
       "color": "palabras",
       "icon": "type",
       "limitMax": 1000
+    },
+    {
+      "id": "comun",
+      "name": "Lenguaje Común",
+      "short": "Lenguaje Común",
+      "description": "Frases de uso diario y sus alternativas",
+      "file": "data/lenguaje_comun.json",
+      "color": "comun",
+      "icon": "message-circle",
+      "limitMax": 100
     }
   ]
 }
