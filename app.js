@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v23
-// Traducción visible en ambos idiomas (subtítulo)
+// ENGLISH AUDIO FLASH - v24
+// Soporte para Alternativas (Lenguaje Común) y modo offline
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -171,11 +171,9 @@ async function loadDecksIndex() {
     console.error(err);
     deckGrid.innerHTML = `<p style="color:#ef4444;text-align:center;">Error al cargar los mazos</p>`;
   } finally {
-    // 👇 OCULTAR PANTALLA DE BIENVENIDA 👇
     const splash = document.getElementById("splash-screen");
     if (splash) {
       splash.classList.add("hidden");
-      // Lo quitamos del DOM después de la animación
       setTimeout(() => splash.remove(), 600);
     }
   }
@@ -364,6 +362,7 @@ function resetCycle() {
     wordEs.textContent = "";
     noteEl.innerHTML = "";
     exampleEl.innerHTML = "";
+    altEl.innerHTML = "";
     counter.textContent = "0 / 0";
     progressBar.style.width = "0%";
     setStatus("Sin tarjetas", "alert-circle");
@@ -473,7 +472,7 @@ function renderCard() {
     exampleEl.innerHTML = "";
   }
 
-  // 👇 NUEVA LÓGICA: ALTERNATIVA 👇
+  // Alternativa
   const altEn = (c.alt_en || "").trim();
   const altEs = (c.alt_es || "").trim();
   if (altEn || altEs) {
@@ -525,7 +524,44 @@ function playExample(text, btn) {
   if (examplePlaying) {
     speechSynthesis.cancel();
     examplePlaying = false;
-    document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing"));
+    document.querySelectorAll(".example-play-btn.playing, .alt-play-btn.playing").forEach(b => b.classList.remove("playing"));
+    return;
+  }
+
+  player.pause();
+  player.onended = null;
+  player.onerror = null;
+  speechSynthesis.cancel();
+
+  examplePlaying = true;
+  if (btn) btn.classList.add("playing");
+
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "en-US";
+  u.rate = speed;
+
+  const bestVoice = getBestVoice("en-US");
+  if (bestVoice) u.voice = bestVoice;
+
+  const cleanup = () => {
+    examplePlaying = false;
+    if (btn) btn.classList.remove("playing");
+  };
+
+  u.onend = cleanup;
+  u.onerror = cleanup;
+
+  speechSynthesis.speak(u);
+}
+
+// ---------- REPRODUCIR ALTERNATIVA (por separado) ----------
+function playAltExample(text, btn) {
+  if (!("speechSynthesis" in window)) return;
+
+  if (examplePlaying) {
+    speechSynthesis.cancel();
+    examplePlaying = false;
+    document.querySelectorAll(".example-play-btn.playing, .alt-play-btn.playing").forEach(b => b.classList.remove("playing"));
     return;
   }
 
@@ -622,7 +658,7 @@ function playCard(gen) {
     pendingResolve = resolve;
     cardEl.classList.add("playing");
 
-    const done = () => {
+    const finishAll = () => {
       if (gen !== loopGeneration) return;
       pendingResolve = null;
       setStatus("Pausa", "pause");
@@ -634,24 +670,57 @@ function playCard(gen) {
       }, pauseSeconds * 1000);
     };
 
+    const playAlt = (lang, callback) => {
+      const altText = lang === "en" ? c.alt_en : c.alt_es;
+      if (altText) {
+        setStatus(lang === "en" ? "Alternativa (EN)" : "Alternativa (ES)", "git-branch");
+        setTimeout(() => {
+          if (gen !== loopGeneration) return;
+          if (lang === "en") speakEnglish(altText, callback);
+          else speakSpanish(altText, callback);
+        }, 800); // Pausa antes de la alternativa
+      } else {
+        callback();
+      }
+    };
+
     if (direction === "en-es") {
       setStatus("Inglés", "volume-2");
       statusEl.classList.add("active");
-
-      if (c.audio) {
-        player.onended = done;
-        player.onerror = () => { console.warn("Error audio:", c.audio); done(); };
-        player.src = c.audio;
-        player.playbackRate = speed;
-        player.currentTime = 0;
-        player.play().catch(done);
-      } else {
-        speakEnglish(c.en, done);
-      }
+      const playEn = () => {
+        if (c.audio) {
+          player.onended = () => playAlt("en", finishAll);
+          player.onerror = () => playAlt("en", finishAll);
+          player.src = c.audio;
+          player.playbackRate = speed;
+          player.currentTime = 0;
+          player.play().catch(() => playAlt("en", finishAll));
+        } else {
+          speakEnglish(c.en, () => playAlt("en", finishAll));
+        }
+      };
+      playEn();
     } else {
       setStatus("Español", "languages");
       statusEl.classList.add("active");
-      speakSpanish(c.es, done);
+      const playEs = () => {
+        speakSpanish(c.es, () => {
+          const playEn = () => {
+            if (c.audio) {
+              player.onended = () => playAlt("en", finishAll);
+              player.onerror = () => playAlt("en", finishAll);
+              player.src = c.audio;
+              player.playbackRate = speed;
+              player.currentTime = 0;
+              player.play().catch(() => playAlt("en", finishAll));
+            } else {
+              speakEnglish(c.en, () => playAlt("en", finishAll));
+            }
+          };
+          playEn();
+        });
+      };
+      playEs();
     }
   });
 }
@@ -689,6 +758,14 @@ function buildDeckList() {
         </div>`
       : "";
 
+    // 👇 NUEVA LÍNEA PARA MOSTRAR LA ALTERNATIVA EN EL PANEL 👇
+    const altHtml = (c.alt_en || c.alt_es)
+      ? `<div class="deck-item-note alt-note">
+          <i data-lucide="git-branch"></i>
+          <span>${escapeHtml(c.alt_en || "")}${c.alt_es ? " — " + escapeHtml(c.alt_es) : ""}</span>
+        </div>`
+      : "";
+
     const noteHtml = c.note && c.note.trim()
       ? `<div class="deck-item-note">
           <i data-lucide="message-circle"></i>
@@ -707,6 +784,7 @@ function buildDeckList() {
       </div>
       <div class="deck-item-es">${escapeHtml(c.es)}</div>
       ${exampleHtml}
+      ${altHtml}
       ${noteHtml}
       ${tagsHtml}
     `;
@@ -752,7 +830,7 @@ function stopAll() {
   if ("speechSynthesis" in window) speechSynthesis.cancel();
 
   examplePlaying = false;
-  document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing"));
+  document.querySelectorAll(".example-play-btn.playing, .alt-play-btn.playing").forEach(b => b.classList.remove("playing"));
 
   if (pendingResolve) {
     const r = pendingResolve;
@@ -850,7 +928,7 @@ setPlayState(false);
 loadDecksIndex();
 refreshIcons();
 
-// 👇 AÑADE ESTAS LÍNEAS PARA ACTIVAR EL MODO OFFLINE 👇
+// Activar modo offline
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('service-worker.js')
