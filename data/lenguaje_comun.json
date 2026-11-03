@@ -1,1 +1,59 @@
-
+{
+  "deck": "Lenguaje Común",
+  "cards": [
+    {
+      "id": 1,
+      "en": "Do me a favor.",
+      "es": "Hazme un favor.",
+      "alt_en": "Do me a quick favor.",
+      "alt_es": "Hazme un pequeño favor.",
+      "note": "Para pedirle un favor a alguien de manera cotidiana.",
+      "tags": ["cotidiano"]
+    },
+    {
+      "id": 2,
+      "en": "Come help me with this, please.",
+      "es": "Ven y ayúdame con esto, por favor.",
+      "alt_en": "Come over and help me with this, please.",
+      "alt_es": "Ven aquí y ayúdame con esto, por favor.",
+      "note": "Para pedirle a alguien que se acerque y te ayude con algo.",
+      "tags": ["cotidiano"]
+    },
+    {
+      "id": 3,
+      "en": "I need you to help me with this.",
+      "es": "Necesito que me ayudes a hacer esto.",
+      "alt_en": "I need you to give me a hand with this.",
+      "alt_es": "Necesito que me eches una mano con esto.",
+      "note": "Para expresar que necesitas la ayuda de alguien para realizar una actividad.",
+      "tags": ["cotidiano"]
+    },
+    {
+      "id": 4,
+      "en": "Hey, how's it going?",
+      "es": "Ey, ¿cómo vas?",
+      "alt_en": "Hey, how are things going?",
+      "alt_es": "Ey, ¿cómo van las cosas?",
+      "note": "Para saludar informalmente y preguntarle a alguien cómo le va.",
+      "tags": ["saludos"]
+    },
+    {
+      "id": 5,
+      "en": "So, how do I do it?",
+      "es": "¿Y cómo lo hago?",
+      "alt_en": "So, how do I go about doing it?",
+      "alt_es": "Entonces, ¿cómo hago para llevarlo a cabo?",
+      "note": "Para preguntar cómo realizar algo o cuál es el procedimiento.",
+      "tags": ["preguntas"]
+    },
+    {
+      "id": 6,
+      "en": "I need to get some rest. I'm tired.",
+      "es": "Debo descansar. Estoy cansado.",
+      "alt_en": "I have to get some rest. I'm exhausted.",
+      "alt_es": "Tengo que descansar. Estoy agotado.",
+      "note": "Para expresar que necesitas descansar porque estás cansado.",
+      "tags": ["cotidiano"]
+    }
+  ]
+}
