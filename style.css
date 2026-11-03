@@ -1092,3 +1092,96 @@ svg.lucide {
   from { transform: scale(1); box-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
   to { transform: scale(1.05); box-shadow: 0 0 50px rgba(139, 92, 246, 0.6); }
 }
+/* ---------- ALTERNATIVAS (LENGUAJE COMÚN) ---------- */
+.alt {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  min-height: 0;
+  background: rgba(6, 182, 212, 0.06);
+  border-left: 2px solid var(--accent-3);
+  border-radius: 0 10px 10px 0;
+  text-align: left;
+}
+.alt:empty { display: none; }
+.alt > svg.lucide {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2.2;
+  color: var(--accent-3);
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+.alt .alt-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.alt .alt-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-3);
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+.alt .alt-en {
+  font-style: italic;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+.alt .alt-es {
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  opacity: 0.9;
+}
+.alt-play-btn {
+  background: linear-gradient(180deg, #22d3ee, #06b6d4 60%, #0891b2);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  align-self: center;
+  transition: transform 0.08s ease, box-shadow 0.15s ease;
+  box-shadow: 0 3px 0 #164e63, 0 4px 10px rgba(6, 182, 212, 0.4);
+  margin-left: 4px;
+}
+.alt-play-btn svg.lucide {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2.6;
+  color: white;
+}
+.alt-play-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 #164e63, 0 6px 14px rgba(6, 182, 212, 0.55);
+}
+.alt-play-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 #164e63;
+}
+
+/* Estilos para el botón en el panel del mazo */
+.deck-item-note.alt-note {
+  background: rgba(6, 182, 212, 0.08);
+  border-left-color: var(--accent-3);
+}
+.deck-item-note.alt-note svg.lucide {
+  color: var(--accent-3);
+}
