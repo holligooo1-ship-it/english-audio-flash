@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v25
-// Reproducción manual de alternativas (solo por botón)
+// ENGLISH AUDIO FLASH - v26
+// Código limpio (sin alternativas internas)
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -100,7 +100,6 @@ const wordEn       = document.getElementById("wordEn");
 const wordEs       = document.getElementById("wordEs");
 const noteEl       = document.getElementById("note");
 const exampleEl    = document.getElementById("example");
-const altEl        = document.getElementById("alt"); 
 const counter      = document.getElementById("counter");
 const progressBar  = document.getElementById("progressBar");
 const cardEl       = document.getElementById("card");
@@ -362,7 +361,6 @@ function resetCycle() {
     wordEs.textContent = "";
     noteEl.innerHTML = "";
     exampleEl.innerHTML = "";
-    altEl.innerHTML = "";
     counter.textContent = "0 / 0";
     progressBar.style.width = "0%";
     setStatus("Sin tarjetas", "alert-circle");
@@ -472,31 +470,6 @@ function renderCard() {
     exampleEl.innerHTML = "";
   }
 
-  // Alternativa
-  const altEn = (c.alt_en || "").trim();
-  const altEs = (c.alt_es || "").trim();
-  if (altEn || altEs) {
-    let html = `<i data-lucide="git-branch"></i><div class="alt-body">`;
-    html += `<span class="alt-label">También se puede decir:</span>`;
-    if (altEn) html += `<span class="alt-en">${escapeHtml(altEn)}</span>`;
-    if (altEs) html += `<span class="alt-es">${escapeHtml(altEs)}</span>`;
-    html += `</div>`;
-    if (altEn) {
-      html += `<button class="alt-play-btn" title="Escuchar alternativa"><i data-lucide="volume-2"></i></button>`;
-    }
-    altEl.innerHTML = html;
-    refreshIcons();
-    const altBtn = altEl.querySelector(".alt-play-btn");
-    if (altBtn && altEn) {
-      altBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        playAltExample(altEn, altBtn);
-      });
-    }
-  } else {
-    altEl.innerHTML = "";
-  }
-
   // Nota
   const note = (c.note || "").trim();
   if (note) {
@@ -524,44 +497,7 @@ function playExample(text, btn) {
   if (examplePlaying) {
     speechSynthesis.cancel();
     examplePlaying = false;
-    document.querySelectorAll(".example-play-btn.playing, .alt-play-btn.playing").forEach(b => b.classList.remove("playing"));
-    return;
-  }
-
-  player.pause();
-  player.onended = null;
-  player.onerror = null;
-  speechSynthesis.cancel();
-
-  examplePlaying = true;
-  if (btn) btn.classList.add("playing");
-
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US";
-  u.rate = speed;
-
-  const bestVoice = getBestVoice("en-US");
-  if (bestVoice) u.voice = bestVoice;
-
-  const cleanup = () => {
-    examplePlaying = false;
-    if (btn) btn.classList.remove("playing");
-  };
-
-  u.onend = cleanup;
-  u.onerror = cleanup;
-
-  speechSynthesis.speak(u);
-}
-
-// ---------- REPRODUCIR ALTERNATIVA (por separado) ----------
-function playAltExample(text, btn) {
-  if (!("speechSynthesis" in window)) return;
-
-  if (examplePlaying) {
-    speechSynthesis.cancel();
-    examplePlaying = false;
-    document.querySelectorAll(".example-play-btn.playing, .alt-play-btn.playing").forEach(b => b.classList.remove("playing"));
+    document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing"));
     return;
   }
 
@@ -725,13 +661,6 @@ function buildDeckList() {
         </div>`
       : "";
 
-    const altHtml = (c.alt_en || c.alt_es)
-      ? `<div class="deck-item-note alt-note">
-          <i data-lucide="git-branch"></i>
-          <span>${escapeHtml(c.alt_en || "")}${c.alt_es ? " — " + escapeHtml(c.alt_es) : ""}</span>
-        </div>`
-      : "";
-
     const noteHtml = c.note && c.note.trim()
       ? `<div class="deck-item-note">
           <i data-lucide="message-circle"></i>
@@ -750,7 +679,6 @@ function buildDeckList() {
       </div>
       <div class="deck-item-es">${escapeHtml(c.es)}</div>
       ${exampleHtml}
-      ${altHtml}
       ${noteHtml}
       ${tagsHtml}
     `;
@@ -796,7 +724,7 @@ function stopAll() {
   if ("speechSynthesis" in window) speechSynthesis.cancel();
 
   examplePlaying = false;
-  document.querySelectorAll(".example-play-btn.playing, .alt-play-btn.playing").forEach(b => b.classList.remove("playing"));
+  document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing"));
 
   if (pendingResolve) {
     const r = pendingResolve;
