@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v24
-// Soporte para Alternativas (Lenguaje Común) y modo offline
+// ENGLISH AUDIO FLASH - v25
+// Reproducción manual de alternativas (solo por botón)
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -658,7 +658,7 @@ function playCard(gen) {
     pendingResolve = resolve;
     cardEl.classList.add("playing");
 
-    const finishAll = () => {
+    const done = () => {
       if (gen !== loopGeneration) return;
       pendingResolve = null;
       setStatus("Pausa", "pause");
@@ -670,57 +670,24 @@ function playCard(gen) {
       }, pauseSeconds * 1000);
     };
 
-    const playAlt = (lang, callback) => {
-      const altText = lang === "en" ? c.alt_en : c.alt_es;
-      if (altText) {
-        setStatus(lang === "en" ? "Alternativa (EN)" : "Alternativa (ES)", "git-branch");
-        setTimeout(() => {
-          if (gen !== loopGeneration) return;
-          if (lang === "en") speakEnglish(altText, callback);
-          else speakSpanish(altText, callback);
-        }, 800); // Pausa antes de la alternativa
-      } else {
-        callback();
-      }
-    };
-
     if (direction === "en-es") {
       setStatus("Inglés", "volume-2");
       statusEl.classList.add("active");
-      const playEn = () => {
-        if (c.audio) {
-          player.onended = () => playAlt("en", finishAll);
-          player.onerror = () => playAlt("en", finishAll);
-          player.src = c.audio;
-          player.playbackRate = speed;
-          player.currentTime = 0;
-          player.play().catch(() => playAlt("en", finishAll));
-        } else {
-          speakEnglish(c.en, () => playAlt("en", finishAll));
-        }
-      };
-      playEn();
+
+      if (c.audio) {
+        player.onended = done;
+        player.onerror = () => { console.warn("Error audio:", c.audio); done(); };
+        player.src = c.audio;
+        player.playbackRate = speed;
+        player.currentTime = 0;
+        player.play().catch(done);
+      } else {
+        speakEnglish(c.en, done);
+      }
     } else {
       setStatus("Español", "languages");
       statusEl.classList.add("active");
-      const playEs = () => {
-        speakSpanish(c.es, () => {
-          const playEn = () => {
-            if (c.audio) {
-              player.onended = () => playAlt("en", finishAll);
-              player.onerror = () => playAlt("en", finishAll);
-              player.src = c.audio;
-              player.playbackRate = speed;
-              player.currentTime = 0;
-              player.play().catch(() => playAlt("en", finishAll));
-            } else {
-              speakEnglish(c.en, () => playAlt("en", finishAll));
-            }
-          };
-          playEn();
-        });
-      };
-      playEs();
+      speakSpanish(c.es, done);
     }
   });
 }
@@ -758,7 +725,6 @@ function buildDeckList() {
         </div>`
       : "";
 
-    // 👇 NUEVA LÍNEA PARA MOSTRAR LA ALTERNATIVA EN EL PANEL 👇
     const altHtml = (c.alt_en || c.alt_es)
       ? `<div class="deck-item-note alt-note">
           <i data-lucide="git-branch"></i>
