@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v26
-// Código limpio (sin alternativas internas)
+// ENGLISH AUDIO FLASH - v27
+// Con botón de instalación PWA
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -830,3 +830,34 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.warn('⚠️ Error al registrar Service Worker:', err));
   });
 }
+
+// ---------- LÓGICA PARA INSTALAR LA PWA ----------
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (installBtn) {
+    installBtn.style.display = "inline-flex";
+    refreshIcons(); 
+  }
+});
+
+if (installBtn) {
+  installBtn.addEventListener("click", async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`El usuario respondió: ${outcome}`);
+      deferredPrompt = null;
+      installBtn.style.display = "none";
+    }
+  });
+}
+
+window.addEventListener("appinstalled", () => {
+  console.log("¡App instalada con éxito!");
+  if (installBtn) installBtn.style.display = "none";
+  deferredPrompt = null;
+});
