@@ -1185,3 +1185,17 @@ svg.lucide {
 .deck-item-note.alt-note svg.lucide {
   color: var(--accent-3);
 }
+/* Color para el mazo de Fauna y Flora */
+.deck-card[data-color="fauna"]:hover {
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(16, 185, 129, 0.3);
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+.deck-card[data-color="fauna"] .deck-card-icon {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow:
+    0 6px 0 #064e3b,
+    0 8px 20px rgba(0, 0, 0, 0.4);
+}
