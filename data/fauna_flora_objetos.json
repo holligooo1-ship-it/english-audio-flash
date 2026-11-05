@@ -1,1 +1,275 @@
-
+{
+  "deck": "Fauna, Flora y Objetos",
+  "cards": [
+    {
+      "id": 1,
+      "en": "Dog",
+      "es": "Perro",
+      "example_en": "The dog is barking.",
+      "example_es": "El perro está ladrando.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 2,
+      "en": "Cat",
+      "es": "Gato",
+      "example_en": "The cat is sleeping.",
+      "example_es": "El gato está durmiendo.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 3,
+      "en": "Bird",
+      "es": "Pájaro, ave",
+      "example_en": "A bird is flying in the sky.",
+      "example_es": "Un pájaro está volando en el cielo.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 4,
+      "en": "Fish",
+      "es": "Pez",
+      "example_en": "The fish swims in the water.",
+      "example_es": "El pez nada en el agua.",
+      "note": "El plural de 'fish' suele ser igual: 'fish'.",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 5,
+      "en": "Horse",
+      "es": "Caballo",
+      "example_en": "She rides a horse.",
+      "example_es": "Ella monta a caballo.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 6,
+      "en": "Cow",
+      "es": "Vaca",
+      "example_en": "The cow gives us milk.",
+      "example_es": "La vaca nos da leche.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 7,
+      "en": "Lion",
+      "es": "León",
+      "example_en": "The lion is the king of the jungle.",
+      "example_es": "El león es el rey de la selva.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 8,
+      "en": "Elephant",
+      "es": "Elefante",
+      "example_en": "Elephants have big ears.",
+      "example_es": "Los elefantes tienen orejas grandes.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 9,
+      "en": "Rabbit",
+      "es": "Conejo",
+      "example_en": "The rabbit eats carrots.",
+      "example_es": "El conejo come zanahorias.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 10,
+      "en": "Snake",
+      "es": "Serpiente, culebra",
+      "example_en": "The snake is very long.",
+      "example_es": "La serpiente es muy larga.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 11,
+      "en": "Tree",
+      "es": "Árbol",
+      "example_en": "The tree has green leaves.",
+      "example_es": "El árbol tiene hojas verdes.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 12,
+      "en": "Flower",
+      "es": "Flor",
+      "example_en": "This flower smells great.",
+      "example_es": "Esta flor huele muy bien.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 13,
+      "en": "Leaf",
+      "es": "Hoja (de planta)",
+      "example_en": "A leaf fell from the tree.",
+      "example_es": "Una hoja cayó del árbol.",
+      "note": "El plural es 'leaves'.",
+      "tags": ["flora"]
+    },
+    {
+      "id": 14,
+      "en": "Grass",
+      "es": "Hierba, césped",
+      "example_en": "The grass is very green.",
+      "example_es": "El césped está muy verde.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 15,
+      "en": "Rose",
+      "es": "Rosa (flor)",
+      "example_en": "He gave her a red rose.",
+      "example_es": "Él le dio una rosa roja.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 16,
+      "en": "Oak",
+      "es": "Roble",
+      "example_en": "The oak is a strong tree.",
+      "example_es": "El roble es un árbol fuerte.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 17,
+      "en": "Cactus",
+      "es": "Cactus",
+      "example_en": "Cactus plants need little water.",
+      "example_es": "Los cactus necesitan poca agua.",
+      "note": "El plural es 'cacti' o 'cactuses'.",
+      "tags": ["flora"]
+    },
+    {
+      "id": 18,
+      "en": "Seed",
+      "es": "Semilla",
+      "example_en": "Plant the seed in the soil.",
+      "example_es": "Planta la semilla en la tierra.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 19,
+      "en": "Root",
+      "es": "Raíz",
+      "example_en": "The roots absorb water.",
+      "example_es": "Las raíces absorben agua.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 20,
+      "en": "Bush",
+      "es": "Arbusto",
+      "example_en": "There is a bird in the bush.",
+      "example_es": "Hay un pájaro en el arbusto.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 21,
+      "en": "Table",
+      "es": "Mesa",
+      "example_en": "Put the plate on the table.",
+      "example_es": "Pon el plato sobre la mesa.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 22,
+      "en": "Chair",
+      "es": "Silla",
+      "example_en": "Please sit on the chair.",
+      "example_es": "Por favor, siéntate en la silla.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 23,
+      "en": "Car",
+      "es": "Coche, auto, carro",
+      "example_en": "I drive a red car.",
+      "example_es": "Conduzco un coche rojo.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 24,
+      "en": "Phone",
+      "es": "Teléfono",
+      "example_en": "My phone is ringing.",
+      "example_es": "Mi teléfono está sonando.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 25,
+      "en": "Book",
+      "es": "Libro",
+      "example_en": "I am reading a good book.",
+      "example_es": "Estoy leyendo un buen libro.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 26,
+      "en": "Pen",
+      "es": "Bolígrafo, lapicero, pluma",
+      "example_en": "Can I borrow your pen?",
+      "example_es": "¿Puedo pedirte prestado tu bolígrafo?",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 27,
+      "en": "Keys",
+      "es": "Llaves",
+      "example_en": "I lost my keys.",
+      "example_es": "Perdí mis llaves.",
+      "note": "Plural de 'key'.",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 28,
+      "en": "Wallet",
+      "es": "Cartera, billetera",
+      "example_en": "My wallet is empty.",
+      "example_es": "Mi cartera está vacía.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 29,
+      "en": "Cup",
+      "es": "Taza, vaso",
+      "example_en": "I drink coffee in a cup.",
+      "example_es": "Bebo café en una taza.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 30,
+      "en": "Window",
+      "es": "Ventana",
+      "example_en": "Open the window, please.",
+      "example_es": "Abre la ventana, por favor.",
+      "note": "",
+      "tags": ["objetos"]
+    }
+  ]
+}
