@@ -1026,6 +1026,7 @@ svg.lucide {
   .deck-item-en { font-size: 15px; }
   .deck-item-es { font-size: 13px; }
 }
+
 /* ---------- SPLASH SCREEN (PANTALLA DE BIENVENIDA) ---------- */
 #splash-screen {
   position: fixed;
@@ -1092,6 +1093,7 @@ svg.lucide {
   from { transform: scale(1); box-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
   to { transform: scale(1.05); box-shadow: 0 0 50px rgba(139, 92, 246, 0.6); }
 }
+
 /* ---------- ALTERNATIVAS (LENGUAJE COMÚN) ---------- */
 .alt {
   display: flex;
@@ -1185,6 +1187,7 @@ svg.lucide {
 .deck-item-note.alt-note svg.lucide {
   color: var(--accent-3);
 }
+
 /* Color para el mazo de Fauna y Flora */
 .deck-card[data-color="fauna"]:hover {
   box-shadow:
@@ -1198,4 +1201,39 @@ svg.lucide {
   box-shadow:
     0 6px 0 #064e3b,
     0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- BOTÓN DE INSTALAR PWA ---------- */
+.install-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  box-shadow: 0 4px 0 #064e3b, 0 6px 15px rgba(16, 185, 129, 0.3);
+  transition: all 0.15s ease;
+}
+
+.install-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #064e3b, 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+.install-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 #064e3b;
+}
+
+.install-btn svg.lucide {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.5;
 }
