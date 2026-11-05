@@ -1845,6 +1845,159 @@
       "example_es": "Los caballos sementales están corriendo.",
       "note": "",
       "tags": ["sustantivos"]
+    },
+      {
+      "id": 206,
+      "en": "Harmful",
+      "es": "Dañino, perjudicial",
+      "example_en": "Smoking is harmful to your health.",
+      "example_es": "Fumar es dañino para tu salud.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 207,
+      "en": "Freely",
+      "es": "Libremente",
+      "example_en": "You can speak freely here.",
+      "example_es": "Puedes hablar libremente aquí.",
+      "note": "",
+      "tags": ["adverbios"]
+    },
+    {
+      "id": 208,
+      "en": "Snipe",
+      "es": "Agachadiza, disparar desde una posición oculta",
+      "example_en": "The hunter tried to snipe the bird.",
+      "example_es": "El cazador intentó dispararle al ave desde su escondite.",
+      "note": "Como sustantivo es un ave; como verbo significa disparar a distancia.",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 209,
+      "en": "Whose",
+      "es": "Cuyo, cuya, de quién",
+      "example_en": "Whose phone is this?",
+      "example_es": "¿De quién es este teléfono?",
+      "note": "Se usa para preguntar a quién pertenece algo.",
+      "tags": ["pronombres"]
+    },
+    {
+      "id": 210,
+      "en": "Spread",
+      "es": "Esparcir, propagar, extender",
+      "example_en": "Don't spread rumors.",
+      "example_es": "No propagues rumores.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 211,
+      "en": "Environment",
+      "es": "Medio ambiente, entorno",
+      "example_en": "We must protect the environment.",
+      "example_es": "Debemos proteger el medio ambiente.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 212,
+      "en": "Across",
+      "es": "A través de, al otro lado de",
+      "example_en": "We walked across the bridge.",
+      "example_es": "Caminamos a través del puente.",
+      "note": "",
+      "tags": ["preposiciones"]
+    },
+    {
+      "id": 213,
+      "en": "Treatment",
+      "es": "Tratamiento",
+      "example_en": "The medical treatment was successful.",
+      "example_es": "El tratamiento médico fue exitoso.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 214,
+      "en": "Worldwide",
+      "es": "En todo el mundo, mundial",
+      "example_en": "The singer is famous worldwide.",
+      "example_es": "La cantante es famosa en todo el mundo.",
+      "note": "",
+      "tags": ["adjetivos", "adverbios"]
+    },
+    {
+      "id": 215,
+      "en": "Press",
+      "es": "Prensa, presionar",
+      "example_en": "Press the red button.",
+      "example_es": "Presiona el botón rojo.",
+      "note": "También se usa para referirse a los medios de comunicación.",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 216,
+      "en": "Interjection",
+      "es": "Interjección",
+      "example_en": "Wow! is an interjection.",
+      "example_es": "¡Wow! es una interjección.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 217,
+      "en": "Bad mistake",
+      "es": "Grave error, gran equivocación",
+      "example_en": "That was a bad mistake.",
+      "example_es": "Ese fue un grave error.",
+      "note": "",
+      "tags": ["expresiones", "sustantivos"]
+    },
+    {
+      "id": 218,
+      "en": "Might",
+      "es": "Podría, tal vez",
+      "example_en": "It might rain later.",
+      "example_es": "Podría llover más tarde.",
+      "note": "Verbo modal que indica posibilidad.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 219,
+      "en": "Nearby",
+      "es": "Cercano, cerca",
+      "example_en": "There is a store nearby.",
+      "example_es": "Hay una tienda cerca.",
+      "note": "",
+      "tags": ["adjetivos", "adverbios"]
+    },
+    {
+      "id": 220,
+      "en": "Costly",
+      "es": "Costoso, caro",
+      "example_en": "That was a costly mistake.",
+      "example_es": "Ese fue un error costoso.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 221,
+      "en": "Blood",
+      "es": "Sangre",
+      "example_en": "He lost a lot of blood.",
+      "example_es": "Él perdió mucha sangre.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 222,
+      "en": "Sea",
+      "es": "Mar",
+      "example_en": "I love swimming in the sea.",
+      "example_es": "Me encanta nadar en el mar.",
+      "note": "",
+      "tags": ["sustantivos"]
     }
   ]
 }
