@@ -900,6 +900,906 @@
       "example_es": "Lleva un paraguas, está lloviendo.",
       "note": "",
       "tags": ["objetos"]
+    },
+        {
+      "id": 101,
+      "en": "Goat",
+      "es": "Cabra",
+      "example_en": "The goat is eating grass.",
+      "example_es": "La cabra está comiendo hierba.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 102,
+      "en": "Donkey",
+      "es": "Burro, asno",
+      "example_en": "The donkey is carrying a heavy load.",
+      "example_es": "El burro está cargando una carga pesada.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 103,
+      "en": "Camel",
+      "es": "Camello",
+      "example_en": "A camel can survive in the desert.",
+      "example_es": "Un camello puede sobrevivir en el desierto.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 104,
+      "en": "Kangaroo",
+      "es": "Canguro",
+      "example_en": "The kangaroo jumps very high.",
+      "example_es": "El canguro salta muy alto.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 105,
+      "en": "Koala",
+      "es": "Koala",
+      "example_en": "The koala sleeps in the tree.",
+      "example_es": "El koala duerme en el árbol.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 106,
+      "en": "Panda",
+      "es": "Panda",
+      "example_en": "The panda eats bamboo.",
+      "example_es": "El panda come bambú.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 107,
+      "en": "Cheetah",
+      "es": "Guepardo, chita",
+      "example_en": "The cheetah is the fastest land animal.",
+      "example_es": "El guepardo es el animal terrestre más rápido.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 108,
+      "en": "Rhinoceros",
+      "es": "Rinoceronte",
+      "example_en": "The rhinoceros has a strong horn.",
+      "example_es": "El rinoceronte tiene un cuerno fuerte.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 109,
+      "en": "Hippopotamus",
+      "es": "Hipopótamo",
+      "example_en": "The hippopotamus lives in the river.",
+      "example_es": "El hipopótamo vive en el río.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 110,
+      "en": "Crocodile",
+      "es": "Cocodrilo",
+      "example_en": "The crocodile has sharp teeth.",
+      "example_es": "El cocodrilo tiene dientes afilados.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 111,
+      "en": "Lizard",
+      "es": "Lagarto, lagartija",
+      "example_en": "A small lizard is on the rock.",
+      "example_es": "Un pequeño lagarto está en la roca.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 112,
+      "en": "Chameleon",
+      "es": "Camaleón",
+      "example_en": "The chameleon changes color.",
+      "example_es": "El camaleón cambia de color.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 113,
+      "en": "Parrot",
+      "es": "Loro, papagayo",
+      "example_en": "The parrot can talk.",
+      "example_es": "El loro puede hablar.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 114,
+      "en": "Peacock",
+      "es": "Pavo real",
+      "example_en": "The peacock has beautiful feathers.",
+      "example_es": "El pavo real tiene plumas hermosas.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 115,
+      "en": "Swan",
+      "es": "Cisne",
+      "example_en": "The white swan is in the lake.",
+      "example_es": "El cisne blanco está en el lago.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 116,
+      "en": "Goose",
+      "es": "Ganso",
+      "example_en": "The goose is flying south.",
+      "example_es": "El ganso está volando al sur.",
+      "note": "El plural es 'geese'.",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 117,
+      "en": "Turkey",
+      "es": "Pavo",
+      "example_en": "We eat turkey on Thanksgiving.",
+      "example_es": "Comemos pavo en Acción de Gracias.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 118,
+      "en": "Squirrel",
+      "es": "Ardilla",
+      "example_en": "The squirrel is hiding a nut.",
+      "example_es": "La ardilla está escondiendo una nuez.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 119,
+      "en": "Bat",
+      "es": "Murciélago",
+      "example_en": "Bats sleep during the day.",
+      "example_es": "Los murciélagos duermen durante el día.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 120,
+      "en": "Hedgehog",
+      "es": "Erizo",
+      "example_en": "The hedgehog has sharp spikes.",
+      "example_es": "El erizo tiene púas afiladas.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 121,
+      "en": "Otter",
+      "es": "Nutria",
+      "example_en": "The otter is swimming in the water.",
+      "example_es": "La nutria está nadando en el agua.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 122,
+      "en": "Seal",
+      "es": "Foca",
+      "example_en": "The seal is resting on the ice.",
+      "example_es": "La foca está descansando en el hielo.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 123,
+      "en": "Octopus",
+      "es": "Pulpo",
+      "example_en": "The octopus has eight arms.",
+      "example_es": "El pulpo tiene ocho brazos.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 124,
+      "en": "Crab",
+      "es": "Cangrejo",
+      "example_en": "The crab walks sideways.",
+      "example_es": "El cangrejo camina de lado.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 125,
+      "en": "Lobster",
+      "es": "Langosta",
+      "example_en": "The lobster is very red.",
+      "example_es": "La langosta es muy roja.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 126,
+      "en": "Jellyfish",
+      "es": "Medusa",
+      "example_en": "The jellyfish can sting you.",
+      "example_es": "La medusa te puede picar.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 127,
+      "en": "Starfish",
+      "es": "Estrella de mar",
+      "example_en": "I found a starfish on the beach.",
+      "example_es": "Encontré una estrella de mar en la playa.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 128,
+      "en": "Snail",
+      "es": "Caracol",
+      "example_en": "The snail moves very slowly.",
+      "example_es": "El caracol se mueve muy lentamente.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 129,
+      "en": "Scorpion",
+      "es": "Escorpión, alacrán",
+      "example_en": "Be careful, there is a scorpion.",
+      "example_es": "Ten cuidado, hay un escorpión.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 130,
+      "en": "Moth",
+      "es": "Polilla",
+      "example_en": "The moth flew into the light.",
+      "example_es": "La polilla voló hacia la luz.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 131,
+      "en": "Dragonfly",
+      "es": "Libélula",
+      "example_en": "The dragonfly has transparent wings.",
+      "example_es": "La libélula tiene alas transparentes.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 132,
+      "en": "Ladybug",
+      "es": "Mariquita, catarina",
+      "example_en": "A ladybug is on the leaf.",
+      "example_es": "Una mariquita está en la hoja.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 133,
+      "en": "Grasshopper",
+      "es": "Saltamontes, langosta",
+      "example_en": "The grasshopper jumps in the field.",
+      "example_es": "El saltamontes salta en el campo.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 134,
+      "en": "Beetle",
+      "es": "Escarabajo",
+      "example_en": "The beetle is under the stone.",
+      "example_es": "El escarabajo está debajo de la piedra.",
+      "note": "",
+      "tags": ["fauna"]
+    },
+    {
+      "id": 135,
+      "en": "Branch",
+      "es": "Rama",
+      "example_en": "The bird sits on the branch.",
+      "example_es": "El pájaro se sienta en la rama.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 136,
+      "en": "Trunk",
+      "es": "Tronco",
+      "example_en": "The tree trunk is very thick.",
+      "example_es": "El tronco del árbol es muy grueso.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 137,
+      "en": "Bark",
+      "es": "Corteza",
+      "example_en": "The bark protects the tree.",
+      "example_es": "La corteza protege el árbol.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 138,
+      "en": "Thorn",
+      "es": "Espina",
+      "example_en": "Be careful with the rose's thorn.",
+      "example_es": "Cuidado con la espina de la rosa.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 139,
+      "en": "Vine",
+      "es": "Enredadera, vid",
+      "example_en": "The vine grows up the wall.",
+      "example_es": "La enredadera crece por la pared.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 140,
+      "en": "Moss",
+      "es": "Musgo",
+      "example_en": "Green moss is on the rocks.",
+      "example_es": "El musgo verde está en las rocas.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 141,
+      "en": "Fern",
+      "es": "Helecho",
+      "example_en": "The fern loves humidity.",
+      "example_es": "El helecho ama la humedad.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 142,
+      "en": "Lotus",
+      "es": "Loto",
+      "example_en": "The lotus flower is in the pond.",
+      "example_es": "La flor de loto está en el estanque.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 143,
+      "en": "Orchid",
+      "es": "Orquídea",
+      "example_en": "This orchid is purple.",
+      "example_es": "Esta orquídea es morada.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 144,
+      "en": "Daisy",
+      "es": "Margarita",
+      "example_en": "She picked a white daisy.",
+      "example_es": "Ella recogió una margarita blanca.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 145,
+      "en": "Lily",
+      "es": "Lirio, azucena",
+      "example_en": "The lily smells wonderful.",
+      "example_es": "El lirio huele maravilloso.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 146,
+      "en": "Dandelion",
+      "es": "Diente de león",
+      "example_en": "Blow the dandelion to make a wish.",
+      "example_es": "Sopla el diente de león para pedir un deseo.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 147,
+      "en": "Clover",
+      "es": "Trébol",
+      "example_en": "A four-leaf clover brings luck.",
+      "example_es": "Un trébol de cuatro hojas trae suerte.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 148,
+      "en": "Maple",
+      "es": "Arce",
+      "example_en": "The maple leaves turn red in autumn.",
+      "example_es": "Las hojas de arce se vuelven rojas en otoño.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 149,
+      "en": "Willow",
+      "es": "Sauce",
+      "example_en": "The willow tree is near the water.",
+      "example_es": "El sauce está cerca del agua.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 150,
+      "en": "Cherry",
+      "es": "Cereza",
+      "example_en": "This cherry is sweet.",
+      "example_es": "Esta cereza es dulce.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 151,
+      "en": "Peach",
+      "es": "Durazno, melocotón",
+      "example_en": "I love peach juice.",
+      "example_es": "Me encanta el jugo de durazno.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 152,
+      "en": "Pear",
+      "es": "Pera",
+      "example_en": "The pear is green and sweet.",
+      "example_es": "La pera es verde y dulce.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 153,
+      "en": "Plum",
+      "es": "Ciruela",
+      "example_en": "He ate a purple plum.",
+      "example_es": "Él comió una ciruela morada.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 154,
+      "en": "Pineapple",
+      "es": "Piña",
+      "example_en": "Pineapple is a tropical fruit.",
+      "example_es": "La piña es una fruta tropical.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 155,
+      "en": "Mango",
+      "es": "Mango",
+      "example_en": "Mango is my favorite fruit.",
+      "example_es": "El mango es mi fruta favorita.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 156,
+      "en": "Coconut",
+      "es": "Coco",
+      "example_en": "Drink coconut water.",
+      "example_es": "Bebe agua de coco.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 157,
+      "en": "Melon",
+      "es": "Melón",
+      "example_en": "The melon is very refreshing.",
+      "example_es": "El melón es muy refrescante.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 158,
+      "en": "Watermelon",
+      "es": "Sandía",
+      "example_en": "Watermelon is perfect for summer.",
+      "example_es": "La sandía es perfecta para el verano.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 159,
+      "en": "Avocado",
+      "es": "Aguacate, palta",
+      "example_en": "Add avocado to your salad.",
+      "example_es": "Agrega aguacate a tu ensalada.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 160,
+      "en": "Pepper",
+      "es": "Pimiento, pimienta",
+      "example_en": "This pepper is spicy.",
+      "example_es": "Este pimiento es picante.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 161,
+      "en": "Cucumber",
+      "es": "Pepino",
+      "example_en": "Slice the cucumber for the salad.",
+      "example_es": "Corta el pepino para la ensalada.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 162,
+      "en": "Lettuce",
+      "es": "Lechuga",
+      "example_en": "Wash the lettuce before eating.",
+      "example_es": "Lava la lechuga antes de comer.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 163,
+      "en": "Spinach",
+      "es": "Espinaca",
+      "example_en": "Popeye eats a lot of spinach.",
+      "example_es": "Popeye come muchas espinacas.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 164,
+      "en": "Broccoli",
+      "es": "Brócoli",
+      "example_en": "Broccoli is very healthy.",
+      "example_es": "El brócoli es muy saludable.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 165,
+      "en": "Garlic",
+      "es": "Ajo",
+      "example_en": "Add garlic to the sauce.",
+      "example_es": "Agrega ajo a la salsa.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 166,
+      "en": "Ginger",
+      "es": "Jengibre",
+      "example_en": "Ginger tea is good for you.",
+      "example_es": "El té de jengibre es bueno para ti.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 167,
+      "en": "Soil",
+      "es": "Suelo, tierra",
+      "example_en": "The plant needs good soil.",
+      "example_es": "La planta necesita buen suelo.",
+      "note": "",
+      "tags": ["flora"]
+    },
+    {
+      "id": 168,
+      "en": "Desk",
+      "es": "Escritorio",
+      "example_en": "I work at my desk.",
+      "example_es": "Trabajo en mi escritorio.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 169,
+      "en": "Shelf",
+      "es": "Estante, repisa",
+      "example_en": "Put the book on the shelf.",
+      "example_es": "Pon el libro en el estante.",
+      "note": "El plural es 'shelves'.",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 170,
+      "en": "Drawer",
+      "es": "Cajón",
+      "example_en": "Open the drawer to find the pen.",
+      "example_es": "Abre el cajón para encontrar el bolígrafo.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 171,
+      "en": "Rug",
+      "es": "Alfombra",
+      "example_en": "The rug is on the floor.",
+      "example_es": "La alfombra está en el suelo.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 172,
+      "en": "Curtain",
+      "es": "Cortina",
+      "example_en": "Close the curtain at night.",
+      "example_es": "Cierra la cortina por la noche.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 173,
+      "en": "Blanket",
+      "es": "Cobija, manta",
+      "example_en": "I need a warm blanket.",
+      "example_es": "Necesito una cobija caliente.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 174,
+      "en": "Pillow",
+      "es": "Almohada",
+      "example_en": "This pillow is very soft.",
+      "example_es": "Esta almohada es muy suave.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 175,
+      "en": "Towel",
+      "es": "Toalla",
+      "example_en": "Dry your hands with a towel.",
+      "example_es": "Seca tus manos con una toalla.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 176,
+      "en": "Soap",
+      "es": "Jabón",
+      "example_en": "Wash your hands with soap.",
+      "example_es": "Lávate las manos con jabón.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 177,
+      "en": "Toothbrush",
+      "es": "Cepillo de dientes",
+      "example_en": "I need a new toothbrush.",
+      "example_es": "Necesito un cepillo de dientes nuevo.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 178,
+      "en": "Comb",
+      "es": "Peine",
+      "example_en": "Use the comb to fix your hair.",
+      "example_es": "Usa el peine para arreglar tu cabello.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 179,
+      "en": "Scissors",
+      "es": "Tijeras",
+      "example_en": "Cut the paper with scissors.",
+      "example_es": "Corta el papel con tijeras.",
+      "note": "Siempre se usa en plural.",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 180,
+      "en": "Razor",
+      "es": "Afeitadora, máquina de afeitar",
+      "example_en": "He shaves with a razor.",
+      "example_es": "Él se afeita con una afeitadora.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 181,
+      "en": "Ring",
+      "es": "Anillo",
+      "example_en": "She has a gold ring.",
+      "example_es": "Ella tiene un anillo de oro.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 182,
+      "en": "Necklace",
+      "es": "Collar",
+      "example_en": "That necklace is beautiful.",
+      "example_es": "Ese collar es hermoso.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 183,
+      "en": "Bracelet",
+      "es": "Pulsera",
+      "example_en": "He gave me a silver bracelet.",
+      "example_es": "Él me dio una pulsera de plata.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 184,
+      "en": "Hat",
+      "es": "Sombrero",
+      "example_en": "Wear a hat to protect yourself from the sun.",
+      "example_es": "Usa un sombrero para protegerte del sol.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 185,
+      "en": "Scarf",
+      "es": "Bufanda",
+      "example_en": "She wears a red scarf in winter.",
+      "example_es": "Ella usa una bufanda roja en invierno.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 186,
+      "en": "Gloves",
+      "es": "Guantes",
+      "example_en": "My hands are cold, I need gloves.",
+      "example_es": "Mis manos están frías, necesito guantes.",
+      "note": "Plural de 'glove'.",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 187,
+      "en": "Jacket",
+      "es": "Chaqueta, cazadora",
+      "example_en": "Wear a jacket, it's cold outside.",
+      "example_es": "Usa una chaqueta, hace frío afuera.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 188,
+      "en": "Shirt",
+      "es": "Camisa",
+      "example_en": "He is wearing a white shirt.",
+      "example_es": "Él lleva una camisa blanca.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 189,
+      "en": "Pants",
+      "es": "Pantalones",
+      "example_en": "These pants are too long.",
+      "example_es": "Estos pantalones son demasiado largos.",
+      "note": "Se usa en plural.",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 190,
+      "en": "Dress",
+      "es": "Vestido",
+      "example_en": "She bought a beautiful dress.",
+      "example_es": "Ella compró un vestido hermoso.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 191,
+      "en": "Skirt",
+      "es": "Falda",
+      "example_en": "The blue skirt matches your shoes.",
+      "example_es": "La falda azul combina con tus zapatos.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 192,
+      "en": "Sock",
+      "es": "Calcetín",
+      "example_en": "I lost one sock.",
+      "example_es": "Perdí un calcetín.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 193,
+      "en": "Boot",
+      "es": "Bota",
+      "example_en": "He wears boots in the rain.",
+      "example_es": "Él usa botas en la lluvia.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 194,
+      "en": "Belt",
+      "es": "Cinturón",
+      "example_en": "My belt is made of leather.",
+      "example_es": "Mi cinturón está hecho de cuero.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 195,
+      "en": "Bucket",
+      "es": "Balde, cubo",
+      "example_en": "Fill the bucket with water.",
+      "example_es": "Llena el balde con agua.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 196,
+      "en": "Broom",
+      "es": "Escoba",
+      "example_en": "Use the broom to clean the floor.",
+      "example_es": "Usa la escoba para limpiar el piso.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 197,
+      "en": "Box",
+      "es": "Caja",
+      "example_en": "Put the toys in the box.",
+      "example_es": "Pon los juguetes en la caja.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 198,
+      "en": "Basket",
+      "es": "Cesta, canasta",
+      "example_en": "The fruit is in the basket.",
+      "example_es": "La fruta está en la cesta.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 199,
+      "en": "Envelope",
+      "es": "Sobre",
+      "example_en": "Put the letter in the envelope.",
+      "example_es": "Pon la carta en el sobre.",
+      "note": "",
+      "tags": ["objetos"]
+    },
+    {
+      "id": 200,
+      "en": "Newspaper",
+      "es": "Periódico",
+      "example_en": "He reads the newspaper every morning.",
+      "example_es": "Él lee el periódico todas las mañanas.",
+      "note": "",
+      "tags": ["objetos"]
     }
   ]
 }
