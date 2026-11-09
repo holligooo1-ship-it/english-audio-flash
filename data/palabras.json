@@ -1998,6 +1998,159 @@
       "example_es": "Me encanta nadar en el mar.",
       "note": "",
       "tags": ["sustantivos"]
+    },
+        {
+      "id": 223,
+      "en": "Well-off",
+      "es": "Acomodado, adinerado",
+      "example_en": "They are a well-off family.",
+      "example_es": "Ellos son una familia acomodada.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 224,
+      "en": "Symptoms",
+      "es": "Síntomas",
+      "example_en": "The symptoms are getting worse.",
+      "example_es": "Los síntomas están empeorando.",
+      "note": "Plural de 'symptom'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 225,
+      "en": "Growth",
+      "es": "Crecimiento",
+      "example_en": "Economic growth is slow this year.",
+      "example_es": "El crecimiento económico es lento este año.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 226,
+      "en": "Oxygen",
+      "es": "Oxígeno",
+      "example_en": "We need oxygen to breathe.",
+      "example_es": "Necesitamos oxígeno para respirar.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 227,
+      "en": "Twice",
+      "es": "Dos veces",
+      "example_en": "I have watched this movie twice.",
+      "example_es": "He visto esta película dos veces.",
+      "note": "También puede significar 'el doble'.",
+      "tags": ["adverbios"]
+    },
+    {
+      "id": 228,
+      "en": "Moxie",
+      "es": "Valentía, determinación",
+      "example_en": "She has a lot of moxie to start her own business.",
+      "example_es": "Ella tiene mucha valentía para iniciar su propio negocio.",
+      "note": "Palabra informal para referirse al coraje.",
+      "tags": ["sustantivos", "coloquial"]
+    },
+    {
+      "id": 229,
+      "en": "Synonym",
+      "es": "Sinónimo",
+      "example_en": "Happy is a synonym for glad.",
+      "example_es": "Happy es un sinónimo de glad.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 230,
+      "en": "Lunchtime",
+      "es": "Hora del almuerzo",
+      "example_en": "Let's meet at lunchtime.",
+      "example_es": "Reunámonos a la hora del almuerzo.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 231,
+      "en": "Maintain",
+      "es": "Mantener",
+      "example_en": "It is important to maintain a healthy diet.",
+      "example_es": "Es importante mantener una dieta saludable.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 232,
+      "en": "Dioxide",
+      "es": "Dióxido",
+      "example_en": "Trees absorb carbon dioxide.",
+      "example_es": "Los árboles absorben dióxido de carbono.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 233,
+      "en": "Atmosphere",
+      "es": "Atmósfera",
+      "example_en": "The Earth's atmosphere protects us from the sun.",
+      "example_es": "La atmósfera de la Tierra nos protege del sol.",
+      "note": "También puede usarse para describir el 'ambiente' de un lugar.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 234,
+      "en": "Development",
+      "es": "Desarrollo",
+      "example_en": "Software development takes time.",
+      "example_es": "El desarrollo de software toma tiempo.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 235,
+      "en": "Liquefy",
+      "es": "Licuar, convertir en líquido",
+      "example_en": "Heat will liquefy the butter.",
+      "example_es": "El calor licuará la mantequilla.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 236,
+      "en": "Sword fight",
+      "es": "Pelea de espadas",
+      "example_en": "They had a sword fight in the movie.",
+      "example_es": "Tuvieron una pelea de espadas en la película.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 237,
+      "en": "Pale",
+      "es": "Pálido",
+      "example_en": "You look pale, are you okay?",
+      "example_es": "Te ves pálido, ¿estás bien?",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 238,
+      "en": "Saw",
+      "es": "Sierra, vi (pasado de see)",
+      "example_en": "Use the saw to cut the wood. I saw a bird.",
+      "example_es": "Usa la sierra para cortar la madera. Vi un pájaro.",
+      "note": "Como sustantivo es herramienta; como verbo es el pasado de 'ver'.",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 239,
+      "en": "Prize",
+      "es": "Premio",
+      "example_en": "She won the first prize.",
+      "example_es": "Ella ganó el primer premio.",
+      "note": "",
+      "tags": ["sustantivos"]
     }
   ]
 }
