@@ -31,14 +31,14 @@
       "limitMax": 100
     },
      {
-      "id": "fauna_flora",
+     "id": "fauna_flora",
       "name": "Fauna, Flora y Objetos",
       "short": "Fauna y Flora",
       "description": "Animales, plantas y cosas del día a día",
       "file": "data/fauna_flora_objetos.json",
       "color": "fauna",
       "icon": "leaf",
-      "limitMax": 100
+      "limitMax": 1000
     }
   ]
 }
