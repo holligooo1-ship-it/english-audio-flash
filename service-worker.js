@@ -1,5 +1,5 @@
-// 👇 SUBIMOS A v2 PARA FORZAR LA ACTUALIZACIÓN
-const CACHE_NAME = 'audio-flash-v2'; 
+// 👇 SUBIMOS A v4 PARA FORZAR LA ACTUALIZACIÓN
+const CACHE_NAME = 'audio-flash-v4'; 
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
