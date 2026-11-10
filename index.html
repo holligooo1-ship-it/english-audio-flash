@@ -110,32 +110,54 @@
   </footer>
 </div>
 
+<!-- MENÚ DE JUEGOS -->
 <div class="deck-modal" id="gameMenuModal">
   <div class="deck-modal-content" style="max-width: 400px;">
     <div class="deck-modal-header">
-      <h2>Minijuegos</h2>
+      <h2>Configurar Juego</h2>
       <button class="close-btn" id="btnCloseGameMenu"><i data-lucide="x"></i></button>
     </div>
-    <div style="padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+    <div style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+      
+      <!-- NUEVOS SELECTORES -->
+      <div class="game-select-group">
+        <label for="gameDirSelect">Dirección</label>
+        <select id="gameDirSelect" class="game-select">
+          <option value="en-es">Inglés → Español</option>
+          <option value="es-en">Español → Inglés</option>
+        </select>
+      </div>
+      
+      <div class="game-select-group">
+        <label for="gameTagSelect">Categoría</label>
+        <select id="gameTagSelect" class="game-select"></select>
+      </div>
+
       <button class="game-menu-btn" id="btnPlayTF">
-        <i data-lucide="check-circle"></i> Verdadero o Falso
-      </button>
-      <button class="game-menu-btn" disabled style="opacity: 0.5; cursor: not-allowed;">
-        <i data-lucide="list"></i> Opción Múltiple (Pronto)
-      </button>
-      <button class="game-menu-btn" disabled style="opacity: 0.5; cursor: not-allowed;">
-        <i data-lucide="type"></i> Dictado Rápido (Pronto)
+        <i data-lucide="check-circle"></i> Empezar Juego
       </button>
     </div>
   </div>
 </div>
 
+<!-- PANTALLA DEL JUEGO -->
 <div class="game-overlay" id="gameView">
   <header class="game-header">
     <div class="game-score-box">
       <span>Puntos</span>
       <strong id="tfScore">0</strong>
     </div>
+    
+    <!-- BOTONES DE AUDIO Y DIRECCIÓN -->
+    <div class="game-header-actions">
+      <button id="btnGameDir" class="game-icon-btn" title="Cambiar dirección">
+        <i data-lucide="arrow-right-left"></i>
+      </button>
+      <button id="btnGameAudio" class="game-icon-btn" title="Escuchar de nuevo">
+        <i data-lucide="volume-2"></i>
+      </button>
+    </div>
+
     <div class="game-timer-box">
       <i data-lucide="timer"></i>
       <strong id="tfTimer">60s</strong>
