@@ -1,6 +1,5 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v28
-// Juego: Verdadero o Falso
+// ENGLISH AUDIO FLASH - v29 (Código Completo y Estable)
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -11,11 +10,9 @@ let sessionCards = [];
 let currentIndex = 0;
 let isPlaying = false;
 
-// GLOBAL
 let speed = 1;
 let pauseSeconds = 2;
 
-// POR MAZO
 let direction = "en-es";
 let order = "secuencial";
 let sessionLimit = "all";
@@ -32,21 +29,36 @@ let pendingResolve = null;
 let examplePlaying = false;
 let availableVoices = [];
 
-// ---------- ESTADO DEL JUEGO ----------
+// Estado del Juego
+let gameDirection = "en-es";
+let gameCards = [];
 let tfTimerInterval = null;
 let tfTimeLeft = 60;
 let tfScore = 0;
 let tfCurrentCard = null;
 let tfIsFake = false;
 
-// ---------- HELPERS LUCIDE ----------
+// ---------- HELPERS ----------
 function refreshIcons() {
   if (window.lucide && typeof window.lucide.createIcons === "function") {
     window.lucide.createIcons();
   }
 }
 
-// ---------- PERSISTENCIA GLOBAL ----------
+function escapeHtml(str) {
+  return String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function setPlayState(playing) {
+  if (playing) { btnPlay.classList.add("playing"); } else { btnPlay.classList.remove("playing"); }
+}
+
+function setStatus(text, icon) {
+  if (icon) { statusEl.innerHTML = `<i data-lucide="${icon}"></i><span>${text}</span>`; refreshIcons(); } 
+  else { statusEl.textContent = text; }
+}
+
+// ---------- PERSISTENCIA ----------
 function loadGlobalSettings() {
   try {
     const g = JSON.parse(localStorage.getItem("af_global") || "{}");
@@ -54,14 +66,10 @@ function loadGlobalSettings() {
     if (typeof g.pause === "number") pauseSeconds = g.pause;
   } catch (e) {}
 }
-
 function saveGlobalSettings() {
-  localStorage.setItem("af_global", JSON.stringify({
-    speed, pause: pauseSeconds
-  }));
+  localStorage.setItem("af_global", JSON.stringify({ speed, pause: pauseSeconds }));
 }
 
-// ---------- PERSISTENCIA POR MAZO ----------
 function loadDeckSettings(deckId) {
   try {
     const all = JSON.parse(localStorage.getItem("af_decks") || "{}");
@@ -71,25 +79,14 @@ function loadDeckSettings(deckId) {
     sessionLimit = d.sessionLimit !== undefined ? d.sessionLimit : "all";
     currentTag   = d.currentTag   || "all";
   } catch (e) {
-    direction = "en-es";
-    order = "secuencial";
-    sessionLimit = "all";
-    currentTag = "all";
+    direction = "en-es"; order = "secuencial"; sessionLimit = "all"; currentTag = "all";
   }
 }
-
 function saveDeckSettings() {
   if (!currentDeck) return;
   let all = {};
-  try {
-    all = JSON.parse(localStorage.getItem("af_decks") || "{}");
-  } catch (e) {}
-  all[currentDeck.id] = {
-    direction,
-    order,
-    sessionLimit,
-    currentTag
-  };
+  try { all = JSON.parse(localStorage.getItem("af_decks") || "{}"); } catch (e) {}
+  all[currentDeck.id] = { direction, order, sessionLimit, currentTag };
   localStorage.setItem("af_decks", JSON.stringify(all));
 }
 
@@ -131,12 +128,13 @@ const tagSelect   = document.getElementById("tag");
 const deckModal   = document.getElementById("deckModal");
 const deckList    = document.getElementById("deckList");
 const btnCloseDeck = document.getElementById("btnCloseDeck");
-const deckTitle   = document.getElementById("deckTitle");
 
-// Juego DOM
+// DOM del Juego
 const gameMenuModal = document.getElementById("gameMenuModal");
 const btnCloseGameMenu = document.getElementById("btnCloseGameMenu");
 const btnPlayTF = document.getElementById("btnPlayTF");
+const gameDirSelect = document.getElementById("gameDirSelect");
+const gameTagSelect = document.getElementById("gameTagSelect");
 const gameView = document.getElementById("gameView");
 const btnCloseGame = document.getElementById("btnCloseGame");
 const tfScoreEl = document.getElementById("tfScore");
@@ -146,42 +144,13 @@ const tfWordEl = document.getElementById("tfWord");
 const tfTranslationEl = document.getElementById("tfTranslation");
 const btnTrue = document.getElementById("btnTrue");
 const btnFalse = document.getElementById("btnFalse");
+const btnGameDir = document.getElementById("btnGameDir");
+const btnGameAudio = document.getElementById("btnGameAudio");
 const tfGameOver = document.getElementById("tfGameOver");
 const tfFinalScore = document.getElementById("tfFinalScore");
 const btnRestartTF = document.getElementById("btnRestartTF");
 
-// ---------- HELPERS ----------
-function setPlayState(playing) {
-  if (playing) {
-    btnPlay.classList.add("playing");
-    btnPlay.setAttribute("aria-label", "Pausar");
-    btnPlay.title = "Pausar";
-  } else {
-    btnPlay.classList.remove("playing");
-    btnPlay.setAttribute("aria-label", "Reproducir");
-    btnPlay.title = "Reproducir";
-  }
-}
-
-function setStatus(text, icon) {
-  if (icon) {
-    statusEl.innerHTML = `<i data-lucide="${icon}"></i><span>${text}</span>`;
-    refreshIcons();
-  } else {
-    statusEl.textContent = text;
-  }
-}
-
-function escapeHtml(str) {
-  return String(str || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
-// ---------- CARGAR ÍNDICE DE MAZOS ----------
+// ---------- CARGA INICIAL ----------
 async function loadDecksIndex() {
   try {
     const res = await fetch("data/decks.json", { cache: "no-store" });
@@ -190,13 +159,10 @@ async function loadDecksIndex() {
     renderDeckGrid();
   } catch (err) {
     console.error(err);
-    deckGrid.innerHTML = `<p style="color:#ef4444;text-align:center;">Error al cargar los mazos</p>`;
+    deckGrid.innerHTML = `<p style="color:#ef4444;text-align:center;">Error al cargar</p>`;
   } finally {
     const splash = document.getElementById("splash-screen");
-    if (splash) {
-      splash.classList.add("hidden");
-      setTimeout(() => splash.remove(), 600);
-    }
+    if (splash) { splash.classList.add("hidden"); setTimeout(() => splash.remove(), 600); }
   }
 }
 
@@ -206,28 +172,20 @@ function renderDeckGrid() {
     const card = document.createElement("div");
     card.className = "deck-card";
     card.dataset.color = deck.color || "frases";
-    card.dataset.id = deck.id;
-
     card.innerHTML = `
-      <div class="deck-card-icon">
-        <i data-lucide="${escapeHtml(deck.icon || "layers")}"></i>
-      </div>
+      <div class="deck-card-icon"><i data-lucide="${escapeHtml(deck.icon || "layers")}"></i></div>
       <div class="deck-card-info">
         <div class="deck-card-name">${escapeHtml(deck.name)}</div>
         <div class="deck-card-desc">${escapeHtml(deck.description || "")}</div>
       </div>
-      <div class="deck-card-arrow">
-        <i data-lucide="chevron-right"></i>
-      </div>
+      <div class="deck-card-arrow"><i data-lucide="chevron-right"></i></div>
     `;
-
     card.addEventListener("click", () => openDeck(deck));
     deckGrid.appendChild(card);
   });
   refreshIcons();
 }
 
-// ---------- ABRIR MAZO ----------
 async function openDeck(deck) {
   try {
     const res = await fetch(deck.file, { cache: "no-store" });
@@ -235,93 +193,43 @@ async function openDeck(deck) {
     cards = data.cards || [];
     currentDeck = deck;
     deckNameEl.textContent = deck.short || deck.name;
+    if (cards.length === 0) setStatus("Sin tarjetas", "alert-circle");
 
-    if (cards.length === 0) {
-      setStatus("Sin tarjetas", "alert-circle");
-    }
-
-    currentIndex = 0;
-    cyclePlayed = [];
-    history = [];
-    cycleCompleted = false;
-    sessionPlayed = 0;
-
+    currentIndex = 0; cyclePlayed = []; history = []; cycleCompleted = false; sessionPlayed = 0;
     loadDeckSettings(deck.id);
+    populateLimitOptions(); populateTagOptions(); buildDeckList(); updateButtons();
 
-    populateLimitOptions();
-    populateTagOptions();
-    buildDeckList();
-    updateButtons();
-
-    speedInput.value = speed;
-    speedValue.textContent = speed.toFixed(1) + "x";
-    pauseInput.value = pauseSeconds;
-    pauseValue.textContent = pauseSeconds + "s";
+    speedInput.value = speed; speedValue.textContent = speed.toFixed(1) + "x";
+    pauseInput.value = pauseSeconds; pauseValue.textContent = pauseSeconds + "s";
     limitSelect.value = String(sessionLimit);
 
-    homeView.classList.add("hidden");
-    playerView.classList.remove("hidden");
-    refreshIcons();
-
+    homeView.classList.add("hidden"); playerView.classList.remove("hidden"); refreshIcons();
     resetCycle();
-  } catch (err) {
-    console.error(err);
-    alert("No se pudo cargar el mazo");
-  }
+  } catch (err) { alert("No se pudo cargar"); }
 }
 
-function goHome() {
-  stopAll();
-  playerView.classList.add("hidden");
-  homeView.classList.remove("hidden");
-  refreshIcons();
-}
-
+function goHome() { stopAll(); playerView.classList.add("hidden"); homeView.classList.remove("hidden"); refreshIcons(); }
 btnBack.addEventListener("click", goHome);
 
-// ---------- POBLAR SELECTORES ----------
 function populateLimitOptions() {
   limitSelect.innerHTML = "";
-  let max = 100;
-  if (currentDeck && typeof currentDeck.limitMax === "number") max = currentDeck.limitMax;
-
+  let max = (currentDeck && currentDeck.limitMax) ? currentDeck.limitMax : 100;
   for (let i = 1; i <= max; i++) {
-    const opt = document.createElement("option");
-    opt.value = String(i);
-    opt.textContent = String(i);
-    limitSelect.appendChild(opt);
+    const opt = document.createElement("option"); opt.value = String(i); opt.textContent = String(i); limitSelect.appendChild(opt);
   }
-  const allOpt = document.createElement("option");
-  allOpt.value = "all";
-  allOpt.textContent = "Todas";
-  limitSelect.appendChild(allOpt);
-
+  const allOpt = document.createElement("option"); allOpt.value = "all"; allOpt.textContent = "Todas"; limitSelect.appendChild(allOpt);
   const saved = String(sessionLimit);
-  const isValid = saved === "all" || (parseInt(saved, 10) >= 1 && parseInt(saved, 10) <= max);
-  if (!isValid) sessionLimit = "all";
+  if (saved !== "all" && (parseInt(saved, 10) < 1 || parseInt(saved, 10) > max)) sessionLimit = "all";
   limitSelect.value = String(sessionLimit);
 }
 
 function populateTagOptions() {
   const tagSet = new Set();
-  cards.forEach(c => {
-    if (Array.isArray(c.tags)) c.tags.forEach(t => tagSet.add(t));
-  });
+  cards.forEach(c => { if (Array.isArray(c.tags)) c.tags.forEach(t => tagSet.add(t)); });
   const tags = Array.from(tagSet).sort();
-
   tagSelect.innerHTML = "";
-  const allOpt = document.createElement("option");
-  allOpt.value = "all";
-  allOpt.textContent = "Todas";
-  tagSelect.appendChild(allOpt);
-
-  tags.forEach(t => {
-    const opt = document.createElement("option");
-    opt.value = t;
-    opt.textContent = t.charAt(0).toUpperCase() + t.slice(1);
-    tagSelect.appendChild(opt);
-  });
-
+  const allOpt = document.createElement("option"); allOpt.value = "all"; allOpt.textContent = "Todas"; tagSelect.appendChild(allOpt);
+  tags.forEach(t => { const opt = document.createElement("option"); opt.value = t; opt.textContent = t.charAt(0).toUpperCase() + t.slice(1); tagSelect.appendChild(opt); });
   if (currentTag !== "all" && !tags.includes(currentTag)) currentTag = "all";
   tagSelect.value = currentTag;
 }
@@ -329,469 +237,198 @@ function populateTagOptions() {
 function updateButtons() {
   directionLabel.textContent = direction === "en-es" ? "EN → ES" : "ES → EN";
   const iconName = order === "secuencial" ? "repeat" : "dices";
-  const labelText = order === "secuencial" ? "Secuencial" : "Aleatorio";
-  orderLabel.textContent = labelText;
-
-  const oldIcon = btnOrder.querySelector("svg, i[data-lucide]");
-  if (oldIcon) oldIcon.remove();
-  const newIcon = document.createElement("i");
-  newIcon.setAttribute("data-lucide", iconName);
-  btnOrder.insertBefore(newIcon, orderLabel);
+  orderLabel.textContent = order === "secuencial" ? "Secuencial" : "Aleatorio";
+  const oldIcon = btnOrder.querySelector("svg, i[data-lucide]"); if (oldIcon) oldIcon.remove();
+  const newIcon = document.createElement("i"); newIcon.setAttribute("data-lucide", iconName); btnOrder.insertBefore(newIcon, orderLabel);
   refreshIcons();
 }
 
-// ---------- REPRODUCCIÓN NORMAL ----------
-function getFilteredCards() {
-  if (currentTag === "all") return cards;
-  return cards.filter(c => Array.isArray(c.tags) && c.tags.includes(currentTag));
-}
-
-function effectiveLimit() {
-  const filtered = getFilteredCards();
-  if (filtered.length === 0) return 1;
-  if (sessionLimit === "all") return filtered.length;
-  const n = parseInt(sessionLimit, 10);
-  if (isNaN(n)) return filtered.length;
-  return Math.min(n, filtered.length);
-}
-
-function buildSession() {
-  const filtered = getFilteredCards();
-  sessionCards = filtered.slice(0, effectiveLimit());
-}
+// ---------- REPRODUCTOR NORMAL ----------
+function getFilteredCards() { return currentTag === "all" ? cards : cards.filter(c => Array.isArray(c.tags) && c.tags.includes(currentTag)); }
+function effectiveLimit() { const f = getFilteredCards(); if (f.length === 0) return 1; if (sessionLimit === "all") return f.length; const n = parseInt(sessionLimit, 10); return isNaN(n) ? f.length : Math.min(n, f.length); }
+function buildSession() { sessionCards = getFilteredCards().slice(0, effectiveLimit()); }
 
 function resetCycle() {
-  buildSession();
-  cyclePlayed = [];
-  history = [];
-  cycleCompleted = false;
-  sessionPlayed = 0;
-
+  buildSession(); cyclePlayed = []; history = []; cycleCompleted = false; sessionPlayed = 0;
   if (sessionCards.length === 0) {
-    wordEn.textContent = "Sin tarjetas";
-    wordEs.textContent = "";
-    noteEl.innerHTML = "";
-    exampleEl.innerHTML = "";
-    counter.textContent = "0 / 0";
-    progressBar.style.width = "0%";
-    setStatus("Sin tarjetas", "alert-circle");
-    return;
+    wordEn.textContent = "Sin tarjetas"; wordEs.textContent = ""; noteEl.innerHTML = ""; exampleEl.innerHTML = ""; counter.textContent = "0 / 0"; progressBar.style.width = "0%"; setStatus("Sin tarjetas", "alert-circle"); return;
   }
-
-  if (order === "aleatorio") {
-    currentIndex = Math.floor(Math.random() * sessionCards.length);
-  } else {
-    currentIndex = 0;
-  }
-  cyclePlayed = [currentIndex];
-  renderCard();
+  currentIndex = order === "aleatorio" ? Math.floor(Math.random() * sessionCards.length) : 0;
+  cyclePlayed = [currentIndex]; renderCard();
 }
 
 function pickNextRandom() {
-  const total = sessionCards.length;
-  if (cyclePlayed.length >= total) cyclePlayed = [];
-  const candidates = [];
-  for (let i = 0; i < total; i++) {
-    if (i === currentIndex) continue;
-    if (cyclePlayed.includes(i)) continue;
-    candidates.push(i);
-  }
-  if (candidates.length === 0) {
-    for (let i = 0; i < total; i++) {
-      if (i !== currentIndex) candidates.push(i);
-    }
-    if (candidates.length === 0) return currentIndex;
-  }
-  const next = candidates[Math.floor(Math.random() * candidates.length)];
-  cyclePlayed.push(next);
-  return next;
+  const total = sessionCards.length; if (cyclePlayed.length >= total) cyclePlayed = [];
+  const candidates = []; for (let i = 0; i < total; i++) { if (i !== currentIndex && !cyclePlayed.includes(i)) candidates.push(i); }
+  if (candidates.length === 0) { for (let i = 0; i < total; i++) { if (i !== currentIndex) candidates.push(i); } if (candidates.length === 0) return currentIndex; }
+  const next = candidates[Math.floor(Math.random() * candidates.length)]; cyclePlayed.push(next); return next;
 }
 
-function goNext() {
-  history.push(currentIndex);
-  cycleCompleted = false;
-  if (order === "secuencial") {
-    currentIndex = (currentIndex + 1) % sessionCards.length;
-  } else {
-    currentIndex = pickNextRandom();
-  }
-}
-
+function goNext() { history.push(currentIndex); cycleCompleted = false; currentIndex = order === "secuencial" ? (currentIndex + 1) % sessionCards.length : pickNextRandom(); }
 function goPrev() {
   cycleCompleted = false;
-  if (history.length > 0) {
-    const prev = history.pop();
-    if (order === "aleatorio") {
-      const idx = cyclePlayed.indexOf(currentIndex);
-      if (idx !== -1) cyclePlayed.splice(idx, 1);
-    }
-    currentIndex = prev;
-  } else if (order === "secuencial") {
-    currentIndex = (currentIndex - 1 + sessionCards.length) % sessionCards.length;
-  }
+  if (history.length > 0) { const prev = history.pop(); if (order === "aleatorio") { const idx = cyclePlayed.indexOf(currentIndex); if (idx !== -1) cyclePlayed.splice(idx, 1); } currentIndex = prev; }
+  else if (order === "secuencial") { currentIndex = (currentIndex - 1 + sessionCards.length) % sessionCards.length; }
 }
 
 function finishCycle() {
-  isPlaying = false;
-  cycleCompleted = true;
-  player.pause();
-  player.onended = null;
-  player.onerror = null;
-  if ("speechSynthesis" in window) speechSynthesis.cancel();
-  cardEl.classList.remove("playing");
-  setPlayState(false);
-  statusEl.classList.remove("active");
-  setStatus("Completado", "check-circle");
+  isPlaying = false; cycleCompleted = true; player.pause(); player.onended = null; player.onerror = null;
+  if ("speechSynthesis" in window) speechSynthesis.cancel(); cardEl.classList.remove("playing"); setPlayState(false); statusEl.classList.remove("active"); setStatus("Completado", "check-circle");
 }
 
 function renderCard() {
-  const c = sessionCards[currentIndex];
-  if (!c) return;
+  const c = sessionCards[currentIndex]; if (!c) return;
+  if (direction === "en-es") { wordEn.textContent = c.es; wordEs.textContent = c.en; } 
+  else { wordEn.textContent = c.en; wordEs.textContent = c.es; }
 
-  if (direction === "en-es") {
-    wordEn.textContent = c.es;
-    wordEs.textContent = c.en;
-  } else {
-    wordEn.textContent = c.en;
-    wordEs.textContent = c.es;
-  }
-
-  const exEn = (c.example_en || "").trim();
-  const exEs = (c.example_es || "").trim();
+  const exEn = (c.example_en || "").trim(); const exEs = (c.example_es || "").trim();
   if (exEn || exEs) {
     let html = `<i data-lucide="book-open"></i><div class="ex-body">`;
-    if (exEn) html += `<span class="ex-en">${escapeHtml(exEn)}</span>`;
-    if (exEs) html += `<span class="ex-es">${escapeHtml(exEs)}</span>`;
-    html += `</div>`;
-    if (exEn) html += `<button class="example-play-btn" title="Escuchar ejemplo"><i data-lucide="volume-2"></i></button>`;
-    exampleEl.innerHTML = html;
-    refreshIcons();
+    if (exEn) html += `<span class="ex-en">${escapeHtml(exEn)}</span>`; if (exEs) html += `<span class="ex-es">${escapeHtml(exEs)}</span>`; html += `</div>`;
+    if (exEn) html += `<button class="example-play-btn" title="Escuchar"><i data-lucide="volume-2"></i></button>`;
+    exampleEl.innerHTML = html; refreshIcons();
     const exBtn = exampleEl.querySelector(".example-play-btn");
-    if (exBtn && exEn) {
-      exBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        playExample(exEn, exBtn);
-      });
-    }
-  } else {
-    exampleEl.innerHTML = "";
-  }
+    if (exBtn && exEn) { exBtn.addEventListener("click", (e) => { e.stopPropagation(); playExample(exEn, exBtn); }); }
+  } else { exampleEl.innerHTML = ""; }
 
   const note = (c.note || "").trim();
-  if (note) {
-    noteEl.innerHTML = `<i data-lucide="message-circle"></i><span>${escapeHtml(note)}</span>`;
-    refreshIcons();
-  } else {
-    noteEl.innerHTML = "";
-  }
+  if (note) { noteEl.innerHTML = `<i data-lucide="message-circle"></i><span>${escapeHtml(note)}</span>`; refreshIcons(); } else { noteEl.innerHTML = ""; }
 
-  const limit = sessionCards.length;
-  const shown = currentIndex + 1;
-  counter.textContent = `${shown} / ${limit}`;
-  progressBar.style.width = (shown / limit) * 100 + "%";
-
-  if (!cycleCompleted) {
-    setStatus("Listo", null);
-    statusEl.classList.remove("active");
-  }
+  counter.textContent = `${currentIndex + 1} / ${sessionCards.length}`; progressBar.style.width = ((currentIndex + 1) / sessionCards.length) * 100 + "%";
+  if (!cycleCompleted) { setStatus("Listo", null); statusEl.classList.remove("active"); }
 }
 
 function playExample(text, btn) {
   if (!("speechSynthesis" in window)) return;
-  if (examplePlaying) {
-    speechSynthesis.cancel();
-    examplePlaying = false;
-    document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing"));
-    return;
-  }
-  player.pause();
-  player.onended = null;
-  player.onerror = null;
-  speechSynthesis.cancel();
-
-  examplePlaying = true;
-  if (btn) btn.classList.add("playing");
-
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US";
-  u.rate = speed;
-
-  const bestVoice = getBestVoice("en-US");
-  if (bestVoice) u.voice = bestVoice;
-
-  const cleanup = () => {
-    examplePlaying = false;
-    if (btn) btn.classList.remove("playing");
-  };
-  u.onend = cleanup;
-  u.onerror = cleanup;
-  speechSynthesis.speak(u);
+  if (examplePlaying) { speechSynthesis.cancel(); examplePlaying = false; document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing")); return; }
+  player.pause(); player.onended = null; player.onerror = null; speechSynthesis.cancel();
+  examplePlaying = true; if (btn) btn.classList.add("playing");
+  const u = new SpeechSynthesisUtterance(text); u.lang = "en-US"; u.rate = speed;
+  const bestVoice = getBestVoice("en-US"); if (bestVoice) u.voice = bestVoice;
+  const cleanup = () => { examplePlaying = false; if (btn) btn.classList.remove("playing"); };
+  u.onend = cleanup; u.onerror = cleanup; speechSynthesis.speak(u);
 }
 
-function loadVoices() {
-  availableVoices = window.speechSynthesis.getVoices();
-}
-if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
-  speechSynthesis.onvoiceschanged = loadVoices;
-}
+function loadVoices() { availableVoices = window.speechSynthesis.getVoices(); }
+if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) { speechSynthesis.onvoiceschanged = loadVoices; }
 loadVoices();
 
 function getBestVoice(lang) {
   if (availableVoices.length === 0) loadVoices();
-  const langCode = lang.split('-')[0]; 
-  const filtered = availableVoices.filter(v => v.lang.startsWith(langCode));
+  const langCode = lang.split('-')[0]; const filtered = availableVoices.filter(v => v.lang.startsWith(langCode));
   if (filtered.length === 0) return null;
-
-  const highQualityKeywords = ['natural', 'neural', 'google', 'premium', 'enhanced'];
-  for (const keyword of highQualityKeywords) {
-    const bestVoice = filtered.find(v => v.name.toLowerCase().includes(keyword));
-    if (bestVoice) return bestVoice;
-  }
+  const keywords = ['natural', 'neural', 'google', 'premium', 'enhanced'];
+  for (const kw of keywords) { const v = filtered.find(v => v.name.toLowerCase().includes(kw)); if (v) return v; }
   return filtered[0];
 }
 
 function speak(text, lang, onDone) {
   if (!("speechSynthesis" in window)) { onDone && onDone(); return; }
   speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = lang;
-  u.rate = speed;
-  const bestVoice = getBestVoice(lang);
-  if (bestVoice) u.voice = bestVoice;
-  u.onend = () => onDone && onDone();
-  u.onerror = () => onDone && onDone();
-  speechSynthesis.speak(u);
+  const u = new SpeechSynthesisUtterance(text); u.lang = lang; u.rate = speed;
+  const bestVoice = getBestVoice(lang); if (bestVoice) u.voice = bestVoice;
+  u.onend = () => onDone && onDone(); u.onerror = () => onDone && onDone(); speechSynthesis.speak(u);
 }
-
 function speakSpanish(text, onDone) { speak(text, "es-ES", onDone); }
 function speakEnglish(text, onDone) { speak(text, "en-US", onDone); }
 
 function playCard(gen) {
   return new Promise((resolve) => {
-    const c = sessionCards[currentIndex];
-    if (!c) return resolve();
-
-    pendingResolve = resolve;
-    cardEl.classList.add("playing");
-
+    const c = sessionCards[currentIndex]; if (!c) return resolve();
+    pendingResolve = resolve; cardEl.classList.add("playing");
     const done = () => {
       if (gen !== loopGeneration) return;
-      pendingResolve = null;
-      setStatus("Pausa", "pause");
-      statusEl.classList.remove("active");
-      cardEl.classList.remove("playing");
-      setTimeout(() => {
-        if (gen !== loopGeneration) return;
-        resolve();
-      }, pauseSeconds * 1000);
+      pendingResolve = null; setStatus("Pausa", "pause"); statusEl.classList.remove("active"); cardEl.classList.remove("playing");
+      setTimeout(() => { if (gen !== loopGeneration) return; resolve(); }, pauseSeconds * 1000);
     };
-
     if (direction === "en-es") {
-      setStatus("Inglés", "volume-2");
-      statusEl.classList.add("active");
+      setStatus("Inglés", "volume-2"); statusEl.classList.add("active");
       if (c.audio) {
-        player.onended = done;
-        player.onerror = () => { console.warn("Error audio:", c.audio); done(); };
-        player.src = c.audio;
-        player.playbackRate = speed;
-        player.currentTime = 0;
-        player.play().catch(done);
-      } else {
-        speakEnglish(c.en, done);
-      }
+        player.onended = done; player.onerror = () => { done(); }; player.src = c.audio; player.playbackRate = speed; player.currentTime = 0; player.play().catch(done);
+      } else { speakEnglish(c.en, done); }
     } else {
-      setStatus("Español", "languages");
-      statusEl.classList.add("active");
-      speakSpanish(c.es, done);
+      setStatus("Español", "languages"); statusEl.classList.add("active"); speakSpanish(c.es, done);
     }
   });
 }
 
 async function loop() {
-  const myGen = ++loopGeneration;
-  const limit = sessionCards.length;
-
+  const myGen = ++loopGeneration; const limit = sessionCards.length;
   while (isPlaying && myGen === loopGeneration) {
     await playCard(myGen);
     if (myGen !== loopGeneration) return;
     if (!isPlaying) break;
     sessionPlayed++;
     if (sessionPlayed >= limit) { finishCycle(); break; }
-    goNext();
-    renderCard();
+    goNext(); renderCard();
   }
 }
 
 function buildDeckList() {
   deckList.innerHTML = "";
   cards.forEach((c, i) => {
-    const item = document.createElement("div");
-    item.className = "deck-item";
-
-    const exampleHtml = (c.example_en || c.example_es)
-      ? `<div class="deck-item-note example-note"><i data-lucide="book-open"></i><span>${escapeHtml(c.example_en || "")}${c.example_es ? " — " + escapeHtml(c.example_es) : ""}</span></div>`
-      : "";
-    const noteHtml = c.note && c.note.trim()
-      ? `<div class="deck-item-note"><i data-lucide="message-circle"></i><span>${escapeHtml(c.note)}</span></div>`
-      : "";
-    const tagsHtml = Array.isArray(c.tags) && c.tags.length
-      ? `<div class="deck-item-tags">${c.tags.map(t => `<span class="deck-tag">${escapeHtml(t)}</span>`).join("")}</div>`
-      : "";
-
+    const item = document.createElement("div"); item.className = "deck-item";
+    const exampleHtml = (c.example_en || c.example_es) ? `<div class="deck-item-note example-note"><i data-lucide="book-open"></i><span>${escapeHtml(c.example_en || "")}${c.example_es ? " — " + escapeHtml(c.example_es) : ""}</span></div>` : "";
+    const noteHtml = c.note && c.note.trim() ? `<div class="deck-item-note"><i data-lucide="message-circle"></i><span>${escapeHtml(c.note)}</span></div>` : "";
+    const tagsHtml = Array.isArray(c.tags) && c.tags.length ? `<div class="deck-item-tags">${c.tags.map(t => `<span class="deck-tag">${escapeHtml(t)}</span>`).join("")}</div>` : "";
+    
     item.innerHTML = `
-      <div class="deck-item-header">
-        <div class="deck-item-en">${escapeHtml(c.en)}</div>
-        <div class="deck-item-index">#${i + 1}</div>
-      </div>
-      <div class="deck-item-es">${escapeHtml(c.es)}</div>
-      ${exampleHtml}
-      ${noteHtml}
-      ${tagsHtml}
+      <div class="deck-item-header"><div class="deck-item-en">${escapeHtml(c.en)}</div><div class="deck-item-index">#${i + 1}</div></div>
+      <div class="deck-item-es">${escapeHtml(c.es)}</div>${exampleHtml}${noteHtml}${tagsHtml}
     `;
-
     item.addEventListener("click", () => {
-      if (c.audio) {
-        player.src = c.audio;
-        player.playbackRate = speed;
-        player.currentTime = 0;
-        player.play().catch(() => {});
-      } else {
-        speakEnglish(c.en);
-      }
+      if (c.audio) { player.src = c.audio; player.playbackRate = speed; player.currentTime = 0; player.play().catch(() => {}); } 
+      else { speakEnglish(c.en); }
     });
     deckList.appendChild(item);
   });
   refreshIcons();
 }
 
-function openDeckModal() {
-  deckModal.classList.add("open");
-  if (isPlaying) stopAll();
-}
+function openDeckModal() { deckModal.classList.add("open"); if (isPlaying) stopAll(); }
 function closeDeckModal() { deckModal.classList.remove("open"); }
 btnDeck.addEventListener("click", openDeckModal);
 btnCloseDeck.addEventListener("click", closeDeckModal);
 deckModal.addEventListener("click", (e) => { if (e.target === deckModal) closeDeckModal(); });
 
 function stopAll() {
-  isPlaying = false;
-  loopGeneration++;
-  player.pause();
-  player.onended = null;
-  player.onerror = null;
+  isPlaying = false; loopGeneration++; player.pause(); player.onended = null; player.onerror = null;
   if ("speechSynthesis" in window) speechSynthesis.cancel();
-  examplePlaying = false;
-  document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing"));
-  if (pendingResolve) {
-    const r = pendingResolve;
-    pendingResolve = null;
-    r();
-  }
-  cardEl.classList.remove("playing");
-  setPlayState(false);
-  statusEl.classList.remove("active");
+  examplePlaying = false; document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing"));
+  if (pendingResolve) { const r = pendingResolve; pendingResolve = null; r(); }
+  cardEl.classList.remove("playing"); setPlayState(false); statusEl.classList.remove("active");
   if (!cycleCompleted) setStatus("Pausado", "pause");
 }
 
 btnPlay.addEventListener("click", () => {
   if (sessionCards.length === 0) return;
   if (isPlaying) { stopAll(); } 
-  else {
-    if (cycleCompleted) resetCycle();
-    isPlaying = true;
-    setPlayState(true);
-    loop();
-  }
+  else { if (cycleCompleted) resetCycle(); isPlaying = true; setPlayState(true); loop(); }
 });
 
-btnNext.addEventListener("click", () => {
-  if (sessionCards.length === 0) return;
-  stopAll();
-  goNext();
-  sessionPlayed = currentIndex;
-  renderCard();
-});
-btnPrev.addEventListener("click", () => {
-  if (sessionCards.length === 0) return;
-  stopAll();
-  goPrev();
-  sessionPlayed = currentIndex;
-  renderCard();
-});
+btnNext.addEventListener("click", () => { if (sessionCards.length === 0) return; stopAll(); goNext(); sessionPlayed = currentIndex; renderCard(); });
+btnPrev.addEventListener("click", () => { if (sessionCards.length === 0) return; stopAll(); goPrev(); sessionPlayed = currentIndex; renderCard(); });
 
-btnDirection.addEventListener("click", () => {
-  stopAll();
-  direction = direction === "en-es" ? "es-en" : "en-es";
-  resetCycle();
-  updateButtons();
-  saveDeckSettings();
-});
+btnDirection.addEventListener("click", () => { stopAll(); direction = direction === "en-es" ? "es-en" : "en-es"; resetCycle(); updateButtons(); saveDeckSettings(); });
+btnOrder.addEventListener("click", () => { stopAll(); order = order === "secuencial" ? "aleatorio" : "secuencial"; resetCycle(); updateButtons(); saveDeckSettings(); });
 
-btnOrder.addEventListener("click", () => {
-  stopAll();
-  order = order === "secuencial" ? "aleatorio" : "secuencial";
-  resetCycle();
-  updateButtons();
-  saveDeckSettings();
-});
+speedInput.addEventListener("input", () => { speed = parseFloat(speedInput.value); speedValue.textContent = speed.toFixed(1) + "x"; player.playbackRate = speed; saveGlobalSettings(); });
+pauseInput.addEventListener("input", () => { pauseSeconds = parseFloat(pauseInput.value); pauseValue.textContent = pauseSeconds.toFixed(1).replace(/\.0$/, "") + "s"; saveGlobalSettings(); });
 
-speedInput.addEventListener("input", () => {
-  speed = parseFloat(speedInput.value);
-  speedValue.textContent = speed.toFixed(1) + "x";
-  player.playbackRate = speed;
-  saveGlobalSettings();
-});
+limitSelect.addEventListener("change", () => { sessionLimit = limitSelect.value === "all" ? "all" : parseInt(limitSelect.value, 10); saveDeckSettings(); stopAll(); resetCycle(); });
+tagSelect.addEventListener("change", () => { currentTag = tagSelect.value; saveDeckSettings(); stopAll(); resetCycle(); });
 
-pauseInput.addEventListener("input", () => {
-  pauseSeconds = parseFloat(pauseInput.value);
-  pauseValue.textContent = pauseSeconds.toFixed(1).replace(/\.0$/, "") + "s";
-  saveGlobalSettings();
-});
-
-limitSelect.addEventListener("change", () => {
-  sessionLimit = limitSelect.value === "all" ? "all" : parseInt(limitSelect.value, 10);
-  saveDeckSettings();
-  stopAll();
-  resetCycle();
-});
-
-tagSelect.addEventListener("change", () => {
-  currentTag = tagSelect.value;
-  saveDeckSettings();
-  stopAll();
-  resetCycle();
-});
-
-// ==========================================================
-// LÓGICA DEL JUEGO (VERDADERO O FALSO)
-// ==========================================================
-
-// Nuevas variables para el juego
-let gameDirection = "en-es";
-let gameCards = [];
-const gameDirSelect = document.getElementById("gameDirSelect");
-const gameTagSelect = document.getElementById("gameTagSelect");
-const btnGameDir = document.getElementById("btnGameDir");
-const btnGameAudio = document.getElementById("btnGameAudio");
-
+// ---------- LÓGICA DEL JUEGO (VERDADERO O FALSO) ----------
 btnGame.addEventListener("click", () => {
   if (isPlaying) stopAll();
-  
-  // Poblar el selector de categorías del juego
   const tagSet = new Set();
-  cards.forEach(c => {
-    if (Array.isArray(c.tags)) c.tags.forEach(t => tagSet.add(t));
-  });
+  cards.forEach(c => { if (Array.isArray(c.tags)) c.tags.forEach(t => tagSet.add(t)); });
   const tags = Array.from(tagSet).sort();
   
   gameTagSelect.innerHTML = `<option value="all">Todas las categorías</option>`;
-  tags.forEach(t => {
-    gameTagSelect.innerHTML += `<option value="${t}">${t.charAt(0).toUpperCase() + t.slice(1)}</option>`;
-  });
+  tags.forEach(t => { gameTagSelect.innerHTML += `<option value="${t}">${t.charAt(0).toUpperCase() + t.slice(1)}</option>`; });
   
-  // Sincronizar la dirección con la de la app
   gameDirSelect.value = direction;
-  
   gameMenuModal.classList.add("open");
 });
 
@@ -799,20 +436,12 @@ btnCloseGameMenu.addEventListener("click", () => gameMenuModal.classList.remove(
 gameMenuModal.addEventListener("click", (e) => { if (e.target === gameMenuModal) gameMenuModal.classList.remove("open"); });
 
 btnPlayTF.addEventListener("click", () => {
-  // Obtener configuración
   gameDirection = gameDirSelect.value;
   const selectedTag = gameTagSelect.value;
   
-  // Filtrar las tarjetas para el juego
-  gameCards = selectedTag === "all" 
-    ? [...cards] 
-    : cards.filter(c => Array.isArray(c.tags) && c.tags.includes(selectedTag));
+  gameCards = selectedTag === "all" ? [...cards] : cards.filter(c => Array.isArray(c.tags) && c.tags.includes(selectedTag));
 
-  if (gameCards.length < 4) {
-    alert("Necesitas al menos 4 tarjetas de esta categoría para jugar.");
-    return;
-  }
-
+  if (gameCards.length < 4) { alert("Necesitas al menos 4 tarjetas de esta categoría para jugar."); return; }
   gameMenuModal.classList.remove("open");
   startTrueFalseGame();
 });
@@ -831,34 +460,21 @@ function startTrueFalseGame() {
 }
 
 function nextTFQuestion() {
-  // Cancelar cualquier audio que esté sonando
   speechSynthesis.cancel();
-  
   tfCurrentCard = gameCards[Math.floor(Math.random() * gameCards.length)];
   tfIsFake = Math.random() < 0.5;
   
   const isEnToEs = gameDirection === "en-es";
-  
-  // El texto principal depende de la dirección
   const mainText = isEnToEs ? tfCurrentCard.en : tfCurrentCard.es;
   tfWordEl.textContent = mainText;
   
-  // Reproducir audio automáticamente
-  if (isEnToEs) {
-    speakEnglish(mainText);
-  } else {
-    speakSpanish(mainText);
-  }
+  if (isEnToEs) { speakEnglish(mainText); } else { speakSpanish(mainText); }
 
   tfCardEl.classList.remove("correct", "wrong");
   
-  // La "traducción" (la que se evaluará como verdadera o falsa)
   if (tfIsFake) {
     let fakeCard;
-    do { 
-      fakeCard = gameCards[Math.floor(Math.random() * gameCards.length)]; 
-    } while ((isEnToEs ? fakeCard.es : fakeCard.en) === (isEnToEs ? tfCurrentCard.es : tfCurrentCard.en));
-    
+    do { fakeCard = gameCards[Math.floor(Math.random() * gameCards.length)]; } while ((isEnToEs ? fakeCard.es : fakeCard.en) === (isEnToEs ? tfCurrentCard.es : tfCurrentCard.en));
     tfTranslationEl.textContent = isEnToEs ? fakeCard.es : fakeCard.en;
   } else { 
     tfTranslationEl.textContent = isEnToEs ? tfCurrentCard.es : tfCurrentCard.en; 
@@ -870,42 +486,38 @@ function checkTFAnswer(userSaidTrue) {
   if (isCorrect) { tfScore++; tfScoreEl.textContent = tfScore; tfCardEl.classList.add("correct"); } 
   else { tfScore = Math.max(0, tfScore - 1); tfScoreEl.textContent = tfScore; tfCardEl.classList.add("wrong"); }
   
-  // Pausa de medio segundo y sigue
-  setTimeout(() => { 
-    if (tfTimeLeft > 0) nextTFQuestion(); 
-  }, 600);
+  setTimeout(() => { if (tfTimeLeft > 0) nextTFQuestion(); }, 600);
 }
 
 btnTrue.addEventListener("click", () => checkTFAnswer(true));
 btnFalse.addEventListener("click", () => checkTFAnswer(false));
 
-// Botón para cambiar dirección dentro del juego
-btnGameDir.addEventListener("click", () => {
-  gameDirection = gameDirection === "en-es" ? "es-en" : "en-es";
-  nextTFQuestion(); // Esto también reproduce el audio en el nuevo idioma
-});
-
-// Botón para repetir el audio
+btnGameDir.addEventListener("click", () => { gameDirection = gameDirection === "en-es" ? "es-en" : "en-es"; nextTFQuestion(); });
 btnGameAudio.addEventListener("click", () => {
   const mainText = gameDirection === "en-es" ? tfCurrentCard.en : tfCurrentCard.es;
-  if (gameDirection === "en-es") speakEnglish(mainText);
-  else speakSpanish(mainText);
+  if (gameDirection === "en-es") speakEnglish(mainText); else speakSpanish(mainText);
 });
 
-function endTrueFalseGame() { 
-  clearInterval(tfTimerInterval); 
-  speechSynthesis.cancel(); // Detener audio al terminar
-  tfFinalScore.textContent = tfScore; 
-  tfGameOver.style.display = "flex"; 
-}
-
+function endTrueFalseGame() { clearInterval(tfTimerInterval); speechSynthesis.cancel(); tfFinalScore.textContent = tfScore; tfGameOver.style.display = "flex"; }
 btnRestartTF.addEventListener("click", startTrueFalseGame);
-btnCloseGame.addEventListener("click", () => { 
-  clearInterval(tfTimerInterval); 
-  speechSynthesis.cancel();
-  gameView.classList.remove("active"); 
+btnCloseGame.addEventListener("click", () => { clearInterval(tfTimerInterval); speechSynthesis.cancel(); gameView.classList.remove("active"); });
+
+// ---------- INIT ----------
+loadGlobalSettings();
+speedInput.value = speed; speedValue.textContent = speed.toFixed(1) + "x";
+pauseInput.value = pauseSeconds; pauseValue.textContent = pauseSeconds + "s";
+setPlayState(false); loadDecksIndex(); refreshIcons();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('service-worker.js').catch(err => console.warn(err)); });
+}
+let deferredPrompt; const installBtn = document.getElementById("installBtn");
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault(); deferredPrompt = e;
+  if (installBtn) { installBtn.style.display = "inline-flex"; refreshIcons(); }
 });
-  console.log("¡App instalada con éxito!");
-  if (installBtn) installBtn.style.display = "none";
-  deferredPrompt = null;
-});
+if (installBtn) {
+  installBtn.addEventListener("click", async () => {
+    if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; installBtn.style.display = "none"; }
+  });
+}
