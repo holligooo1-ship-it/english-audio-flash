@@ -1,5 +1,5 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v30 (Verdadero/Falso + Opción Múltiple)
+// ENGLISH AUDIO FLASH - v31 (Límite de palabras en juegos)
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -146,6 +146,7 @@ const btnPlayTF = document.getElementById("btnPlayTF");
 const btnPlayMC = document.getElementById("btnPlayMC");
 const gameDirSelect = document.getElementById("gameDirSelect");
 const gameTagSelect = document.getElementById("gameTagSelect");
+const gameLimitSelect = document.getElementById("gameLimitSelect"); // NUEVO
 
 // DOM Verdadero/Falso
 const gameView = document.getElementById("gameView");
@@ -450,13 +451,29 @@ tagSelect.addEventListener("change", () => { currentTag = tagSelect.value; saveD
 // ==========================================================
 btnGame.addEventListener("click", () => {
   if (isPlaying) stopAll();
+  
+  // Llenar categorías
   const tagSet = new Set();
   cards.forEach(c => { if (Array.isArray(c.tags)) c.tags.forEach(t => tagSet.add(t)); });
   const tags = Array.from(tagSet).sort();
-  
   gameTagSelect.innerHTML = `<option value="all">Todas las categorías</option>`;
   tags.forEach(t => { gameTagSelect.innerHTML += `<option value="${t}">${t.charAt(0).toUpperCase() + t.slice(1)}</option>`; });
   
+  // Llenar cantidades
+  gameLimitSelect.innerHTML = "";
+  for (let i = 1; i <= cards.length; i++) {
+    const opt = document.createElement("option");
+    opt.value = String(i);
+    opt.textContent = String(i);
+    gameLimitSelect.appendChild(opt);
+  }
+  const allOpt = document.createElement("option");
+  allOpt.value = "all";
+  allOpt.textContent = "Todas";
+  gameLimitSelect.appendChild(allOpt);
+  
+  // Valor por defecto
+  gameLimitSelect.value = "all";
   gameDirSelect.value = direction;
   gameMenuModal.classList.add("open");
 });
@@ -467,8 +484,24 @@ gameMenuModal.addEventListener("click", (e) => { if (e.target === gameMenuModal)
 function prepareGameCards() {
   gameDirection = gameDirSelect.value;
   const selectedTag = gameTagSelect.value;
-  gameCards = selectedTag === "all" ? [...cards] : cards.filter(c => Array.isArray(c.tags) && c.tags.includes(selectedTag));
-  if (gameCards.length < 4) { alert("Necesitas al menos 4 tarjetas de esta categoría para jugar."); return false; }
+  const selectedLimit = gameLimitSelect.value;
+
+  // 1. Filtrar por categoría
+  let filtered = selectedTag === "all" ? [...cards] : cards.filter(c => Array.isArray(c.tags) && c.tags.includes(selectedTag));
+
+  // 2. Aplicar límite de cantidad (en el orden en que están)
+  if (selectedLimit !== "all") {
+    const limitNum = parseInt(selectedLimit, 10);
+    filtered = filtered.slice(0, limitNum);
+  }
+
+  gameCards = filtered;
+
+  if (gameCards.length < 4) { 
+    alert("Necesitas al menos 4 tarjetas de esta categoría para jugar."); 
+    return false; 
+  }
+  
   gameMenuModal.classList.remove("open");
   return true;
 }
@@ -580,10 +613,8 @@ function nextMCQuestion() {
   }
 
   const options = [mcCorrectAnswer, ...fakes];
-  // Mezclar aleatoriamente
   options.sort(() => Math.random() - 0.5);
 
-  // Renderizar botones
   mcOptionsContainer.innerHTML = "";
   options.forEach(optText => {
     const btn = document.createElement("button");
@@ -595,7 +626,7 @@ function nextMCQuestion() {
 }
 
 function checkMCAnswer(selectedText, btnElement) {
-  if (mcIsAnswering) return; // Evitar doble clic rápido
+  if (mcIsAnswering) return;
   mcIsAnswering = true;
 
   if (selectedText === mcCorrectAnswer) {
@@ -607,7 +638,6 @@ function checkMCAnswer(selectedText, btnElement) {
     mcScoreEl.textContent = mcScore;
     btnElement.classList.add("wrong");
     
-    // Iluminar la correcta también para aprender
     const allBtns = mcOptionsContainer.querySelectorAll(".mc-btn");
     allBtns.forEach(b => {
       if (b.textContent === mcCorrectAnswer) b.classList.add("correct");
@@ -616,7 +646,7 @@ function checkMCAnswer(selectedText, btnElement) {
 
   setTimeout(() => { 
     if (mcTimeLeft > 0) nextMCQuestion(); 
-  }, 1200); // Pausa más larga para que asimile la respuesta
+  }, 1200);
 }
 
 btnMCGameDir.addEventListener("click", () => { gameDirection = gameDirection === "en-es" ? "es-en" : "en-es"; nextMCQuestion(); });
