@@ -118,6 +118,7 @@
       <button class="close-btn" id="btnCloseGameMenu"><i data-lucide="x"></i></button>
     </div>
     <div style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+      
       <div class="game-select-group">
         <label for="gameDirSelect">Dirección</label>
         <select id="gameDirSelect" class="game-select">
@@ -125,18 +126,28 @@
           <option value="es-en">Español → Inglés</option>
         </select>
       </div>
+      
       <div class="game-select-group">
         <label for="gameTagSelect">Categoría</label>
         <select id="gameTagSelect" class="game-select"></select>
       </div>
-      <button class="game-menu-btn" id="btnPlayTF">
-        <i data-lucide="check-circle"></i> Empezar Juego
-      </button>
+
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+        <button class="game-menu-btn" id="btnPlayTF">
+          <i data-lucide="check-circle"></i> Verdadero o Falso
+        </button>
+        <button class="game-menu-btn" id="btnPlayMC">
+          <i data-lucide="list"></i> Opción Múltiple
+        </button>
+        <button class="game-menu-btn" disabled style="opacity: 0.5; cursor: not-allowed;">
+          <i data-lucide="type"></i> Dictado Rápido (Pronto)
+        </button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- PANTALLA DEL JUEGO -->
+<!-- JUEGO 1: VERDADERO O FALSO -->
 <div class="game-overlay" id="gameView">
   <header class="game-header">
     <div class="game-score-box">
@@ -166,12 +177,8 @@
   </main>
 
   <footer class="game-controls">
-    <button class="tf-btn false-btn" id="btnFalse">
-      <i data-lucide="x"></i> Falso
-    </button>
-    <button class="tf-btn true-btn" id="btnTrue">
-      <i data-lucide="check"></i> Verdadero
-    </button>
+    <button class="tf-btn false-btn" id="btnFalse"><i data-lucide="x"></i> Falso</button>
+    <button class="tf-btn true-btn" id="btnTrue"><i data-lucide="check"></i> Verdadero</button>
   </footer>
 
   <div class="game-over" id="tfGameOver" style="display: none;">
@@ -179,6 +186,46 @@
     <p>Tu puntuación es:</p>
     <div class="final-score" id="tfFinalScore">0</div>
     <button class="btn-primary" id="btnRestartTF" style="margin-top: 20px;">Jugar de nuevo</button>
+  </div>
+</div>
+
+<!-- JUEGO 2: OPCIÓN MÚLTIPLE -->
+<div class="game-overlay" id="mcGameView">
+  <header class="game-header">
+    <div class="game-score-box">
+      <span>Puntos</span>
+      <strong id="mcScore">0</strong>
+    </div>
+    <div class="game-header-actions">
+      <button id="btnMCGameDir" class="game-icon-btn" title="Cambiar dirección">
+        <i data-lucide="arrow-right-left"></i>
+      </button>
+      <button id="btnMCGameAudio" class="game-icon-btn" title="Escuchar de nuevo">
+        <i data-lucide="volume-2"></i>
+      </button>
+    </div>
+    <div class="game-timer-box">
+      <i data-lucide="timer"></i>
+      <strong id="mcTimer">60s</strong>
+    </div>
+    <button class="close-btn" id="btnCloseMCGame"><i data-lucide="x"></i></button>
+  </header>
+
+  <main class="game-area">
+    <div class="tf-card" id="mcCard" style="padding: 30px;">
+      <div class="tf-word" id="mcWord">—</div>
+    </div>
+  </main>
+
+  <footer class="mc-controls" id="mcOptionsContainer">
+    <!-- Los 4 botones se generan aquí dinámicamente -->
+  </footer>
+
+  <div class="game-over" id="mcGameOver" style="display: none;">
+    <h2>¡Tiempo terminado!</h2>
+    <p>Tu puntuación es:</p>
+    <div class="final-score" id="mcFinalScore">0</div>
+    <button class="btn-primary" id="btnRestartMC" style="margin-top: 20px;">Jugar de nuevo</button>
   </div>
 </div>
 
