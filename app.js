@@ -1,6 +1,6 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v27
-// Con botón de instalación PWA
+// ENGLISH AUDIO FLASH - v28
+// Juego: Verdadero o Falso
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -29,11 +29,15 @@ let sessionPlayed = 0;
 let loopGeneration = 0;
 let pendingResolve = null;
 
-// Estado del ejemplo (para saber si está sonando)
 let examplePlaying = false;
-
-// Voces disponibles
 let availableVoices = [];
+
+// ---------- ESTADO DEL JUEGO ----------
+let tfTimerInterval = null;
+let tfTimeLeft = 60;
+let tfScore = 0;
+let tfCurrentCard = null;
+let tfIsFake = false;
 
 // ---------- HELPERS LUCIDE ----------
 function refreshIcons() {
@@ -111,6 +115,7 @@ const btnNext      = document.getElementById("btnNext");
 const btnDirection = document.getElementById("btnDirection");
 const btnOrder     = document.getElementById("btnOrder");
 const btnDeck      = document.getElementById("btnDeck");
+const btnGame      = document.getElementById("btnGame");
 
 const directionLabel = document.getElementById("directionLabel");
 const orderLabel     = document.getElementById("orderLabel");
@@ -127,6 +132,23 @@ const deckModal   = document.getElementById("deckModal");
 const deckList    = document.getElementById("deckList");
 const btnCloseDeck = document.getElementById("btnCloseDeck");
 const deckTitle   = document.getElementById("deckTitle");
+
+// Juego DOM
+const gameMenuModal = document.getElementById("gameMenuModal");
+const btnCloseGameMenu = document.getElementById("btnCloseGameMenu");
+const btnPlayTF = document.getElementById("btnPlayTF");
+const gameView = document.getElementById("gameView");
+const btnCloseGame = document.getElementById("btnCloseGame");
+const tfScoreEl = document.getElementById("tfScore");
+const tfTimerEl = document.getElementById("tfTimer");
+const tfCardEl = document.getElementById("tfCard");
+const tfWordEl = document.getElementById("tfWord");
+const tfTranslationEl = document.getElementById("tfTranslation");
+const btnTrue = document.getElementById("btnTrue");
+const btnFalse = document.getElementById("btnFalse");
+const tfGameOver = document.getElementById("tfGameOver");
+const tfFinalScore = document.getElementById("tfFinalScore");
+const btnRestartTF = document.getElementById("btnRestartTF");
 
 // ---------- HELPERS ----------
 function setPlayState(playing) {
@@ -257,14 +279,11 @@ function goHome() {
 
 btnBack.addEventListener("click", goHome);
 
-// ---------- POBLAR SELECTOR LÍMITE ----------
+// ---------- POBLAR SELECTORES ----------
 function populateLimitOptions() {
   limitSelect.innerHTML = "";
-
   let max = 100;
-  if (currentDeck && typeof currentDeck.limitMax === "number") {
-    max = currentDeck.limitMax;
-  }
+  if (currentDeck && typeof currentDeck.limitMax === "number") max = currentDeck.limitMax;
 
   for (let i = 1; i <= max; i++) {
     const opt = document.createElement("option");
@@ -278,15 +297,11 @@ function populateLimitOptions() {
   limitSelect.appendChild(allOpt);
 
   const saved = String(sessionLimit);
-  const isValid =
-    saved === "all" ||
-    (parseInt(saved, 10) >= 1 && parseInt(saved, 10) <= max);
-
+  const isValid = saved === "all" || (parseInt(saved, 10) >= 1 && parseInt(saved, 10) <= max);
   if (!isValid) sessionLimit = "all";
   limitSelect.value = String(sessionLimit);
 }
 
-// ---------- POBLAR SELECTOR DE TAG ----------
 function populateTagOptions() {
   const tagSet = new Set();
   cards.forEach(c => {
@@ -311,10 +326,8 @@ function populateTagOptions() {
   tagSelect.value = currentTag;
 }
 
-// ---------- ACTUALIZAR BOTONES ----------
 function updateButtons() {
   directionLabel.textContent = direction === "en-es" ? "EN → ES" : "ES → EN";
-
   const iconName = order === "secuencial" ? "repeat" : "dices";
   const labelText = order === "secuencial" ? "Secuencial" : "Aleatorio";
   orderLabel.textContent = labelText;
@@ -324,11 +337,10 @@ function updateButtons() {
   const newIcon = document.createElement("i");
   newIcon.setAttribute("data-lucide", iconName);
   btnOrder.insertBefore(newIcon, orderLabel);
-
   refreshIcons();
 }
 
-// ---------- FILTRAR ----------
+// ---------- REPRODUCCIÓN NORMAL ----------
 function getFilteredCards() {
   if (currentTag === "all") return cards;
   return cards.filter(c => Array.isArray(c.tags) && c.tags.includes(currentTag));
@@ -348,7 +360,6 @@ function buildSession() {
   sessionCards = filtered.slice(0, effectiveLimit());
 }
 
-// ---------- RESET ----------
 function resetCycle() {
   buildSession();
   cyclePlayed = [];
@@ -376,7 +387,6 @@ function resetCycle() {
   renderCard();
 }
 
-// ---------- ALEATORIO ----------
 function pickNextRandom() {
   const total = sessionCards.length;
   if (cyclePlayed.length >= total) cyclePlayed = [];
@@ -446,7 +456,6 @@ function renderCard() {
     wordEs.textContent = c.es;
   }
 
-  // Ejemplo
   const exEn = (c.example_en || "").trim();
   const exEs = (c.example_es || "").trim();
   if (exEn || exEs) {
@@ -454,9 +463,7 @@ function renderCard() {
     if (exEn) html += `<span class="ex-en">${escapeHtml(exEn)}</span>`;
     if (exEs) html += `<span class="ex-es">${escapeHtml(exEs)}</span>`;
     html += `</div>`;
-    if (exEn) {
-      html += `<button class="example-play-btn" title="Escuchar ejemplo"><i data-lucide="volume-2"></i></button>`;
-    }
+    if (exEn) html += `<button class="example-play-btn" title="Escuchar ejemplo"><i data-lucide="volume-2"></i></button>`;
     exampleEl.innerHTML = html;
     refreshIcons();
     const exBtn = exampleEl.querySelector(".example-play-btn");
@@ -470,7 +477,6 @@ function renderCard() {
     exampleEl.innerHTML = "";
   }
 
-  // Nota
   const note = (c.note || "").trim();
   if (note) {
     noteEl.innerHTML = `<i data-lucide="message-circle"></i><span>${escapeHtml(note)}</span>`;
@@ -490,17 +496,14 @@ function renderCard() {
   }
 }
 
-// ---------- REPRODUCIR EJEMPLO (por separado) ----------
 function playExample(text, btn) {
   if (!("speechSynthesis" in window)) return;
-
   if (examplePlaying) {
     speechSynthesis.cancel();
     examplePlaying = false;
     document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing"));
     return;
   }
-
   player.pause();
   player.onended = null;
   player.onerror = null;
@@ -520,18 +523,14 @@ function playExample(text, btn) {
     examplePlaying = false;
     if (btn) btn.classList.remove("playing");
   };
-
   u.onend = cleanup;
   u.onerror = cleanup;
-
   speechSynthesis.speak(u);
 }
 
-// ---------- TTS PROFESIONAL (SELECCIÓN DE VOCES) ----------
 function loadVoices() {
   availableVoices = window.speechSynthesis.getVoices();
 }
-
 if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
   speechSynthesis.onvoiceschanged = loadVoices;
 }
@@ -539,53 +538,34 @@ loadVoices();
 
 function getBestVoice(lang) {
   if (availableVoices.length === 0) loadVoices();
-
   const langCode = lang.split('-')[0]; 
   const filtered = availableVoices.filter(v => v.lang.startsWith(langCode));
-
   if (filtered.length === 0) return null;
 
   const highQualityKeywords = ['natural', 'neural', 'google', 'premium', 'enhanced'];
-  
   for (const keyword of highQualityKeywords) {
     const bestVoice = filtered.find(v => v.name.toLowerCase().includes(keyword));
-    if (bestVoice) {
-      console.log(`🎙️ Usando voz de alta calidad: ${bestVoice.name} (${bestVoice.lang})`);
-      return bestVoice;
-    }
+    if (bestVoice) return bestVoice;
   }
-
-  console.log(`🎙️ Usando voz disponible: ${filtered[0].name} (${filtered[0].lang})`);
   return filtered[0];
 }
 
 function speak(text, lang, onDone) {
-  if (!("speechSynthesis" in window)) {
-    onDone && onDone();
-    return;
-  }
-
+  if (!("speechSynthesis" in window)) { onDone && onDone(); return; }
   speechSynthesis.cancel();
-
   const u = new SpeechSynthesisUtterance(text);
   u.lang = lang;
   u.rate = speed;
-
   const bestVoice = getBestVoice(lang);
-  if (bestVoice) {
-    u.voice = bestVoice;
-  }
-
+  if (bestVoice) u.voice = bestVoice;
   u.onend = () => onDone && onDone();
   u.onerror = () => onDone && onDone();
-  
   speechSynthesis.speak(u);
 }
 
 function speakSpanish(text, onDone) { speak(text, "es-ES", onDone); }
 function speakEnglish(text, onDone) { speak(text, "en-US", onDone); }
 
-// ---------- REPRODUCIR TARJETA (principal) ----------
 function playCard(gen) {
   return new Promise((resolve) => {
     const c = sessionCards[currentIndex];
@@ -609,7 +589,6 @@ function playCard(gen) {
     if (direction === "en-es") {
       setStatus("Inglés", "volume-2");
       statusEl.classList.add("active");
-
       if (c.audio) {
         player.onended = done;
         player.onerror = () => { console.warn("Error audio:", c.audio); done(); };
@@ -637,17 +616,12 @@ async function loop() {
     if (myGen !== loopGeneration) return;
     if (!isPlaying) break;
     sessionPlayed++;
-
-    if (sessionPlayed >= limit) {
-      finishCycle();
-      break;
-    }
+    if (sessionPlayed >= limit) { finishCycle(); break; }
     goNext();
     renderCard();
   }
 }
 
-// ---------- PANEL DEL MAZO ----------
 function buildDeckList() {
   deckList.innerHTML = "";
   cards.forEach((c, i) => {
@@ -655,19 +629,11 @@ function buildDeckList() {
     item.className = "deck-item";
 
     const exampleHtml = (c.example_en || c.example_es)
-      ? `<div class="deck-item-note example-note">
-          <i data-lucide="book-open"></i>
-          <span>${escapeHtml(c.example_en || "")}${c.example_es ? " — " + escapeHtml(c.example_es) : ""}</span>
-        </div>`
+      ? `<div class="deck-item-note example-note"><i data-lucide="book-open"></i><span>${escapeHtml(c.example_en || "")}${c.example_es ? " — " + escapeHtml(c.example_es) : ""}</span></div>`
       : "";
-
     const noteHtml = c.note && c.note.trim()
-      ? `<div class="deck-item-note">
-          <i data-lucide="message-circle"></i>
-          <span>${escapeHtml(c.note)}</span>
-        </div>`
+      ? `<div class="deck-item-note"><i data-lucide="message-circle"></i><span>${escapeHtml(c.note)}</span></div>`
       : "";
-
     const tagsHtml = Array.isArray(c.tags) && c.tags.length
       ? `<div class="deck-item-tags">${c.tags.map(t => `<span class="deck-tag">${escapeHtml(t)}</span>`).join("")}</div>`
       : "";
@@ -693,7 +659,6 @@ function buildDeckList() {
         speakEnglish(c.en);
       }
     });
-
     deckList.appendChild(item);
   });
   refreshIcons();
@@ -703,18 +668,11 @@ function openDeckModal() {
   deckModal.classList.add("open");
   if (isPlaying) stopAll();
 }
-
-function closeDeckModal() {
-  deckModal.classList.remove("open");
-}
-
+function closeDeckModal() { deckModal.classList.remove("open"); }
 btnDeck.addEventListener("click", openDeckModal);
 btnCloseDeck.addEventListener("click", closeDeckModal);
-deckModal.addEventListener("click", (e) => {
-  if (e.target === deckModal) closeDeckModal();
-});
+deckModal.addEventListener("click", (e) => { if (e.target === deckModal) closeDeckModal(); });
 
-// ---------- STOP ----------
 function stopAll() {
   isPlaying = false;
   loopGeneration++;
@@ -722,28 +680,23 @@ function stopAll() {
   player.onended = null;
   player.onerror = null;
   if ("speechSynthesis" in window) speechSynthesis.cancel();
-
   examplePlaying = false;
   document.querySelectorAll(".example-play-btn.playing").forEach(b => b.classList.remove("playing"));
-
   if (pendingResolve) {
     const r = pendingResolve;
     pendingResolve = null;
     r();
   }
-
   cardEl.classList.remove("playing");
   setPlayState(false);
   statusEl.classList.remove("active");
   if (!cycleCompleted) setStatus("Pausado", "pause");
 }
 
-// ---------- CONTROLES ----------
 btnPlay.addEventListener("click", () => {
   if (sessionCards.length === 0) return;
-  if (isPlaying) {
-    stopAll();
-  } else {
+  if (isPlaying) { stopAll(); } 
+  else {
     if (cycleCompleted) resetCycle();
     isPlaying = true;
     setPlayState(true);
@@ -758,7 +711,6 @@ btnNext.addEventListener("click", () => {
   sessionPlayed = currentIndex;
   renderCard();
 });
-
 btnPrev.addEventListener("click", () => {
   if (sessionCards.length === 0) return;
   stopAll();
@@ -797,9 +749,7 @@ pauseInput.addEventListener("input", () => {
 });
 
 limitSelect.addEventListener("change", () => {
-  sessionLimit = limitSelect.value === "all"
-    ? "all"
-    : parseInt(limitSelect.value, 10);
+  sessionLimit = limitSelect.value === "all" ? "all" : parseInt(limitSelect.value, 10);
   saveDeckSettings();
   stopAll();
   resetCycle();
@@ -810,6 +760,109 @@ tagSelect.addEventListener("change", () => {
   saveDeckSettings();
   stopAll();
   resetCycle();
+});
+
+// ==========================================================
+// LÓGICA DEL JUEGO (VERDADERO O FALSO)
+// ==========================================================
+
+btnGame.addEventListener("click", () => {
+  if (isPlaying) stopAll();
+  if (sessionCards.length < 4) {
+    alert("Necesitas al menos 4 tarjetas en este mazo para jugar.");
+    return;
+  }
+  gameMenuModal.classList.add("open");
+});
+
+btnCloseGameMenu.addEventListener("click", () => gameMenuModal.classList.remove("open"));
+gameMenuModal.addEventListener("click", (e) => { if (e.target === gameMenuModal) gameMenuModal.classList.remove("open"); });
+
+btnPlayTF.addEventListener("click", () => {
+  gameMenuModal.classList.remove("open");
+  startTrueFalseGame();
+});
+
+function startTrueFalseGame() {
+  tfScore = 0;
+  tfTimeLeft = 60;
+  tfScoreEl.textContent = tfScore;
+  tfTimerEl.textContent = tfTimeLeft + "s";
+  tfGameOver.style.display = "none";
+  tfCardEl.classList.remove("correct", "wrong");
+  gameView.classList.add("active");
+
+  nextTFQuestion();
+
+  clearInterval(tfTimerInterval);
+  tfTimerInterval = setInterval(() => {
+    tfTimeLeft--;
+    tfTimerEl.textContent = tfTimeLeft + "s";
+    if (tfTimeLeft <= 0) {
+      endTrueFalseGame();
+    }
+  }, 1000);
+}
+
+function nextTFQuestion() {
+  // Elegir una tarjeta al azar
+  const randomIndex = Math.floor(Math.random() * sessionCards.length);
+  tfCurrentCard = sessionCards[randomIndex];
+
+  // 50% de probabilidad de que sea verdadero o falso
+  tfIsFake = Math.random() < 0.5;
+
+  tfWordEl.textContent = tfCurrentCard.en;
+  tfCardEl.classList.remove("correct", "wrong");
+
+  if (tfIsFake) {
+    // Elegir una traducción falsa (que no sea la correcta)
+    let fakeCard;
+    do {
+      fakeCard = sessionCards[Math.floor(Math.random() * sessionCards.length)];
+    } while (fakeCard.es === tfCurrentCard.es);
+    
+    tfTranslationEl.textContent = fakeCard.es;
+  } else {
+    tfTranslationEl.textContent = tfCurrentCard.es;
+  }
+}
+
+function checkTFAnswer(userSaidTrue) {
+  // Si el usuario dice Verdadero y NO es falso -> Correcto
+  // Si el usuario dice Falso y SÍ es falso -> Correcto
+  const isCorrect = (userSaidTrue && !tfIsFake) || (!userSaidTrue && tfIsFake);
+
+  if (isCorrect) {
+    tfScore++;
+    tfScoreEl.textContent = tfScore;
+    tfCardEl.classList.add("correct");
+  } else {
+    tfScore = Math.max(0, tfScore - 1); // Restar 1 punto, mínimo 0
+    tfScoreEl.textContent = tfScore;
+    tfCardEl.classList.add("wrong");
+  }
+
+  // Pequeña pausa para ver el color y pasar a la siguiente
+  setTimeout(() => {
+    if (tfTimeLeft > 0) nextTFQuestion();
+  }, 400);
+}
+
+btnTrue.addEventListener("click", () => checkTFAnswer(true));
+btnFalse.addEventListener("click", () => checkTFAnswer(false));
+
+function endTrueFalseGame() {
+  clearInterval(tfTimerInterval);
+  tfFinalScore.textContent = tfScore;
+  tfGameOver.style.display = "flex";
+}
+
+btnRestartTF.addEventListener("click", startTrueFalseGame);
+
+btnCloseGame.addEventListener("click", () => {
+  clearInterval(tfTimerInterval);
+  gameView.classList.remove("active");
 });
 
 // ---------- INIT ----------
