@@ -1,5 +1,5 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v29 (Código Completo y Estable)
+// ENGLISH AUDIO FLASH - v30 (Verdadero/Falso + Opción Múltiple)
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -32,11 +32,21 @@ let availableVoices = [];
 // Estado del Juego
 let gameDirection = "en-es";
 let gameCards = [];
+
+// TF = True/False
 let tfTimerInterval = null;
 let tfTimeLeft = 60;
 let tfScore = 0;
 let tfCurrentCard = null;
 let tfIsFake = false;
+
+// MC = Multiple Choice
+let mcTimerInterval = null;
+let mcTimeLeft = 60;
+let mcScore = 0;
+let mcCurrentCard = null;
+let mcCorrectAnswer = "";
+let mcIsAnswering = false;
 
 // ---------- HELPERS ----------
 function refreshIcons() {
@@ -129,12 +139,15 @@ const deckModal   = document.getElementById("deckModal");
 const deckList    = document.getElementById("deckList");
 const btnCloseDeck = document.getElementById("btnCloseDeck");
 
-// DOM del Juego
+// DOM del Juego (Menú)
 const gameMenuModal = document.getElementById("gameMenuModal");
 const btnCloseGameMenu = document.getElementById("btnCloseGameMenu");
 const btnPlayTF = document.getElementById("btnPlayTF");
+const btnPlayMC = document.getElementById("btnPlayMC");
 const gameDirSelect = document.getElementById("gameDirSelect");
 const gameTagSelect = document.getElementById("gameTagSelect");
+
+// DOM Verdadero/Falso
 const gameView = document.getElementById("gameView");
 const btnCloseGame = document.getElementById("btnCloseGame");
 const tfScoreEl = document.getElementById("tfScore");
@@ -149,6 +162,20 @@ const btnGameAudio = document.getElementById("btnGameAudio");
 const tfGameOver = document.getElementById("tfGameOver");
 const tfFinalScore = document.getElementById("tfFinalScore");
 const btnRestartTF = document.getElementById("btnRestartTF");
+
+// DOM Opción Múltiple
+const mcGameView = document.getElementById("mcGameView");
+const btnCloseMCGame = document.getElementById("btnCloseMCGame");
+const mcScoreEl = document.getElementById("mcScore");
+const mcTimerEl = document.getElementById("mcTimer");
+const mcCardEl = document.getElementById("mcCard");
+const mcWordEl = document.getElementById("mcWord");
+const mcOptionsContainer = document.getElementById("mcOptionsContainer");
+const btnMCGameDir = document.getElementById("btnMCGameDir");
+const btnMCGameAudio = document.getElementById("btnMCGameAudio");
+const mcGameOver = document.getElementById("mcGameOver");
+const mcFinalScore = document.getElementById("mcFinalScore");
+const btnRestartMC = document.getElementById("btnRestartMC");
 
 // ---------- CARGA INICIAL ----------
 async function loadDecksIndex() {
@@ -418,7 +445,9 @@ pauseInput.addEventListener("input", () => { pauseSeconds = parseFloat(pauseInpu
 limitSelect.addEventListener("change", () => { sessionLimit = limitSelect.value === "all" ? "all" : parseInt(limitSelect.value, 10); saveDeckSettings(); stopAll(); resetCycle(); });
 tagSelect.addEventListener("change", () => { currentTag = tagSelect.value; saveDeckSettings(); stopAll(); resetCycle(); });
 
-// ---------- LÓGICA DEL JUEGO (VERDADERO O FALSO) ----------
+// ==========================================================
+// LÓGICA DE MENÚ DE JUEGOS
+// ==========================================================
 btnGame.addEventListener("click", () => {
   if (isPlaying) stopAll();
   const tagSet = new Set();
@@ -435,14 +464,20 @@ btnGame.addEventListener("click", () => {
 btnCloseGameMenu.addEventListener("click", () => gameMenuModal.classList.remove("open"));
 gameMenuModal.addEventListener("click", (e) => { if (e.target === gameMenuModal) gameMenuModal.classList.remove("open"); });
 
-btnPlayTF.addEventListener("click", () => {
+function prepareGameCards() {
   gameDirection = gameDirSelect.value;
   const selectedTag = gameTagSelect.value;
-  
   gameCards = selectedTag === "all" ? [...cards] : cards.filter(c => Array.isArray(c.tags) && c.tags.includes(selectedTag));
-
-  if (gameCards.length < 4) { alert("Necesitas al menos 4 tarjetas de esta categoría para jugar."); return; }
+  if (gameCards.length < 4) { alert("Necesitas al menos 4 tarjetas de esta categoría para jugar."); return false; }
   gameMenuModal.classList.remove("open");
+  return true;
+}
+
+// ==========================================================
+// JUEGO 1: VERDADERO O FALSO
+// ==========================================================
+btnPlayTF.addEventListener("click", () => {
+  if (!prepareGameCards()) return;
   startTrueFalseGame();
 });
 
@@ -501,6 +536,108 @@ btnGameAudio.addEventListener("click", () => {
 function endTrueFalseGame() { clearInterval(tfTimerInterval); speechSynthesis.cancel(); tfFinalScore.textContent = tfScore; tfGameOver.style.display = "flex"; }
 btnRestartTF.addEventListener("click", startTrueFalseGame);
 btnCloseGame.addEventListener("click", () => { clearInterval(tfTimerInterval); speechSynthesis.cancel(); gameView.classList.remove("active"); });
+
+// ==========================================================
+// JUEGO 2: OPCIÓN MÚLTIPLE
+// ==========================================================
+btnPlayMC.addEventListener("click", () => {
+  if (!prepareGameCards()) return;
+  startMultipleChoiceGame();
+});
+
+function startMultipleChoiceGame() {
+  mcScore = 0; mcTimeLeft = 60; mcScoreEl.textContent = mcScore; mcTimerEl.textContent = mcTimeLeft + "s";
+  mcGameOver.style.display = "none"; mcGameView.classList.add("active");
+  
+  nextMCQuestion();
+  
+  clearInterval(mcTimerInterval);
+  mcTimerInterval = setInterval(() => {
+    mcTimeLeft--; mcTimerEl.textContent = mcTimeLeft + "s";
+    if (mcTimeLeft <= 0) endMultipleChoiceGame();
+  }, 1000);
+}
+
+function nextMCQuestion() {
+  speechSynthesis.cancel();
+  mcIsAnswering = false;
+  
+  mcCurrentCard = gameCards[Math.floor(Math.random() * gameCards.length)];
+  const isEnToEs = gameDirection === "en-es";
+  
+  const mainText = isEnToEs ? mcCurrentCard.en : mcCurrentCard.es;
+  mcCorrectAnswer = isEnToEs ? mcCurrentCard.es : mcCurrentCard.en;
+  mcWordEl.textContent = mainText;
+  
+  if (isEnToEs) { speakEnglish(mainText); } else { speakSpanish(mainText); }
+
+  // Generar 3 respuestas falsas
+  const fakes = new Set();
+  while (fakes.size < 3) {
+    const f = gameCards[Math.floor(Math.random() * gameCards.length)];
+    const text = isEnToEs ? f.es : f.en;
+    if (text !== mcCorrectAnswer) fakes.add(text);
+  }
+
+  const options = [mcCorrectAnswer, ...fakes];
+  // Mezclar aleatoriamente
+  options.sort(() => Math.random() - 0.5);
+
+  // Renderizar botones
+  mcOptionsContainer.innerHTML = "";
+  options.forEach(optText => {
+    const btn = document.createElement("button");
+    btn.className = "mc-btn";
+    btn.textContent = optText;
+    btn.addEventListener("click", () => checkMCAnswer(optText, btn));
+    mcOptionsContainer.appendChild(btn);
+  });
+}
+
+function checkMCAnswer(selectedText, btnElement) {
+  if (mcIsAnswering) return; // Evitar doble clic rápido
+  mcIsAnswering = true;
+
+  if (selectedText === mcCorrectAnswer) {
+    mcScore++;
+    mcScoreEl.textContent = mcScore;
+    btnElement.classList.add("correct");
+  } else {
+    mcScore = Math.max(0, mcScore - 1);
+    mcScoreEl.textContent = mcScore;
+    btnElement.classList.add("wrong");
+    
+    // Iluminar la correcta también para aprender
+    const allBtns = mcOptionsContainer.querySelectorAll(".mc-btn");
+    allBtns.forEach(b => {
+      if (b.textContent === mcCorrectAnswer) b.classList.add("correct");
+    });
+  }
+
+  setTimeout(() => { 
+    if (mcTimeLeft > 0) nextMCQuestion(); 
+  }, 1200); // Pausa más larga para que asimile la respuesta
+}
+
+btnMCGameDir.addEventListener("click", () => { gameDirection = gameDirection === "en-es" ? "es-en" : "en-es"; nextMCQuestion(); });
+btnMCGameAudio.addEventListener("click", () => {
+  const mainText = gameDirection === "en-es" ? mcCurrentCard.en : mcCurrentCard.es;
+  if (gameDirection === "en-es") speakEnglish(mainText); else speakSpanish(mainText);
+});
+
+function endMultipleChoiceGame() { 
+  clearInterval(mcTimerInterval); 
+  speechSynthesis.cancel(); 
+  mcFinalScore.textContent = mcScore; 
+  mcGameOver.style.display = "flex"; 
+}
+
+btnRestartMC.addEventListener("click", startMultipleChoiceGame);
+btnCloseMCGame.addEventListener("click", () => { 
+  clearInterval(mcTimerInterval); 
+  speechSynthesis.cancel(); 
+  mcGameView.classList.remove("active"); 
+});
 
 // ---------- INIT ----------
 loadGlobalSettings();
