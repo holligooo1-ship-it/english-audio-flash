@@ -19,7 +19,6 @@
   <h1 class="splash-title">English Memory ERTO</h1>
   <div class="splash-loader"></div>
 </div>
-<!-- ============================================================ -->
 
 <div class="app">
 
@@ -29,7 +28,6 @@
     <img src="english memory logo.png" alt="Logo" class="home-logo">
     <h1>English Memory ERTO</h1>
     <p class="home-subtitle">Elige tu mazo</p>
-    <!-- 👇 NUEVO BOTÓN DE INSTALAR 👇 -->
     <button id="installBtn" class="install-btn" style="display: none;">
       <i data-lucide="download"></i> Instalar App
     </button>
@@ -49,6 +47,12 @@
       <span class="app-name" id="deckName">—</span>
     </div>
     <div class="topbar-actions">
+      <!-- 👇 NUEVO BOTÓN DE JUEGO 👇 -->
+      <button id="btnGame" class="toolbar-btn game-btn" title="Minijuegos">
+        <i data-lucide="gamepad-2"></i>
+        <span class="btn-label">Jugar</span>
+      </button>
+      
       <button id="btnDeck" class="toolbar-btn" title="Ver mazo completo">
         <i data-lucide="book-open"></i>
         <span class="btn-label">Mazo</span>
@@ -83,12 +87,10 @@
     <button id="btnPrev" class="ctrl-btn" title="Anterior" aria-label="Anterior">
       <i data-lucide="skip-back"></i>
     </button>
-
     <button id="btnPlay" class="ctrl-btn primary" title="Reproducir" aria-label="Reproducir">
       <i data-lucide="play" class="icon-play"></i>
       <i data-lucide="pause" class="icon-pause"></i>
     </button>
-
     <button id="btnNext" class="ctrl-btn" title="Siguiente" aria-label="Siguiente">
       <i data-lucide="skip-forward"></i>
     </button>
@@ -98,18 +100,15 @@
       <input type="range" id="speed" min="0.5" max="1.5" step="0.1" value="1">
       <span id="speedValue">1.0x</span>
     </div>
-
     <div class="pause-wrap">
       <label for="pause">Pausa</label>
       <input type="range" id="pause" min="0" max="5" step="0.5" value="2">
       <span id="pauseValue">2s</span>
     </div>
-
     <div class="limit-wrap">
       <label for="limit">Tarjetas</label>
       <select id="limit"></select>
     </div>
-
     <div class="tag-wrap">
       <label for="tag">Categoría</label>
       <select id="tag"></select>
@@ -118,16 +117,64 @@
 
 </div>
 
-<!-- PANEL DEL MAZO -->
-<div class="deck-modal" id="deckModal">
-  <div class="deck-modal-content">
+<!-- ================== MODAL: MENÚ DE JUEGOS ================== -->
+<div class="deck-modal" id="gameMenuModal">
+  <div class="deck-modal-content" style="max-width: 400px;">
     <div class="deck-modal-header">
-      <h2 id="deckTitle">Mazo completo</h2>
-      <button id="btnCloseDeck" class="close-btn" title="Cerrar" aria-label="Cerrar">
-        <i data-lucide="x"></i>
+      <h2>Minijuegos</h2>
+      <button class="close-btn" id="btnCloseGameMenu"><i data-lucide="x"></i></button>
+    </div>
+    <div style="padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+      <button class="game-menu-btn" id="btnPlayTF">
+        <i data-lucide="check-circle"></i> Verdadero o Falso
+      </button>
+      <button class="game-menu-btn" disabled style="opacity: 0.5; cursor: not-allowed;">
+        <i data-lucide="list"></i> Opción Múltiple (Pronto)
+      </button>
+      <button class="game-menu-btn" disabled style="opacity: 0.5; cursor: not-allowed;">
+        <i data-lucide="type"></i> Dictado Rápido (Pronto)
       </button>
     </div>
-    <div class="deck-list" id="deckList"></div>
+  </div>
+</div>
+
+<!-- ================== PANTALLA DEL JUEGO (VERDADERO O FALSO) ================== -->
+<div class="game-overlay" id="gameView">
+  <header class="game-header">
+    <div class="game-score-box">
+      <span>Puntos</span>
+      <strong id="tfScore">0</strong>
+    </div>
+    <div class="game-timer-box">
+      <i data-lucide="timer"></i>
+      <strong id="tfTimer">60s</strong>
+    </div>
+    <button class="close-btn" id="btnCloseGame"><i data-lucide="x"></i></button>
+  </header>
+
+  <main class="game-area" id="tfGameArea">
+    <!-- Aquí se inyecta la tarjeta del juego -->
+    <div class="tf-card" id="tfCard">
+      <div class="tf-word" id="tfWord">—</div>
+      <div class="tf-translation" id="tfTranslation">—</div>
+    </div>
+  </main>
+
+  <footer class="game-controls" id="tfControls">
+    <button class="tf-btn false-btn" id="btnFalse">
+      <i data-lucide="x"></i> Falso
+    </button>
+    <button class="tf-btn true-btn" id="btnTrue">
+      <i data-lucide="check"></i> Verdadero
+    </button>
+  </footer>
+
+  <!-- Pantalla de Game Over -->
+  <div class="game-over" id="tfGameOver" style="display: none;">
+    <h2>¡Tiempo terminado!</h2>
+    <p>Tu puntuación es:</p>
+    <div class="final-score" id="tfFinalScore">0</div>
+    <button class="btn-primary" id="btnRestartTF" style="margin-top: 20px;">Jugar de nuevo</button>
   </div>
 </div>
 
