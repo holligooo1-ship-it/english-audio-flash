@@ -766,12 +766,32 @@ tagSelect.addEventListener("change", () => {
 // LÓGICA DEL JUEGO (VERDADERO O FALSO)
 // ==========================================================
 
+// Nuevas variables para el juego
+let gameDirection = "en-es";
+let gameCards = [];
+const gameDirSelect = document.getElementById("gameDirSelect");
+const gameTagSelect = document.getElementById("gameTagSelect");
+const btnGameDir = document.getElementById("btnGameDir");
+const btnGameAudio = document.getElementById("btnGameAudio");
+
 btnGame.addEventListener("click", () => {
   if (isPlaying) stopAll();
-  if (sessionCards.length < 4) {
-    alert("Necesitas al menos 4 tarjetas en este mazo para jugar.");
-    return;
-  }
+  
+  // Poblar el selector de categorías del juego
+  const tagSet = new Set();
+  cards.forEach(c => {
+    if (Array.isArray(c.tags)) c.tags.forEach(t => tagSet.add(t));
+  });
+  const tags = Array.from(tagSet).sort();
+  
+  gameTagSelect.innerHTML = `<option value="all">Todas las categorías</option>`;
+  tags.forEach(t => {
+    gameTagSelect.innerHTML += `<option value="${t}">${t.charAt(0).toUpperCase() + t.slice(1)}</option>`;
+  });
+  
+  // Sincronizar la dirección con la de la app
+  gameDirSelect.value = direction;
+  
   gameMenuModal.classList.add("open");
 });
 
@@ -779,137 +799,112 @@ btnCloseGameMenu.addEventListener("click", () => gameMenuModal.classList.remove(
 gameMenuModal.addEventListener("click", (e) => { if (e.target === gameMenuModal) gameMenuModal.classList.remove("open"); });
 
 btnPlayTF.addEventListener("click", () => {
+  // Obtener configuración
+  gameDirection = gameDirSelect.value;
+  const selectedTag = gameTagSelect.value;
+  
+  // Filtrar las tarjetas para el juego
+  gameCards = selectedTag === "all" 
+    ? [...cards] 
+    : cards.filter(c => Array.isArray(c.tags) && c.tags.includes(selectedTag));
+
+  if (gameCards.length < 4) {
+    alert("Necesitas al menos 4 tarjetas de esta categoría para jugar.");
+    return;
+  }
+
   gameMenuModal.classList.remove("open");
   startTrueFalseGame();
 });
 
 function startTrueFalseGame() {
-  tfScore = 0;
-  tfTimeLeft = 60;
-  tfScoreEl.textContent = tfScore;
-  tfTimerEl.textContent = tfTimeLeft + "s";
-  tfGameOver.style.display = "none";
-  tfCardEl.classList.remove("correct", "wrong");
-  gameView.classList.add("active");
-
+  tfScore = 0; tfTimeLeft = 60; tfScoreEl.textContent = tfScore; tfTimerEl.textContent = tfTimeLeft + "s";
+  tfGameOver.style.display = "none"; tfCardEl.classList.remove("correct", "wrong"); gameView.classList.add("active");
+  
   nextTFQuestion();
-
+  
   clearInterval(tfTimerInterval);
   tfTimerInterval = setInterval(() => {
-    tfTimeLeft--;
-    tfTimerEl.textContent = tfTimeLeft + "s";
-    if (tfTimeLeft <= 0) {
-      endTrueFalseGame();
-    }
+    tfTimeLeft--; tfTimerEl.textContent = tfTimeLeft + "s";
+    if (tfTimeLeft <= 0) endTrueFalseGame();
   }, 1000);
 }
 
 function nextTFQuestion() {
-  // Elegir una tarjeta al azar
-  const randomIndex = Math.floor(Math.random() * sessionCards.length);
-  tfCurrentCard = sessionCards[randomIndex];
-
-  // 50% de probabilidad de que sea verdadero o falso
+  // Cancelar cualquier audio que esté sonando
+  speechSynthesis.cancel();
+  
+  tfCurrentCard = gameCards[Math.floor(Math.random() * gameCards.length)];
   tfIsFake = Math.random() < 0.5;
-
-  tfWordEl.textContent = tfCurrentCard.en;
-  tfCardEl.classList.remove("correct", "wrong");
-
-  if (tfIsFake) {
-    // Elegir una traducción falsa (que no sea la correcta)
-    let fakeCard;
-    do {
-      fakeCard = sessionCards[Math.floor(Math.random() * sessionCards.length)];
-    } while (fakeCard.es === tfCurrentCard.es);
-    
-    tfTranslationEl.textContent = fakeCard.es;
+  
+  const isEnToEs = gameDirection === "en-es";
+  
+  // El texto principal depende de la dirección
+  const mainText = isEnToEs ? tfCurrentCard.en : tfCurrentCard.es;
+  tfWordEl.textContent = mainText;
+  
+  // Reproducir audio automáticamente
+  if (isEnToEs) {
+    speakEnglish(mainText);
   } else {
-    tfTranslationEl.textContent = tfCurrentCard.es;
+    speakSpanish(mainText);
+  }
+
+  tfCardEl.classList.remove("correct", "wrong");
+  
+  // La "traducción" (la que se evaluará como verdadera o falsa)
+  if (tfIsFake) {
+    let fakeCard;
+    do { 
+      fakeCard = gameCards[Math.floor(Math.random() * gameCards.length)]; 
+    } while ((isEnToEs ? fakeCard.es : fakeCard.en) === (isEnToEs ? tfCurrentCard.es : tfCurrentCard.en));
+    
+    tfTranslationEl.textContent = isEnToEs ? fakeCard.es : fakeCard.en;
+  } else { 
+    tfTranslationEl.textContent = isEnToEs ? tfCurrentCard.es : tfCurrentCard.en; 
   }
 }
 
 function checkTFAnswer(userSaidTrue) {
-  // Si el usuario dice Verdadero y NO es falso -> Correcto
-  // Si el usuario dice Falso y SÍ es falso -> Correcto
   const isCorrect = (userSaidTrue && !tfIsFake) || (!userSaidTrue && tfIsFake);
-
-  if (isCorrect) {
-    tfScore++;
-    tfScoreEl.textContent = tfScore;
-    tfCardEl.classList.add("correct");
-  } else {
-    tfScore = Math.max(0, tfScore - 1); // Restar 1 punto, mínimo 0
-    tfScoreEl.textContent = tfScore;
-    tfCardEl.classList.add("wrong");
-  }
-
-  // Pequeña pausa para ver el color y pasar a la siguiente
-  setTimeout(() => {
-    if (tfTimeLeft > 0) nextTFQuestion();
-  }, 400);
+  if (isCorrect) { tfScore++; tfScoreEl.textContent = tfScore; tfCardEl.classList.add("correct"); } 
+  else { tfScore = Math.max(0, tfScore - 1); tfScoreEl.textContent = tfScore; tfCardEl.classList.add("wrong"); }
+  
+  // Pausa de medio segundo y sigue
+  setTimeout(() => { 
+    if (tfTimeLeft > 0) nextTFQuestion(); 
+  }, 600);
 }
 
 btnTrue.addEventListener("click", () => checkTFAnswer(true));
 btnFalse.addEventListener("click", () => checkTFAnswer(false));
 
-function endTrueFalseGame() {
-  clearInterval(tfTimerInterval);
-  tfFinalScore.textContent = tfScore;
-  tfGameOver.style.display = "flex";
+// Botón para cambiar dirección dentro del juego
+btnGameDir.addEventListener("click", () => {
+  gameDirection = gameDirection === "en-es" ? "es-en" : "en-es";
+  nextTFQuestion(); // Esto también reproduce el audio en el nuevo idioma
+});
+
+// Botón para repetir el audio
+btnGameAudio.addEventListener("click", () => {
+  const mainText = gameDirection === "en-es" ? tfCurrentCard.en : tfCurrentCard.es;
+  if (gameDirection === "en-es") speakEnglish(mainText);
+  else speakSpanish(mainText);
+});
+
+function endTrueFalseGame() { 
+  clearInterval(tfTimerInterval); 
+  speechSynthesis.cancel(); // Detener audio al terminar
+  tfFinalScore.textContent = tfScore; 
+  tfGameOver.style.display = "flex"; 
 }
 
 btnRestartTF.addEventListener("click", startTrueFalseGame);
-
-btnCloseGame.addEventListener("click", () => {
-  clearInterval(tfTimerInterval);
-  gameView.classList.remove("active");
+btnCloseGame.addEventListener("click", () => { 
+  clearInterval(tfTimerInterval); 
+  speechSynthesis.cancel();
+  gameView.classList.remove("active"); 
 });
-
-// ---------- INIT ----------
-loadGlobalSettings();
-speedInput.value = speed;
-speedValue.textContent = speed.toFixed(1) + "x";
-pauseInput.value = pauseSeconds;
-pauseValue.textContent = pauseSeconds + "s";
-setPlayState(false);
-loadDecksIndex();
-refreshIcons();
-
-// Activar modo offline
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(reg => console.log('✅ Service Worker registrado. Modo offline activo.'))
-      .catch(err => console.warn('⚠️ Error al registrar Service Worker:', err));
-  });
-}
-
-// ---------- LÓGICA PARA INSTALAR LA PWA ----------
-let deferredPrompt;
-const installBtn = document.getElementById("installBtn");
-
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  if (installBtn) {
-    installBtn.style.display = "inline-flex";
-    refreshIcons(); 
-  }
-});
-
-if (installBtn) {
-  installBtn.addEventListener("click", async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`El usuario respondió: ${outcome}`);
-      deferredPrompt = null;
-      installBtn.style.display = "none";
-    }
-  });
-}
-
-window.addEventListener("appinstalled", () => {
   console.log("¡App instalada con éxito!");
   if (installBtn) installBtn.style.display = "none";
   deferredPrompt = null;
