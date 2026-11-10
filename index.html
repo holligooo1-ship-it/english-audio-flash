@@ -13,7 +13,6 @@
 </head>
 <body>
 
-<!-- ================== PANTALLA DE BIENVENIDA ================== -->
 <div id="splash-screen">
   <img src="english memory logo.png" alt="Logo" class="splash-logo">
   <h1 class="splash-title">English Memory ERTO</h1>
@@ -22,7 +21,6 @@
 
 <div class="app">
 
-<!-- ================== HOME: SELECTOR DE MAZOS ================== -->
 <div class="view home-view" id="homeView">
   <div class="home-header">
     <img src="english memory logo.png" alt="Logo" class="home-logo">
@@ -36,9 +34,7 @@
   <div class="home-footer">English Memory</div>
 </div>
 
-<!-- ================== PLAYER: REPRODUCTOR ================== -->
 <div class="view player-view hidden" id="playerView">
-
   <header class="topbar">
     <button id="btnBack" class="back-btn" title="Volver" aria-label="Volver">
       <i data-lucide="chevron-left"></i>
@@ -47,12 +43,10 @@
       <span class="app-name" id="deckName">—</span>
     </div>
     <div class="topbar-actions">
-      <!-- 👇 NUEVO BOTÓN DE JUEGO 👇 -->
       <button id="btnGame" class="toolbar-btn game-btn" title="Minijuegos">
         <i data-lucide="gamepad-2"></i>
         <span class="btn-label">Jugar</span>
       </button>
-      
       <button id="btnDeck" class="toolbar-btn" title="Ver mazo completo">
         <i data-lucide="book-open"></i>
         <span class="btn-label">Mazo</span>
@@ -114,10 +108,8 @@
       <select id="tag"></select>
     </div>
   </footer>
-
 </div>
 
-<!-- ================== MODAL: MENÚ DE JUEGOS ================== -->
 <div class="deck-modal" id="gameMenuModal">
   <div class="deck-modal-content" style="max-width: 400px;">
     <div class="deck-modal-header">
@@ -138,7 +130,6 @@
   </div>
 </div>
 
-<!-- ================== PANTALLA DEL JUEGO (VERDADERO O FALSO) ================== -->
 <div class="game-overlay" id="gameView">
   <header class="game-header">
     <div class="game-score-box">
@@ -152,15 +143,14 @@
     <button class="close-btn" id="btnCloseGame"><i data-lucide="x"></i></button>
   </header>
 
-  <main class="game-area" id="tfGameArea">
-    <!-- Aquí se inyecta la tarjeta del juego -->
+  <main class="game-area">
     <div class="tf-card" id="tfCard">
       <div class="tf-word" id="tfWord">—</div>
       <div class="tf-translation" id="tfTranslation">—</div>
     </div>
   </main>
 
-  <footer class="game-controls" id="tfControls">
+  <footer class="game-controls">
     <button class="tf-btn false-btn" id="btnFalse">
       <i data-lucide="x"></i> Falso
     </button>
@@ -169,12 +159,23 @@
     </button>
   </footer>
 
-  <!-- Pantalla de Game Over -->
   <div class="game-over" id="tfGameOver" style="display: none;">
     <h2>¡Tiempo terminado!</h2>
     <p>Tu puntuación es:</p>
     <div class="final-score" id="tfFinalScore">0</div>
     <button class="btn-primary" id="btnRestartTF" style="margin-top: 20px;">Jugar de nuevo</button>
+  </div>
+</div>
+
+<div class="deck-modal" id="deckModal">
+  <div class="deck-modal-content">
+    <div class="deck-modal-header">
+      <h2 id="deckTitle">Mazo completo</h2>
+      <button id="btnCloseDeck" class="close-btn" title="Cerrar" aria-label="Cerrar">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <div class="deck-list" id="deckList"></div>
   </div>
 </div>
 
