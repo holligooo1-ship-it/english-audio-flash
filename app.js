@@ -1,5 +1,5 @@
 // ==========================================================
-// ENGLISH AUDIO FLASH - v31 (Límite de palabras en juegos)
+// ENGLISH AUDIO FLASH - v32 (Verdadero/Falso + Opción Múltiple + Dictado)
 // ==========================================================
 
 // ---------- ESTADO ----------
@@ -48,6 +48,13 @@ let mcCurrentCard = null;
 let mcCorrectAnswer = "";
 let mcIsAnswering = false;
 
+// DT = Dictation
+let dtTimerInterval = null;
+let dtTimeLeft = 60;
+let dtScore = 0;
+let dtCurrentCard = null;
+let dtIsAnswering = false;
+
 // ---------- HELPERS ----------
 function refreshIcons() {
   if (window.lucide && typeof window.lucide.createIcons === "function") {
@@ -57,6 +64,16 @@ function refreshIcons() {
 
 function escapeHtml(str) {
   return String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function normalizeText(str) {
+  return String(str || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?¿!¡'"’]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function setPlayState(playing) {
@@ -144,9 +161,10 @@ const gameMenuModal = document.getElementById("gameMenuModal");
 const btnCloseGameMenu = document.getElementById("btnCloseGameMenu");
 const btnPlayTF = document.getElementById("btnPlayTF");
 const btnPlayMC = document.getElementById("btnPlayMC");
+const btnPlayDictation = document.getElementById("btnPlayDictation");
 const gameDirSelect = document.getElementById("gameDirSelect");
 const gameTagSelect = document.getElementById("gameTagSelect");
-const gameLimitSelect = document.getElementById("gameLimitSelect"); // NUEVO
+const gameLimitSelect = document.getElementById("gameLimitSelect");
 
 // DOM Verdadero/Falso
 const gameView = document.getElementById("gameView");
@@ -177,6 +195,21 @@ const btnMCGameAudio = document.getElementById("btnMCGameAudio");
 const mcGameOver = document.getElementById("mcGameOver");
 const mcFinalScore = document.getElementById("mcFinalScore");
 const btnRestartMC = document.getElementById("btnRestartMC");
+
+// DOM Dictado
+const dictationGameView = document.getElementById("dictationGameView");
+const btnCloseDTGame = document.getElementById("btnCloseDTGame");
+const dtScoreEl = document.getElementById("dtScore");
+const dtTimerEl = document.getElementById("dtTimer");
+const dtInstruction = document.getElementById("dtInstruction");
+const dtInput = document.getElementById("dtInput");
+const btnDTSubmit = document.getElementById("btnDTSubmit");
+const dtFeedback = document.getElementById("dtFeedback");
+const btnDTGameDir = document.getElementById("btnDTGameDir");
+const btnDTGameAudio = document.getElementById("btnDTGameAudio");
+const dtGameOver = document.getElementById("dtGameOver");
+const dtFinalScore = document.getElementById("dtFinalScore");
+const btnRestartDT = document.getElementById("btnRestartDT");
 
 // ---------- CARGA INICIAL ----------
 async function loadDecksIndex() {
@@ -452,14 +485,12 @@ tagSelect.addEventListener("change", () => { currentTag = tagSelect.value; saveD
 btnGame.addEventListener("click", () => {
   if (isPlaying) stopAll();
   
-  // Llenar categorías
   const tagSet = new Set();
   cards.forEach(c => { if (Array.isArray(c.tags)) c.tags.forEach(t => tagSet.add(t)); });
   const tags = Array.from(tagSet).sort();
   gameTagSelect.innerHTML = `<option value="all">Todas las categorías</option>`;
   tags.forEach(t => { gameTagSelect.innerHTML += `<option value="${t}">${t.charAt(0).toUpperCase() + t.slice(1)}</option>`; });
   
-  // Llenar cantidades
   gameLimitSelect.innerHTML = "";
   for (let i = 1; i <= cards.length; i++) {
     const opt = document.createElement("option");
@@ -472,7 +503,6 @@ btnGame.addEventListener("click", () => {
   allOpt.textContent = "Todas";
   gameLimitSelect.appendChild(allOpt);
   
-  // Valor por defecto
   gameLimitSelect.value = "all";
   gameDirSelect.value = direction;
   gameMenuModal.classList.add("open");
@@ -486,10 +516,8 @@ function prepareGameCards() {
   const selectedTag = gameTagSelect.value;
   const selectedLimit = gameLimitSelect.value;
 
-  // 1. Filtrar por categoría
   let filtered = selectedTag === "all" ? [...cards] : cards.filter(c => Array.isArray(c.tags) && c.tags.includes(selectedTag));
 
-  // 2. Aplicar límite de cantidad (en el orden en que están)
   if (selectedLimit !== "all") {
     const limitNum = parseInt(selectedLimit, 10);
     filtered = filtered.slice(0, limitNum);
@@ -604,7 +632,6 @@ function nextMCQuestion() {
   
   if (isEnToEs) { speakEnglish(mainText); } else { speakSpanish(mainText); }
 
-  // Generar 3 respuestas falsas
   const fakes = new Set();
   while (fakes.size < 3) {
     const f = gameCards[Math.floor(Math.random() * gameCards.length)];
@@ -667,6 +694,107 @@ btnCloseMCGame.addEventListener("click", () => {
   clearInterval(mcTimerInterval); 
   speechSynthesis.cancel(); 
   mcGameView.classList.remove("active"); 
+});
+
+// ==========================================================
+// JUEGO 3: DICTADO RÁPIDO
+// ==========================================================
+btnPlayDictation.addEventListener("click", () => {
+  if (!prepareGameCards()) return;
+  startDictationGame();
+});
+
+function startDictationGame() {
+  dtScore = 0; dtTimeLeft = 60; dtScoreEl.textContent = dtScore; dtTimerEl.textContent = dtTimeLeft + "s";
+  dtGameOver.style.display = "none"; dictationGameView.classList.add("active");
+  dtFeedback.textContent = "";
+  dtFeedback.className = "dt-feedback";
+  
+  nextDictationQuestion();
+  
+  clearInterval(dtTimerInterval);
+  dtTimerInterval = setInterval(() => {
+    dtTimeLeft--; dtTimerEl.textContent = dtTimeLeft + "s";
+    if (dtTimeLeft <= 0) endDictationGame();
+  }, 1000);
+}
+
+function nextDictationQuestion() {
+  speechSynthesis.cancel();
+  dtIsAnswering = false;
+  dtInput.value = "";
+  dtInput.disabled = false;
+  dtInput.focus();
+  dtFeedback.textContent = "";
+  dtFeedback.className = "dt-feedback";
+  dtInstruction.textContent = "Escribe lo que escuchas...";
+  
+  dtCurrentCard = gameCards[Math.floor(Math.random() * gameCards.length)];
+  const isEnToEs = gameDirection === "en-es";
+  
+  const textToSpeak = isEnToEs ? dtCurrentCard.en : dtCurrentCard.es;
+  
+  // Reproducir audio después de un micro-corto delay para asegurar que el input está listo
+  setTimeout(() => {
+    if (isEnToEs) { speakEnglish(textToSpeak); } else { speakSpanish(textToSpeak); }
+  }, 100);
+}
+
+function checkDictationAnswer() {
+  if (dtIsAnswering) return;
+  const userAnswer = dtInput.value.trim();
+  if (!userAnswer) return;
+
+  dtIsAnswering = true;
+  dtInput.disabled = true;
+
+  const isEnToEs = gameDirection === "en-es";
+  const correctAnswer = isEnToEs ? dtCurrentCard.en : dtCurrentCard.es;
+  
+  const normalizedUser = normalizeText(userAnswer);
+  const normalizedCorrect = normalizeText(correctAnswer);
+
+  if (normalizedUser === normalizedCorrect) {
+    dtScore++;
+    dtScoreEl.textContent = dtScore;
+    dtFeedback.textContent = "¡Correcto!";
+    dtFeedback.classList.add("correct");
+  } else {
+    dtScore = Math.max(0, dtScore - 1);
+    dtScoreEl.textContent = dtScore;
+    dtFeedback.innerHTML = `Incorrecto <span class="dt-correct-answer">Respuesta: ${escapeHtml(correctAnswer)}</span>`;
+    dtFeedback.classList.add("wrong");
+  }
+
+  setTimeout(() => { 
+    if (dtTimeLeft > 0) nextDictationQuestion(); 
+  }, 1800); // 1.8 segundos para leer la respuesta correcta
+}
+
+btnDTSubmit.addEventListener("click", checkDictationAnswer);
+dtInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") checkDictationAnswer();
+});
+
+btnDTGameDir.addEventListener("click", () => { gameDirection = gameDirection === "en-es" ? "es-en" : "en-es"; nextDictationQuestion(); });
+btnDTGameAudio.addEventListener("click", () => {
+  const isEnToEs = gameDirection === "en-es";
+  const textToSpeak = isEnToEs ? dtCurrentCard.en : dtCurrentCard.es;
+  if (isEnToEs) speakEnglish(textToSpeak); else speakSpanish(textToSpeak);
+});
+
+function endDictationGame() { 
+  clearInterval(dtTimerInterval); 
+  speechSynthesis.cancel(); 
+  dtFinalScore.textContent = dtScore; 
+  dtGameOver.style.display = "flex"; 
+}
+
+btnRestartDT.addEventListener("click", startDictationGame);
+btnCloseDTGame.addEventListener("click", () => { 
+  clearInterval(dtTimerInterval); 
+  speechSynthesis.cancel(); 
+  dictationGameView.classList.remove("active"); 
 });
 
 // ---------- INIT ----------
