@@ -1515,3 +1515,94 @@ svg.lucide {
 @media (max-width: 380px) {
   .mc-controls { grid-template-columns: 1fr; }
 }
+/* ==================================================
+   ESTILOS: DICTADO RÁPIDO
+================================================== */
+.dt-icon-container {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(236, 72, 153, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  animation: pulse-icon 2s infinite alternate;
+}
+.dt-icon-container svg {
+  width: 40px;
+  height: 40px;
+  color: var(--accent);
+  stroke-width: 2.5;
+}
+
+.dt-instruction {
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  color: var(--muted);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.dt-form {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.dt-input {
+  flex: 1;
+  padding: 16px 20px;
+  background: rgba(10, 5, 32, 0.8);
+  border: 2px solid var(--border-2);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: 'Fredoka', sans-serif;
+  font-size: 18px;
+  outline: none;
+  transition: all 0.2s;
+}
+.dt-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.3);
+}
+
+.dt-submit-btn {
+  background: linear-gradient(180deg, #f472b6, #d946ef 60%, #a855f7);
+  border: none;
+  color: white;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 0 var(--accent-deep);
+  transition: all 0.1s;
+}
+.dt-submit-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--accent-deep);
+}
+.dt-submit-btn svg { width: 24px; height: 24px; }
+
+.dt-feedback {
+  margin-top: 20px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  min-height: 30px;
+  text-align: center;
+}
+.dt-feedback.correct { color: var(--success); }
+.dt-feedback.wrong { color: var(--danger); }
+
+.dt-correct-answer {
+  display: block;
+  font-size: 15px;
+  font-family: 'Nunito', sans-serif;
+  color: var(--text-dim);
+  margin-top: 8px;
+}
