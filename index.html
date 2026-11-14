@@ -132,7 +132,6 @@
         <select id="gameTagSelect" class="game-select"></select>
       </div>
 
-      <!-- NUEVO SELECTOR DE CANTIDAD -->
       <div class="game-select-group">
         <label for="gameLimitSelect">Cantidad de palabras</label>
         <select id="gameLimitSelect" class="game-select"></select>
@@ -145,8 +144,8 @@
         <button class="game-menu-btn" id="btnPlayMC">
           <i data-lucide="list"></i> Opción Múltiple
         </button>
-        <button class="game-menu-btn" disabled style="opacity: 0.5; cursor: not-allowed;">
-          <i data-lucide="type"></i> Dictado Rápido (Pronto)
+        <button class="game-menu-btn" id="btnPlayDictation">
+          <i data-lucide="type"></i> Dictado Rápido
         </button>
       </div>
     </div>
@@ -232,6 +231,52 @@
     <p>Tu puntuación es:</p>
     <div class="final-score" id="mcFinalScore">0</div>
     <button class="btn-primary" id="btnRestartMC" style="margin-top: 20px;">Jugar de nuevo</button>
+  </div>
+</div>
+
+<!-- JUEGO 3: DICTADO RÁPIDO -->
+<div class="game-overlay" id="dictationGameView">
+  <header class="game-header">
+    <div class="game-score-box">
+      <span>Puntos</span>
+      <strong id="dtScore">0</strong>
+    </div>
+    <div class="game-header-actions">
+      <button id="btnDTGameDir" class="game-icon-btn" title="Cambiar dirección">
+        <i data-lucide="arrow-right-left"></i>
+      </button>
+      <button id="btnDTGameAudio" class="game-icon-btn" title="Escuchar de nuevo">
+        <i data-lucide="volume-2"></i>
+      </button>
+    </div>
+    <div class="game-timer-box">
+      <i data-lucide="timer"></i>
+      <strong id="dtTimer">60s</strong>
+    </div>
+    <button class="close-btn" id="btnCloseDTGame"><i data-lucide="x"></i></button>
+  </header>
+
+  <main class="game-area" style="flex-direction: column;">
+    <div class="dt-icon-container">
+      <i data-lucide="headphones"></i>
+    </div>
+    <p class="dt-instruction" id="dtInstruction">Escribe lo que escuchas...</p>
+    
+    <div class="dt-form">
+      <input type="text" id="dtInput" class="dt-input" placeholder="Escribe aquí..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      <button class="dt-submit-btn" id="btnDTSubmit">
+        <i data-lucide="arrow-right"></i>
+      </button>
+    </div>
+    
+    <div class="dt-feedback" id="dtFeedback"></div>
+  </main>
+
+  <div class="game-over" id="dtGameOver" style="display: none;">
+    <h2>¡Tiempo terminado!</h2>
+    <p>Tu puntuación es:</p>
+    <div class="final-score" id="dtFinalScore">0</div>
+    <button class="btn-primary" id="btnRestartDT" style="margin-top: 20px;">Jugar de nuevo</button>
   </div>
 </div>
 
