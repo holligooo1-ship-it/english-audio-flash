@@ -2151,6 +2151,771 @@
       "example_es": "Ella ganó el primer premio.",
       "note": "",
       "tags": ["sustantivos"]
+    },
+        {
+      "id": 240,
+      "en": "Fearing",
+      "es": "Temiendo",
+      "example_en": "She is fearing the worst.",
+      "example_es": "Ella está temiendo lo peor.",
+      "note": "Gerundio del verbo 'fear' (temer).",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 241,
+      "en": "Spare",
+      "es": "Repuesto, ahorrar, de sobra",
+      "example_en": "I have a spare tire.",
+      "example_es": "Tengo un neumático de repuesto.",
+      "note": "",
+      "tags": ["adjetivos", "sustantivos"]
+    },
+    {
+      "id": 242,
+      "en": "Below",
+      "es": "Debajo de, por debajo de",
+      "example_en": "The cat is below the table.",
+      "example_es": "El gato está debajo de la mesa.",
+      "note": "",
+      "tags": ["preposiciones"]
+    },
+    {
+      "id": 243,
+      "en": "Complex",
+      "es": "Complejo, complicado",
+      "example_en": "This is a complex problem.",
+      "example_es": "Este es un problema complejo.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 244,
+      "en": "Increase",
+      "es": "Aumentar, incrementar",
+      "example_en": "We need to increase sales.",
+      "example_es": "Necesitamos aumentar las ventas.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 245,
+      "en": "Per",
+      "es": "Por (en ratios o medidas)",
+      "example_en": "It costs 10 dollars per person.",
+      "example_es": "Cuesta 10 dólares por persona.",
+      "note": "",
+      "tags": ["preposiciones"]
+    },
+    {
+      "id": 246,
+      "en": "Ate",
+      "es": "Comió",
+      "example_en": "She ate an apple.",
+      "example_es": "Ella se comió una manzana.",
+      "note": "Pasado del verbo 'eat'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 247,
+      "en": "Tasty",
+      "es": "Sabroso, delicioso",
+      "example_en": "This pizza is very tasty.",
+      "example_es": "Esta pizza es muy sabrosa.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 248,
+      "en": "Through",
+      "es": "A través de",
+      "example_en": "We walked through the forest.",
+      "example_es": "Caminamos a través del bosque.",
+      "note": "",
+      "tags": ["preposiciones"]
+    },
+    {
+      "id": 249,
+      "en": "Explain",
+      "es": "Explicar",
+      "example_en": "Can you explain this?",
+      "example_es": "¿Puedes explicar esto?",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 250,
+      "en": "Combine",
+      "es": "Combinar",
+      "example_en": "Combine the flour and sugar.",
+      "example_es": "Combina la harina y el azúcar.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 251,
+      "en": "Landslide",
+      "es": "Deslizamiento de tierra, derrumbe",
+      "example_en": "The landslide blocked the road.",
+      "example_es": "El deslizamiento de tierra bloqueó la carretera.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 252,
+      "en": "Landfall",
+      "es": "Llegada a tierra",
+      "example_en": "The hurricane made landfall.",
+      "example_es": "El huracán tocó tierra.",
+      "note": "Usado mayormente para tormentas que llegan a la costa.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 253,
+      "en": "Stainless",
+      "es": "Inoxidable",
+      "example_en": "I bought a stainless steel pan.",
+      "example_es": "Compré una sartén de acero inoxidable.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 254,
+      "en": "Out of the ordinary",
+      "es": "Fuera de lo común",
+      "example_en": "It was an event out of the ordinary.",
+      "example_es": "Fue un evento fuera de lo común.",
+      "note": "",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 255,
+      "en": "Certain",
+      "es": "Cierto, seguro",
+      "example_en": "I am certain about this.",
+      "example_es": "Estoy seguro de esto.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 256,
+      "en": "Cub",
+      "es": "Cachorro (de animal salvaje)",
+      "example_en": "The lion cub is playing.",
+      "example_es": "El cachorro de león está jugando.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 257,
+      "en": "Bit",
+      "es": "Poco, pedazo, un poco",
+      "example_en": "Just a bit of sugar, please.",
+      "example_es": "Solo un poco de azúcar, por favor.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 258,
+      "en": "Male",
+      "es": "Macho, masculino",
+      "example_en": "The male bird is colorful.",
+      "example_es": "El pájaro macho es colorido.",
+      "note": "",
+      "tags": ["adjetivos", "sustantivos"]
+    },
+    {
+      "id": 259,
+      "en": "Filled",
+      "es": "Llenado, lleno",
+      "example_en": "The glass is filled with water.",
+      "example_es": "El vaso está lleno de agua.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 260,
+      "en": "Target",
+      "es": "Objetivo, blanco",
+      "example_en": "Hit the target.",
+      "example_es": "Golpea el objetivo.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 261,
+      "en": "Change",
+      "es": "Cambio, cambiar",
+      "example_en": "I need to change my clothes.",
+      "example_es": "Necesito cambiar mi ropa.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 262,
+      "en": "Step",
+      "es": "Paso, escalón",
+      "example_en": "Take one step forward.",
+      "example_es": "Da un paso adelante.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 263,
+      "en": "Ruled",
+      "es": "Gobernó, dictaminó",
+      "example_en": "The king ruled the country.",
+      "example_es": "El rey gobernó el país.",
+      "note": "Pasado del verbo 'rule'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 264,
+      "en": "Lead",
+      "es": "Liderar, plomo",
+      "example_en": "You can lead the team.",
+      "example_es": "Puedes liderar el equipo.",
+      "note": "Como sustantivo significa plomo.",
+      "tags": ["verbos", "sustantivos"]
+    },
+    {
+      "id": 265,
+      "en": "Been",
+      "es": "Estado (participio de be)",
+      "example_en": "I have been to Paris.",
+      "example_es": "He estado en París.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 266,
+      "en": "Pride",
+      "es": "Orgullo",
+      "example_en": "He takes pride in his work.",
+      "example_es": "Él se enorgullece de su trabajo.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 267,
+      "en": "Gone",
+      "es": "Ido, ido/a",
+      "example_en": "He is already gone.",
+      "example_es": "Él ya se ha ido.",
+      "note": "Participio del verbo 'go'.",
+      "tags": ["adjetivos", "verbos"]
+    },
+    {
+      "id": 268,
+      "en": "Seem",
+      "es": "Parecer",
+      "example_en": "You seem tired.",
+      "example_es": "Pareces cansado.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 269,
+      "en": "Heartbeat",
+      "es": "Latido del corazón",
+      "example_en": "I can hear my heartbeat.",
+      "example_es": "Puedo escuchar los latidos de mi corazón.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 270,
+      "en": "Alone",
+      "es": "Solo, sola",
+      "example_en": "I want to be alone.",
+      "example_es": "Quiero estar solo.",
+      "note": "",
+      "tags": ["adjetivos", "adverbios"]
+    },
+    {
+      "id": 271,
+      "en": "Learn",
+      "es": "Aprender",
+      "example_en": "I want to learn English.",
+      "example_es": "Quiero aprender inglés.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 272,
+      "en": "Success",
+      "es": "Éxito",
+      "example_en": "The project was a success.",
+      "example_es": "El proyecto fue un éxito.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 273,
+      "en": "Everyone",
+      "es": "Todos, todo el mundo",
+      "example_en": "Everyone is invited.",
+      "example_es": "Todos están invitados.",
+      "note": "",
+      "tags": ["pronombres"]
+    },
+    {
+      "id": 274,
+      "en": "Almost",
+      "es": "Casi",
+      "example_en": "I almost missed the bus.",
+      "example_es": "Casi pierdo el autobús.",
+      "note": "",
+      "tags": ["adverbios"]
+    },
+    {
+      "id": 275,
+      "en": "Bloodline",
+      "es": "Linaje",
+      "example_en": "He comes from a royal bloodline.",
+      "example_es": "Él proviene de un linaje real.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 276,
+      "en": "Timid",
+      "es": "Tímido",
+      "example_en": "The child is very timid.",
+      "example_es": "El niño es muy tímido.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 277,
+      "en": "Wide",
+      "es": "Ancho, amplio",
+      "example_en": "The river is very wide.",
+      "example_es": "El río es muy ancho.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 278,
+      "en": "Whole",
+      "es": "Entero, todo",
+      "example_en": "I ate the whole cake.",
+      "example_es": "Me comí el pastel entero.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 279,
+      "en": "Quite",
+      "es": "Bastante",
+      "example_en": "It is quite cold today.",
+      "example_es": "Hoy hace bastante frío.",
+      "note": "",
+      "tags": ["adverbios"]
+    },
+    {
+      "id": 280,
+      "en": "Feed",
+      "es": "Alimentar",
+      "example_en": "Please feed the dog.",
+      "example_es": "Por favor, alimenta al perro.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 281,
+      "en": "Injured",
+      "es": "Herido, lesionado",
+      "example_en": "The injured man needs help.",
+      "example_es": "El hombre herido necesita ayuda.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 282,
+      "en": "Strayed",
+      "es": "Se desvió, se alejó",
+      "example_en": "The dog strayed from home.",
+      "example_es": "El perro se alejó de casa.",
+      "note": "Pasado del verbo 'stray'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 283,
+      "en": "Learnt",
+      "es": "Aprendió",
+      "example_en": "He learnt to swim.",
+      "example_es": "Él aprendió a nadar.",
+      "note": "Variante británica del pasado de 'learn' (también se usa 'learned').",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 284,
+      "en": "Trial",
+      "es": "Juicio, prueba",
+      "example_en": "The trial lasted three days.",
+      "example_es": "El juicio duró tres días.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 285,
+      "en": "Meow",
+      "es": "Maullido, miau",
+      "example_en": "The cat said meow.",
+      "example_es": "El gato dijo miau.",
+      "note": "",
+      "tags": ["sustantivos", "onomatopeyas"]
+    },
+    {
+      "id": 286,
+      "en": "Bellowing",
+      "es": "Bramando, gritando",
+      "example_en": "The bull is bellowing.",
+      "example_es": "El toro está bramando.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 287,
+      "en": "Snorting",
+      "es": "Resoplando",
+      "example_en": "The horse is snorting.",
+      "example_es": "El caballo está resoplando.",
+      "note": "",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 288,
+      "en": "Size",
+      "es": "Tamaño, talla",
+      "example_en": "What is your shoe size?",
+      "example_es": "¿Cuál es tu talla de zapato?",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 289,
+      "en": "Holy",
+      "es": "Santo, sagrado",
+      "example_en": "This is a holy place.",
+      "example_es": "Este es un lugar sagrado.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 290,
+      "en": "Spring",
+      "es": "Primavera, manantial, resorte",
+      "example_en": "Flowers bloom in spring.",
+      "example_es": "Las flores florecen en primavera.",
+      "note": "Tiene múltiples significados según el contexto.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 291,
+      "en": "Unbuilt",
+      "es": "No construido",
+      "example_en": "The land is still unbuilt.",
+      "example_es": "La tierra aún no está construida.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 292,
+      "en": "Clever",
+      "es": "Listo, inteligente, astuto",
+      "example_en": "She is a clever girl.",
+      "example_es": "Ella es una chica lista.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 293,
+      "en": "Built",
+      "es": "Construido",
+      "example_en": "They built a new house.",
+      "example_es": "Construyeron una casa nueva.",
+      "note": "Pasado del verbo 'build'.",
+      "tags": ["verbos", "adjetivos"]
+    },
+    {
+      "id": 294,
+      "en": "Popcorn",
+      "es": "Palomitas de maíz",
+      "example_en": "We eat popcorn at the movies.",
+      "example_es": "Comemos palomitas en el cine.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 295,
+      "en": "Refused",
+      "es": "Rechazó, se negó",
+      "example_en": "He refused the offer.",
+      "example_es": "Él rechazó la oferta.",
+      "note": "Pasado del verbo 'refuse'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 296,
+      "en": "Leader",
+      "es": "Líder",
+      "example_en": "She is a strong leader.",
+      "example_es": "Ella es una líder fuerte.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 297,
+      "en": "Riot",
+      "es": "Disturbio, motín",
+      "example_en": "There was a riot in the street.",
+      "example_es": "Hubo un disturbio en la calle.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 298,
+      "en": "Law",
+      "es": "Ley",
+      "example_en": "We must obey the law.",
+      "example_es": "Debemos obedecer la ley.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 299,
+      "en": "Court",
+      "es": "Corte, tribunal, cancha",
+      "example_en": "The case will go to court.",
+      "example_es": "El caso irá a la corte.",
+      "note": "También se usa para canchas de tenis o baloncesto.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 300,
+      "en": "Owner",
+      "es": "Dueño, dueña",
+      "example_en": "Who is the owner of this car?",
+      "example_es": "¿Quién es el dueño de este coche?",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 301,
+      "en": "Gain",
+      "es": "Ganar, ganancia",
+      "example_en": "No pain, no gain.",
+      "example_es": "Sin dolor no hay ganancia.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 302,
+      "en": "Fair",
+      "es": "Justo, feria",
+      "example_en": "The decision was not fair.",
+      "example_es": "La decisión no fue justa.",
+      "note": "",
+      "tags": ["adjetivos", "sustantivos"]
+    },
+    {
+      "id": 303,
+      "en": "Source",
+      "es": "Fuente, origen",
+      "example_en": "The sun is a source of energy.",
+      "example_es": "El sol es una fuente de energía.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 304,
+      "en": "Failure",
+      "es": "Fracaso, fallo",
+      "example_en": "Failure is the mother of success.",
+      "example_es": "El fracaso es la madre del éxito.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 305,
+      "en": "Database",
+      "es": "Base de datos",
+      "example_en": "The database has all the records.",
+      "example_es": "La base de datos tiene todos los registros.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 306,
+      "en": "Ways",
+      "es": "Maneras, formas, caminos",
+      "example_en": "There are many ways to do this.",
+      "example_es": "Hay muchas maneras de hacer esto.",
+      "note": "Plural de 'way'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 307,
+      "en": "Purdue",
+      "es": "Universidad Purdue",
+      "example_en": "She studied at Purdue University.",
+      "example_es": "Ella estudió en la Universidad Purdue.",
+      "note": "Nombre propio de una universidad en Estados Unidos.",
+      "tags": ["sustantivos", "propios"]
+    },
+    {
+      "id": 308,
+      "en": "Accused",
+      "es": "Acusado, acusada",
+      "example_en": "The man was accused of theft.",
+      "example_es": "El hombre fue acusado de robo.",
+      "note": "",
+      "tags": ["adjetivos", "verbos"]
+    },
+    {
+      "id": 309,
+      "en": "Instance",
+      "es": "Instancia, ejemplo",
+      "example_en": "For instance, look at this case.",
+      "example_es": "Por ejemplo, mira este caso.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 310,
+      "en": "Should",
+      "es": "Debería",
+      "example_en": "You should see a doctor.",
+      "example_es": "Deberías ver a un doctor.",
+      "note": "Verbo modal.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 311,
+      "en": "Gotten",
+      "es": "Obtenido, conseguido",
+      "example_en": "He has gotten a new job.",
+      "example_es": "Él ha obtenido un nuevo trabajo.",
+      "note": "Participio pasado de 'get' en inglés americano.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 312,
+      "en": "Crossing",
+      "es": "Cruce",
+      "example_en": "Be careful at the crossing.",
+      "example_es": "Ten cuidado en el cruce.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 313,
+      "en": "Toll",
+      "es": "Peaje, costo, número de víctimas",
+      "example_en": "The death toll is rising.",
+      "example_es": "El número de muertos está aumentando.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 314,
+      "en": "Mob",
+      "es": "Multitud, mafia",
+      "example_en": "The mob gathered outside.",
+      "example_es": "La multitud se reunió afuera.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 315,
+      "en": "Rising",
+      "es": "Subiendo, en aumento",
+      "example_en": "Prices are rising quickly.",
+      "example_es": "Los precios están subiendo rápidamente.",
+      "note": "",
+      "tags": ["verbos", "adjetivos"]
+    },
+    {
+      "id": 316,
+      "en": "Flags",
+      "es": "Banderas",
+      "example_en": "The flags are flying in the wind.",
+      "example_es": "Las banderas ondean en el viento.",
+      "note": "Plural de 'flag'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 317,
+      "en": "Led",
+      "es": "Lideró, dirigió",
+      "example_en": "He led the team to victory.",
+      "example_es": "Él lideró al equipo hacia la victoria.",
+      "note": "Pasado del verbo 'lead'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 318,
+      "en": "Ended",
+      "es": "Terminó, acabó",
+      "example_en": "The movie ended late.",
+      "example_es": "La película terminó tarde.",
+      "note": "Pasado del verbo 'end'.",
+      "tags": ["verbos"]
+    },
+    {
+      "id": 319,
+      "en": "Egregious",
+      "es": "Atroz, flagrante",
+      "example_en": "It was an egregious error.",
+      "example_es": "Fue un error flagrante.",
+      "note": "",
+      "tags": ["adjetivos"]
+    },
+    {
+      "id": 320,
+      "en": "Buildings",
+      "es": "Edificios",
+      "example_en": "The buildings are very tall.",
+      "example_es": "Los edificios son muy altos.",
+      "note": "Plural de 'building'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 321,
+      "en": "Research",
+      "es": "Investigación, investigar",
+      "example_en": "They are doing medical research.",
+      "example_es": "Están haciendo investigación médica.",
+      "note": "",
+      "tags": ["sustantivos", "verbos"]
+    },
+    {
+      "id": 322,
+      "en": "Lab",
+      "es": "Laboratorio",
+      "example_en": "We work in the science lab.",
+      "example_es": "Trabajamos en el laboratorio de ciencias.",
+      "note": "Abreviatura de 'laboratory'.",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 323,
+      "en": "Plagiarism",
+      "es": "Plagio",
+      "example_en": "Plagiarism is a serious offense.",
+      "example_es": "El plagio es una ofensa grave.",
+      "note": "",
+      "tags": ["sustantivos"]
+    },
+    {
+      "id": 324,
+      "en": "Busiest",
+      "es": "Más ocupado, más concurrido",
+      "example_en": "It is the busiest street in town.",
+      "example_es": "Es la calle más concurrida de la ciudad.",
+      "note": "Superlativo de 'busy'.",
+      "tags": ["adjetivos"]
     }
   ]
 }
