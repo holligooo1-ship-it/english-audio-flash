@@ -480,6 +480,54 @@
       "audio": "audios/time-out.mp3",
       "note": "Se usa en juegos o discusiones para hacer una pausa.",
       "tags": ["expresiones"]
+    },
+        {
+      "id": 61,
+      "en": "You said it.",
+      "es": "Tú lo has dicho.",
+      "audio": "audios/you-said-it.mp3",
+      "note": "Lit: Tú lo dijiste. Uso: Se usa para estar totalmente de acuerdo con alguien.",
+      "tags": ["expresiones"]
+    },
+    {
+      "id": 62,
+      "en": "Anything you say.",
+      "es": "Lo que tú digas.",
+      "audio": "audios/anything-you-say.mp3",
+      "note": "Se usa para aceptar lo que alguien manda o dice, a veces de forma resignada o irónica.",
+      "tags": ["frases"]
+    },
+    {
+      "id": 63,
+      "en": "Be right there.",
+      "es": "Ya voy para allá , Estaré ahi enseguida.",
+      "audio": "audios/be-right-there.mp3",
+      "note": "Lit: Estar justo ahí. Uso: Se dice para indicar que llegarás a un lugar en muy poco tiempo.",
+      "tags": ["frases"]
+    },
+    {
+      "id": 64,
+      "en": "Be good.",
+      "es": "Pórtate bien.",
+      "audio": "audios/be-good.mp3",
+      "note": "Lit: Sé bueno. Uso: Se dice típicamente a los niños o amigos al despedirse.",
+      "tags": ["despedidas"]
+    },
+    {
+      "id": 65,
+      "en": "Not a bit.",
+      "es": "Ni un poco, en absoluto.",
+      "audio": "audios/not-a-bit.mp3",
+      "note": "",
+      "tags": ["respuestas"]
+    },
+    {
+      "id": 66,
+      "en": "Watch it.",
+      "es": "Cuidado.",
+      "audio": "audios/watch-it.mp3",
+      "note": "Lit: Míralo. Uso: Es una advertencia para que alguien tenga cuidado con lo que hace o dice (a veces dicho con enojo).",
+      "tags": ["expresiones"]
     }
   ]
 }
